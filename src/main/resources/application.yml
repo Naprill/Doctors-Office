@@ -6,12 +6,10 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
-        temp:
-          use_jdbc_metadata_defaults: false
   thymeleaf:
     encoding: UTF-8
     prefix: classpath:/templates/
