@@ -1,6 +1,8 @@
 package com.chernivtsi.doctorsoffice.config;
 
-//import com.chernivtsi.doctorsoffice.service.UserService;
+import com.chernivtsi.doctorsoffice.service.AdminService;
+import com.chernivtsi.doctorsoffice.service.UserService;
+import com.chernivtsi.doctorsoffice.security.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +26,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    private UserService userService;
+    private UserService userService;
+    private AdminService adminService;
 
-//    @Override
-//    protected org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
-//        return new UserDetailsServiceImpl(userService);
-//    }
+    @Override
+    protected org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl(userService, adminService);
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
