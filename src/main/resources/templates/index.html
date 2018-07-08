@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Doctor`s Office</title>
+    <meta name="description" content="Doctor`s Office">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" th:href="@{people.png}">
+
+    <link rel="stylesheet" th:href="@{/assets/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/flag-icon.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/cs-skin-elastic.css}">
+    <link rel="stylesheet" th:href="@{/assets/scss/style.css}">
+    <link th:href="@{/assets/css/lib/vector-map/jqvmap.min.css}" rel="stylesheet">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <th:block layout:fragment="links">
+
+    </th:block>
+</head>
+<body>
+
+        <!-- Left Panel -->
+
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="../../java"><img src="images/logo.png" alt="Logo"></a>
+                <a class="navbar-brand hidden" href="../../java"><img src="images/logo2.png" alt="Logo"></a>
+            </div>
+
+            <div id="main-menu" class="main-menu collapse navbar-collapse" >
+                <!--user menu-->
+                <ul class="nav navbar-nav" sec:authorize="hasAuthority('USER')">
+                    <li class="active">
+                        <a href="index.html"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
+                    </li>
+
+                    <h3 class="menu-title">Візити</h3><!-- /.menu-title -->
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-calendar"></i>Розклад лікаря </a>
+                    </li>
+                    <li >
+                        <a href=""> <i class="menu-icon fa fa-clock-o"></i>Мої візити </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-pencil-square-o"></i>Запис на прийом </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa ti-email"></i>Задати запитання </a>
+                    </li>
+
+                    <h3 class="menu-title">Профіль</h3><!-- /.menu-title -->
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-id-card-o"></i>Мої дані </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-key"></i>Змінити пароль </a>
+                    </li>
+
+                    <h3 class="menu-title">Інформація</h3><!-- /.menu-title -->
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-comments-o"></i>Відгуки </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-info-circle"></i>Контакти </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-file-text"></i>Статті </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-question-circle"></i>Поширені питання </a>
+                    </li>
+                </ul>
+
+                <!--admin menu-->
+                <ul class="nav navbar-nav" sec:authorize="hasAuthority('ADMIN')">
+                    <li class="active">
+                        <a href="index.html"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
+                    </li>
+
+                    <h3 class="menu-title">Меню</h3><!-- /.menu-title -->
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-calendar"></i>Мій розклад </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-list"></i>Список пацієнтів </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa ti-email"></i>Запитання пацієнтів</a>
+                    </li>
+
+                    <h3 class="menu-title">Налаштування</h3><!-- /.menu-title -->
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-pencil-square-o"></i>Додати статтю </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-key"></i>Змінити пароль </a>
+                    </li>
+
+                    <h3 class="menu-title">Інформація</h3><!-- /.menu-title -->
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-comments-o"></i>Відгуки </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-info-circle"></i>Контакти </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa  fa-file-text"></i>Статті </a>
+                    </li>
+                    <li>
+                        <a href=""> <i class="menu-icon fa fa-question-circle"></i>Поширені питання </a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </aside><!-- /#left-panel -->
+
+    <!-- Left Panel -->
+
+    <!-- Right Panel -->
+
+    <div id="right-panel" class="right-panel">
+
+        <!-- Header-->
+        <header id="header" class="header">
+
+            <div class="header-menu">
+
+                <div class="col-sm-7">
+                    <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                    <div class="header-left">
+                        <button class="search-trigger"><i class="fa fa-search"></i></button>
+                        <div class="form-inline">
+                            <form class="search-form">
+                                <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
+                                <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="user-avatar rounded-circle" th:src="@{/images/user.png}" alt="User Avatar">
+                        </a>
+
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Профіль</a>
+
+                            <a class="nav-link" href="#"><i class="fa fa- user"></i>Повідомлення <span class="count">2</span></a>
+
+                            <a class="nav-link" th:href="@{/logout}"><i class="fa fa-power -off"></i>Вийти</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </header><!-- /header -->
+        <!-- Header-->
+
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <th:block layout:fragment="title">
+                        <div class="page-title">
+                            <h1>Головне меню</h1>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="content mt-3">
+            <th:block layout:fragment="body">
+                <div sec:authorize="hasAuthority('USER')">
+                    <div layout:replace="~{fragments/dashboard/dashboardUser}"></div>
+                </div>
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <div layout:replace="~{fragments/dashboard/dashboardAdmin}"></div>
+                </div>
+            </th:block>
+        </div> <!-- .content -->
+    </div><!-- /#right-panel -->
+
+    <!-- Right Panel -->
+
+        <script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+        <script th:src="@{/assets/js/plugins.js}"></script>
+        <script th:src="@{/assets/js/main.js}"></script>
+
+
+</body>
+</html>
