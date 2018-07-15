@@ -1,6 +1,7 @@
 package com.chernivtsi.doctorsoffice.model;
 
 import com.chernivtsi.doctorsoffice.model.base.AbstractVersional;
+import com.chernivtsi.doctorsoffice.model.converter.StringToRoleListConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,8 +16,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.time.LocalDate;
@@ -43,18 +42,19 @@ public class User extends AbstractVersional {
 	private String hashedPassword;
 
 	@Column(nullable = false)
-	private String email;
+	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+	private LocalDate birthDate;
 
 	@Column(nullable = false)
 	private String telephone;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private Address address;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@PrimaryKeyJoinColumn
+	@Column
+	private String address;
 
 	@Column(nullable = false)
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
-	private LocalDate birthDate;
+	private String email;
 
 	@Column(nullable = false)
 	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
@@ -72,4 +72,7 @@ public class User extends AbstractVersional {
 	@JoinColumn(name = "user_id")
 	private List<Therapy> therapies;
 
+	@Column
+	@Convert(converter = StringToRoleListConverter.class)
+	private List<Role> roles;
 }
