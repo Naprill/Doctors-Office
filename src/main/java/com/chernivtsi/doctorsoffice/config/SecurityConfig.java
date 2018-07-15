@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +15,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -44,6 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    AuthenticationEntryPoint loginAuthenticationEntryPoint() {
+        return new LoginAuthenticationEntryPoint();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         FormLoginConfigurer<HttpSecurity> loginConfigurer = http.formLogin();
@@ -63,5 +71,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf();
 
+        loginConfigurer.addObjectPostProcessor(new ObjectPostProcessor<UsernamePasswordAuthenticationFilter>() {
+            @Override
+            public UsernamePasswordAuthenticationFilter postProcess(UsernamePasswordAuthenticationFilter filter) {
+                return new CustomAbstractAuthenticationProcessingFilter(filter, loginAuthenticationEntryPoint());
+            }
+        });
     }
 }
