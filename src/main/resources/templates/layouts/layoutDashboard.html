@@ -9,7 +9,7 @@
     <meta name="description" content="Doctor`s Office">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" th:href="@{people.png}">
+    <link rel="shortcut icon" th:href="@{images/people.png}">
 
     <link rel="stylesheet" th:href="@{/assets/css/normalize.css}">
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
@@ -37,15 +37,15 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="../../java"><img src="images/logo.png" alt="Logo"></a>
-                <a class="navbar-brand hidden" href="../../java"><img src="images/logo2.png" alt="Logo"></a>
+                <a class="navbar-brand" href="../../../java"><img th:src="@{images/logo.png}" alt="Logo"></a>
+                <a class="navbar-brand hidden" href="../../../java"><img th:src="@{images/logo2.png}" alt="Logo"></a>
             </div>
 
             <div id="main-menu" class="main-menu collapse navbar-collapse" >
                 <!--user menu-->
                 <ul class="nav navbar-nav" sec:authorize="hasAuthority('USER')">
                     <li class="active">
-                        <a href="index.html"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
+                        <a href="layoutDashboard.html"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
                     </li>
 
                     <h3 class="menu-title">Візити</h3><!-- /.menu-title -->
@@ -88,7 +88,7 @@
                 <!--admin menu-->
                 <ul class="nav navbar-nav" sec:authorize="hasAuthority('ADMIN')">
                     <li class="active">
-                        <a href="index.html"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
+                        <a href="layoutDashboard.html"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
                     </li>
 
                     <h3 class="menu-title">Меню</h3><!-- /.menu-title -->
@@ -202,7 +202,7 @@
     <!-- Right Panel -->
 
         <script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+        <script th:src="@{/assets/js/popper.min.js}"></script>
         <script th:src="@{/assets/js/plugins.js}"></script>
         <script th:src="@{/assets/js/main.js}"></script>
 

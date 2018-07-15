@@ -1,0 +1,105 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Doctor`s Office</title>
+    <meta name="description" content="Doctor`s Office">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" th:href="@{images/people.png}">
+
+    <link rel="stylesheet" th:href="@{/assets/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/flag-icon.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/cs-skin-elastic.css}">
+    <link rel="stylesheet" th:href="@{/assets/scss/style.css}">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+</head>
+<body class="bg-dark">
+
+
+    <div class="d-flex align-content-center flex-wrap">
+        <div class="container">
+            <div class="login-content">
+                <div class="login-logo">
+                    <a th:href="@{/}">
+                        <img class="align-content" th:src="@{/images/logo.png}" alt="Doctors Office">
+                    </a>
+                </div>
+                <div class="login-form">
+                    <form th:action="@{/registration}" th:object="${user}" method="post">
+
+                        <p class="alert alert-danger"
+                           th:if="${#fields.hasGlobalErrors()}"
+                           th:each="error : ${#fields.errors('global')}"
+                           th:text="${error}">Невірні дані</p>
+
+                        <!--<div class="form-group">-->
+                            <!--<label>Ім'я</label>-->
+                            <!--<input type="text" class="form-control" placeholder="Name" th:field="*{firstName}">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Прізвище</label>-->
+                            <!--<input type="text" class="form-control" placeholder="Surname" th:field="*{lastName}">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Побатькові</label>-->
+                            <!--<input type="text" class="form-control" placeholder="Patronymic" th:field="*{patronymic}">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Дата народження</label>-->
+                            <!--<input type="date" class="form-control" placeholder="Birth date" th:field="*{birthDate}">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Номер телефону</label>-->
+                            <!--<input type="tel" class="form-control" placeholder="Phone number" th:field="*{telephone}">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label>Адреса</label>-->
+                            <!--<input type="text" class="form-control" placeholder="Address" th:field="*{address}">-->
+                        <!--</div>-->
+                        <div class="form-group">
+                            <label>Електронна пошта</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email" th:field="*{email}">
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Пароль</label>
+                            <input type="password" name="uniquePassword" class="form-control" placeholder="Password" th:field="*{password.uniquePassword}">
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('password.uniquePassword')}" th:errors="*{password.uniquePassword}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Повторіть пароль</label>
+                            <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" th:field="*{password.confirmPassword}">
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('password.confirmPassword')}" th:errors="*{password.confirmPassword}"></p>
+                        </div>
+                        <div class="alert alert-success" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <strong>Successfully</strong>
+                            registered
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Зареєструватись</button>
+
+                        <div class="register-link m-t-15 text-center">
+                            <p>Вже маєте акаунт? <a th:href="@{login}"> Увійти</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/assets/js/vendor/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/assets/js/popper.min.js}"></script>
+    <script th:src="@{/assets/js/plugins.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+    <script th:src="@{/app/js/registration-success.js}"></script>
+    <script th:src="@{/assets/js/vendor/sweetalert2.js}"></script>
+
+</body>
+</html>
