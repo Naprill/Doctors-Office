@@ -16,19 +16,20 @@ import org.springframework.security.core.authority.AuthorityUtils;
 @Setter
 public class SecurityUser extends org.springframework.security.core.userdetails.User {
 
-    private Long id;
+	private Long id;
 
-    public SecurityUser(final User user) {
-        super(user.getEmail(),
-                user.getHashedPassword(),
-                AuthorityUtils.createAuthorityList("USER"));
-        this.id = user.getId();
-    }
+	public SecurityUser(final User user) {
+		super(user.getEmail(),
+				user.getHashedPassword(),
+				user.isEnabled(), true, true, true,
+				AuthorityUtils.createAuthorityList("USER"));
+		this.id = user.getId();
+	}
 
-    public SecurityUser(final Admin admin) {
-        super(admin.getEmail(),
-                admin.getHashedPassword(),
-                AuthorityUtils.createAuthorityList("ADMIN"));
-    }
+	public SecurityUser(final Admin admin) {
+		super(admin.getEmail(),
+				admin.getHashedPassword(),
+				AuthorityUtils.createAuthorityList("ADMIN"));
+	}
 
 }

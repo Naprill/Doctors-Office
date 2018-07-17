@@ -27,4 +27,7 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	@Query("UPDATE User u set u.hashedPassword = :password where u.id = :id")
 	void updatePassword(@Param("password") String password, @Param("id") Long longId);
 
+	@Modifying
+	@Query("UPDATE User u set u.enabled = :enabled where u.id = :id")
+	void updateUserEnabled(@Param("enabled") boolean enabled, @Param("id") Long userId);
 }

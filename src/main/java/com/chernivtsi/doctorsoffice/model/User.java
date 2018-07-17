@@ -75,4 +75,7 @@ public class User extends AbstractVersional {
 	@Column
 	@Convert(converter = StringToRoleListConverter.class)
 	private List<Role> roles;
+
+	@Column(name = "enabled", nullable = false)
+	private boolean enabled = false;
 }

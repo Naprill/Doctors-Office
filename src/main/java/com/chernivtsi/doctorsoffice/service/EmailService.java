@@ -2,8 +2,7 @@ package com.chernivtsi.doctorsoffice.service;
 
 import com.chernivtsi.doctorsoffice.model.Mail;
 import com.chernivtsi.doctorsoffice.model.User;
-import com.chernivtsi.doctorsoffice.repository.TokenRepository;
-import com.chernivtsi.doctorsoffice.model.token.PasswordResetToken;
+import com.chernivtsi.doctorsoffice.model.token.ConfirmAccountToken;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -15,44 +14,36 @@ import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class EmailService {
 
-    private JavaMailSender emailSender;
-    private SpringTemplateEngine templateEngine;
-    private TokenRepository tokenRepository;
+	private JavaMailSender emailSender;
+	private SpringTemplateEngine templateEngine;
 
 
-    public EmailService(JavaMailSender emailSender, SpringTemplateEngine templateEngine, TokenRepository tokenRepository) {
-        this.emailSender = emailSender;
-        this.templateEngine = templateEngine;
-        this.tokenRepository = tokenRepository;
-    }
+	public EmailService(JavaMailSender emailSender, SpringTemplateEngine templateEngine) {
+		this.emailSender = emailSender;
+		this.templateEngine = templateEngine;
+	}
 
-    @Async
-    public void createAndSendEmail(User user, Integer time, String url) {
-        PasswordResetToken token = new PasswordResetToken();
-        token.setToken(UUID.randomUUID().toString());
-        token.setUser(user);
-        token.setExpiryDate(time);
-        tokenRepository.save(token);
+	@Async
+	public void createAndSendEmail(ConfirmAccountToken token, User user, String url) {
 
-        Mail mail = new Mail();
-        mail.setFrom("no-reply@doctor-patratiy-office.com");
-        mail.setTo(user.getEmail());
-        mail.setSubject("Реєстрація персонального кабінету в медкабінеті лікаря Патратій Марини Володимирівни");
+		Mail mail = new Mail();
+		mail.setFrom("no-reply@doctor-patratiy-office.com");
+		mail.setTo(user.getEmail());
+		mail.setSubject("Реєстрація персонального кабінету в медкабінеті лікаря Патратій Марини Володимирівни");
 
-        Map<String, Object> model = new HashMap<>();
-        model.put("token", token);
-        model.put("userFName", user.getFirstName());
-        model.put("userLName", user.getLastName());
-        model.put("signature", "https://doctors-office.com/");
-        model.put("resetUrl", url + "/reset-password?token=" + token.getToken());
-        mail.setModel(model);
-        sendEmail(mail);
-    }
+		Map<String, Object> model = new HashMap<>();
+		model.put("token", token);
+		model.put("userFName", user.getFirstName());
+		model.put("userLName", user.getLastName());
+		model.put("signature", "https://doctors-office.com/");
+		model.put("confirmUrl", url + "/confirm-account?token=" + token.getToken());
+		mail.setModel(model);
+		sendEmail(mail);
+	}
 
 	private void sendEmail(Mail mail) {
 		try {
@@ -72,7 +63,7 @@ public class EmailService {
 
 			emailSender.send(message);
 
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
