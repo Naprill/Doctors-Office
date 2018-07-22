@@ -1,8 +1,8 @@
 package com.chernivtsi.doctorsoffice.config;
 
+import com.chernivtsi.doctorsoffice.security.UserDetailsServiceImpl;
 import com.chernivtsi.doctorsoffice.service.AdminService;
 import com.chernivtsi.doctorsoffice.service.UserService;
-import com.chernivtsi.doctorsoffice.security.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,53 +29,53 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
-    private AdminService adminService;
+	private UserService userService;
+	private AdminService adminService;
 
-    @Override
-    protected org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl(userService, adminService);
-    }
+	@Override
+	protected org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
+		return new UserDetailsServiceImpl(userService, adminService);
+	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+	}
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    AuthenticationEntryPoint loginAuthenticationEntryPoint() {
-        return new LoginAuthenticationEntryPoint();
-    }
+	@Bean
+	AuthenticationEntryPoint loginAuthenticationEntryPoint() {
+		return new LoginAuthenticationEntryPoint();
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        FormLoginConfigurer<HttpSecurity> loginConfigurer = http.formLogin();
-        loginConfigurer
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .successHandler(new SimpleUrlAuthenticationSuccessHandler()) //TODO check
-                .and()
-                .logout().logoutUrl("/logout").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID")
-                .and()
-                .authorizeRequests()
-                .antMatchers("/public").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/").authenticated()
-                .and()
-                .csrf();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		FormLoginConfigurer<HttpSecurity> loginConfigurer = http.formLogin();
+		loginConfigurer
+				.loginPage("/login")
+				.loginProcessingUrl("/login")
+				.usernameParameter("email")
+				.passwordParameter("password")
+				.successHandler(new SimpleUrlAuthenticationSuccessHandler())
+				.and()
+				.logout().logoutUrl("/logout").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID")
+				.and()
+				.authorizeRequests()
+				.antMatchers("/public").permitAll()
+				.antMatchers("/login").permitAll()
+				.antMatchers("/").authenticated()
+				.and()
+				.csrf();
 
-        loginConfigurer.addObjectPostProcessor(new ObjectPostProcessor<UsernamePasswordAuthenticationFilter>() {
-            @Override
-            public UsernamePasswordAuthenticationFilter postProcess(UsernamePasswordAuthenticationFilter filter) {
-                return new CustomAbstractAuthenticationProcessingFilter(filter, loginAuthenticationEntryPoint());
-            }
-        });
-    }
+		loginConfigurer.addObjectPostProcessor(new ObjectPostProcessor<UsernamePasswordAuthenticationFilter>() {
+			@Override
+			public UsernamePasswordAuthenticationFilter postProcess(UsernamePasswordAuthenticationFilter filter) {
+				return new CustomAbstractAuthenticationProcessingFilter(filter, loginAuthenticationEntryPoint());
+			}
+		});
+	}
 }
