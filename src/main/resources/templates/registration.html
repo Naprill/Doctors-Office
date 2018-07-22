@@ -39,43 +39,53 @@
                            th:each="error : ${#fields.errors('global')}"
                            th:text="${error}">Невірні дані</p>
 
-                        <!--<div class="form-group">-->
-                            <!--<label>Ім'я</label>-->
-                            <!--<input type="text" class="form-control" placeholder="Name" th:field="*{firstName}">-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Прізвище</label>-->
-                            <!--<input type="text" class="form-control" placeholder="Surname" th:field="*{lastName}">-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Побатькові</label>-->
-                            <!--<input type="text" class="form-control" placeholder="Patronymic" th:field="*{patronymic}">-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Дата народження</label>-->
-                            <!--<input type="date" class="form-control" placeholder="Birth date" th:field="*{birthDate}">-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Номер телефону</label>-->
-                            <!--<input type="tel" class="form-control" placeholder="Phone number" th:field="*{telephone}">-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label>Адреса</label>-->
-                            <!--<input type="text" class="form-control" placeholder="Address" th:field="*{address}">-->
-                        <!--</div>-->
+                        <div class="form-group">
+                            <label>Ім'я</label>
+                            <input type="text" name="firstName" class="form-control" placeholder="Name" th:field="*{firstName}"
+                                   required pattern="[\p{L}-]+" title="Допустима тільки кирилиця" autofocus="autofocus">
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Прізвище</label>
+                            <input type="text" name="lastName" class="form-control" placeholder="Surname" th:field="*{lastName}"
+                                   required pattern="[\p{L}]+" title="Допустима тільки кирилиця">
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Побатькові</label>
+                            <input type="text" name="patronymic" class="form-control" placeholder="Patronymic" th:field="*{patronymic}"
+                                   required pattern="[\p{L}]+" title="Допустима тільки кирилиця">
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Дата народження</label>
+                            <input type="date" name="birthDate" class="form-control" placeholder="Birth date" th:field="*{birthDate}" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Номер телефону</label>
+                            <input type="tel" name="telephone" class="form-control" placeholder="Phone number" th:field="*{telephone}"
+                                   required pattern="^[0-9\-+]{9,15}$" >
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Адреса</label>
+                            <input type="text" name="address" class="form-control" placeholder="Address" th:field="*{address}" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                        </div>
                         <div class="form-group">
                             <label>Електронна пошта</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email" th:field="*{email}">
+                            <input type="email" name="email" class="form-control" placeholder="Email" th:field="*{email}" required>
                             <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                         </div>
                         <div class="form-group">
                             <label>Пароль</label>
-                            <input type="password" name="uniquePassword" class="form-control" placeholder="Password" th:field="*{password.uniquePassword}">
+                            <input type="password" name="uniquePassword" class="form-control" placeholder="Password" th:field="*{password.uniquePassword}" required>
                             <p class="alert alert-danger" th:if="${#fields.hasErrors('password.uniquePassword')}" th:errors="*{password.uniquePassword}"></p>
                         </div>
                         <div class="form-group">
                             <label>Повторіть пароль</label>
-                            <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" th:field="*{password.confirmPassword}">
+                            <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" th:field="*{password.confirmPassword}" required>
                             <p class="alert alert-danger" th:if="${#fields.hasErrors('password.confirmPassword')}" th:errors="*{password.confirmPassword}"></p>
                         </div>
 

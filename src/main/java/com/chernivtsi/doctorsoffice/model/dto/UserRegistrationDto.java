@@ -22,28 +22,28 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRegistrationDto {
 
-//    @NotBlank(message = "Ваше ім'я обов'язкове")
-//    @Pattern(regexp = "[А-Яа-я]*", message = "Ім'я містить недопустимі символи")
-//    String firstName;
-//
-//    @NotBlank(message = "Ваше прізвище обов'язкове")
-//    @Pattern(regexp = "[А-Яа-я]*", message = "Прізвище містить недопустимі символи")
-//    String lastName;
-//
-//    @Pattern(regexp = "[А-Яа-я]*", message = "Побатькові містить недопустимі символи")
-//    String patronymic;
-//
-//	@NotNull(message = "Дата народження необхідна")
-//	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-//	@DateTillTodayConstraint
-//	LocalDate birthDate;
-//
-//    @NotBlank(message = "Ваш номер телефону обов'язковий")
-//    @Pattern(regexp = "^[0-9\\-+]{9,15}$", message = "Номер телефону недопустимий")
-//    String telephone;
-//
-//	@NotNull(message = "Ваша адреса обов'язкова")
-//	String address;
+    @NotBlank(message = "Ваше ім'я обов'язкове")
+    @Pattern(regexp = "[\\u0400-\\u04ff-]*", message = "Ім'я містить недопустимі символи")//A-Яa-я
+    String firstName;
+
+    @NotBlank(message = "Ваше прізвище обов'язкове")
+    @Pattern(regexp = "[\\u0400-\\u04ff]*", message = "Прізвище містить недопустимі символи")
+    String lastName;
+
+	@NotBlank(message = "Ваше ім'я по батькові обов'язкове")
+    @Pattern(regexp = "[\\u0400-\\u04ff]*", message = "Ім'я по батькові містить недопустимі символи")
+    String patronymic;
+
+	@NotNull(message = "Дата народження необхідна")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@DateTillTodayConstraint
+	LocalDate birthDate;
+
+    @Pattern(regexp = "^[0-9\\-+]{9,15}$", message = "Номер телефону недопустимий")
+    String telephone;
+
+	@NotBlank(message = "Ваша адреса обов'язкова")//notnull
+	String address;
 
 	@Email(message = "Неправильний формат e-mail")
 	@NotBlank(message = "E-mail необхідний")

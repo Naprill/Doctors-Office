@@ -47,19 +47,12 @@ public class AccountService {
 
 		User user = new User();
 
-//        user.setFirstName(registration.getFirstName());
-//        user.setLastName(registration.getLastName());
-//        user.setPatronymic(registration.getPatronymic());
-//        user.setBirthDate(registration.getBirthDate());
-//	    user.setTelephone(registration.getTelephone());
-//	    user.setAddress(registration.getAddress());!!!!!
-
-		user.setFirstName("Name");
-		user.setLastName("Surname");
-		user.setPatronymic("Patr");
-		user.setBirthDate(LocalDate.now());
-		user.setTelephone("0000000000");
-		user.setAddress("Chernivtsy");
+        user.setFirstName(registration.getFirstName());
+        user.setLastName(registration.getLastName());
+        user.setPatronymic(registration.getPatronymic());
+        user.setBirthDate(registration.getBirthDate());
+	    user.setTelephone(registration.getTelephone());
+	    user.setAddress(registration.getAddress());
 
 		user.setEmail(registration.getEmail());
 		user.setHashedPassword(passwordEncoder.encode(registration.getPassword().getUniquePassword()));
