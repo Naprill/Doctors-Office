@@ -50,10 +50,9 @@ public class User extends AbstractVersional {
 	@Column(nullable = false)
 	private String telephone;
 
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@PrimaryKeyJoinColumn
-	@Column
-	private String address;
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private Address address;
 
 	@Column(nullable = false)
 	private String email;
