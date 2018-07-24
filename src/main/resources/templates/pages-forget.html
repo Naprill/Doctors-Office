@@ -1,56 +1,31 @@
-<!doctype html>
-<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Doctor`s Office</title>
-    <meta name="description" content="Doctor`s Office">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<th:block layout:decorate="~{layouts/layoutAuthentication}"
+          xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-    <link rel="shortcut icon" th:href="@{images/people.png}">
+    <th:block layout:fragment="body">
 
-    <link rel="stylesheet" th:href="@{/assets/css/normalize.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/flag-icon.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/cs-skin-elastic.css}">
-    <link rel="stylesheet" th:href="@{/assets/scss/style.css}">
+        <div class="sufee-login d-flex align-content-center flex-wrap">
+            <div class="container">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <a th:href="@{/}">
+                            <img class="align-content" th:src="@{/images/logo.png}" alt="Doctors Office">
+                        </a>
+                    </div>
+                    <div class="login-form">
+                        <form>
+                            <div class="form-group">
+                                <label>Електронна пошта</label>
+                                <input type="email" class="form-control" placeholder="Email">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-flat m-b-15">Надіслати</button>
 
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
-</head>
-<body class="bg-dark">
-
-
-    <div class="sufee-login d-flex align-content-center flex-wrap">
-        <div class="container">
-            <div class="login-content">
-                <div class="login-logo">
-                    <a th:href="@{/}">
-                        <img class="align-content" th:src="@{/images/logo.png}" alt="Doctors Office">
-                    </a>
-                </div>
-                <div class="login-form">
-                    <form>
-                        <div class="form-group">
-                            <label>Електронна пошта</label>
-                            <input type="email" class="form-control" placeholder="Email">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-flat m-b-15">Надіслати</button>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </th:block>
 
-    <script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
-    <script th:src="@{/assets/js/popper.min.js}"></script>
-    <script th:src="@{/assets/js/plugins.js}"></script>
-    <script th:src="@{/assets/js/main.js}"></script>
-
-
-</body>
-</html>
+</th:block>
