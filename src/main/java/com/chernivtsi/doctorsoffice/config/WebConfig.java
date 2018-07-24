@@ -14,10 +14,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/login").setViewName("page-login");
+		registry.addViewController("/login").setViewName("authentication/page-login");
 		registry.addViewController("/").setViewName("layouts/layoutDashboard");
 		registry.addViewController("/logout").setViewName("home");
-		registry.addViewController("/forget").setViewName("pages-forget");
+		registry.addViewController("/forget").setViewName("authentication/pages-forget");
 	}
 
 	@Bean
