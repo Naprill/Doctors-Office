@@ -1,0 +1,32 @@
+<th:block layout:decorate="~{layouts/layoutAuthentication}"
+          xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <th:block layout:fragment="body">
+
+        <div class="d-flex align-content-center flex-wrap">
+            <div class="container">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <a th:href="@{/}">
+                            <img class="align-content" th:src="@{/images/logo.png}" alt="Doctors Office">
+                        </a>
+                    </div>
+                    <div class="login-form">
+                        <div class="d-flex align-items-center text-center">
+                            <div class="col-lg-12 mx-auto">
+                                <h1 class="display-1 mb-0" style="text-align: center" th:text="${error}"></h1>
+                                <h2 class="mb-4">Ой... щось пішло не так</h2>
+                                <p>Повернімося до головної сторінки</p>
+                                <a class="btn btn-primary mt-5 btn-lg" href="/">Назад</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+
+</th:block>

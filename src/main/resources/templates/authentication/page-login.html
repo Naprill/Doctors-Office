@@ -1,0 +1,57 @@
+<th:block layout:decorate="~{layouts/layoutAuthentication}"
+          xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <th:block layout:fragment="body">
+
+
+        <div class="d-flex align-content-center flex-wrap">
+            <div class="container">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <a th:href="@{/}">
+                            <img class="align-content" th:src="@{/images/logo.png}" alt="Doctors Office">
+                        </a>
+                    </div>
+                    <div class="login-form">
+                        <form th:action="@{/login}" th:method="post">
+                            <div class="form-group">
+                                <label>Електронна пошта</label>
+                                <input type="email" id="email" name="email"
+                                       class="form-control" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label>Пароль</label>
+                                <input type="password" id="password" name="password"
+                                       class="form-control" placeholder="Password">
+
+                                <div th:if="${param.badCredentials}" class="alert alert-danger">
+                                    Невірні пароль або емейл
+                                </div>
+                                <div th:if="${param.disabled}" class="alert alert-danger">
+                                    Ваш акаунт не активовано
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Запам'ятати мене
+                                </label>
+                                <label class="pull-right">
+                                    <a th:href="@{forget}">Забули пароль?</a>
+                                </label>
+
+                            </div>
+                            <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Увійти</button>
+
+                            <div class="register-link m-t-15 text-center">
+                                <p>Ще не зареєстровані? <a th:href="@{/registration}"> Зареєструватись тут</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+
+</th:block>

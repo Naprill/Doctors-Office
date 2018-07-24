@@ -15,3 +15,22 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     template-resolver-order: 1
+
+  mail:
+      default-encoding: UTF-8
+      host: smtp.gmail.com
+      username: Doctor.Patratiy.Office@gmail.com
+      password: doctor-office
+      port: 587
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+      protocol: smtp
+      test-connection: false
+
+tokenExpiration:
+      resetPassword: 60
+      verificationTime: 3600

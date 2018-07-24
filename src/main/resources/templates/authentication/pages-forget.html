@@ -1,0 +1,31 @@
+<th:block layout:decorate="~{layouts/layoutAuthentication}"
+          xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <th:block layout:fragment="body">
+
+        <div class="d-flex align-content-center flex-wrap">
+            <div class="container">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <a th:href="@{/}">
+                            <img class="align-content" th:src="@{/images/logo.png}" alt="Doctors Office">
+                        </a>
+                    </div>
+                    <div class="login-form">
+                        <form>
+                            <div class="form-group">
+                                <label>Електронна пошта</label>
+                                <input type="email" class="form-control" placeholder="Email">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-flat m-b-15">Надіслати</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+
+</th:block>

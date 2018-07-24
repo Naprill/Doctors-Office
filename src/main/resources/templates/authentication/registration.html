@@ -1,0 +1,154 @@
+<th:block layout:decorate="~{layouts/layoutAuthentication}"
+          xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <th:block layout:fragment="body">
+
+        <div class="d-flex align-content-center flex-wrap">
+            <div class="container">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <a th:href="@{/}">
+                            <img class="align-content" th:src="@{/images/logo.png}" alt="Doctors Office">
+                        </a>
+                    </div>
+                    <div class="login-form">
+                        <form th:action="@{/registration}" th:object="${user}" method="post">
+
+                            <p class="alert alert-danger"
+                               th:if="${#fields.hasAnyErrors()}"
+                               th:each="error : ${#fields.allErrors()}"
+                               th:text="${error}">Невірні дані</p>
+
+                            <div class="form-group">
+                                <label>Ім'я</label>
+                                <input type="text" name="firstName" class="form-control" placeholder="Name"
+                                       th:field="*{firstName}" required
+                                       pattern="[А-Яа-яІіЙйЇїЄє'-]+" title="Допустима тільки кирилиця, дефіс"
+                                       autofocus="autofocus">
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('firstName')}"
+                                   th:errors="*{firstName}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Прізвище</label>
+                                <input type="text" name="lastName" class="form-control" placeholder="Surname"
+                                       th:field="*{lastName}" required
+                                       pattern="[А-Яа-яІіЙйЇїЄє']+" title="Допустима тільки кирилиця">
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('lastName')}"
+                                   th:errors="*{lastName}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Побатькові</label>
+                                <input type="text" name="patronymic" class="form-control" placeholder="Patronymic"
+                                       th:field="*{patronymic}" required
+                                       pattern="[А-Яа-яІіЙйЇїЄє']+" title="Допустима тільки кирилиця">
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('patronymic')}"
+                                   th:errors="*{patronymic}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Дата народження</label>
+                                <input type="date" name="birthDate" class="form-control" placeholder="Birth date"
+                                       th:field="*{birthDate}" required>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('birthDate')}"
+                                   th:errors="*{birthDate}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Номер телефону</label>
+                                <input type="tel" name="telephone" class="form-control" placeholder="Phone number"
+                                       th:field="*{telephone}" required
+                                       pattern="^[0-9\-+]{9,15}$" title="Від 9 до 15 цифр, +, -">
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('telephone')}"
+                                   th:errors="*{telephone}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Адреса</label>
+                                <div class="row">
+                                    <input class="col form-control" type="text" name="region" placeholder="Область"
+                                           th:field="*{address.region}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє' -]+"
+                                           title="Допустима тільки кирилиця, пробіл та дефіс">
+                                    <input class="col form-control" type="text" name="district" placeholder="Район"
+                                           th:field="*{address.district}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє' -]+"
+                                           title="Допустима тільки кирилиця, пробіл та дефіс">
+                                    <input class="col form-control" type="text" name="cityOrVillage"
+                                           placeholder="Нас. пункт"
+                                           th:field="*{address.cityOrVillage}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє' -]+"
+                                           title="Допустима тільки кирилиця, пробіл та дефіс">
+                                    <input class="col form-control" type="text" name="street" placeholder="Вулиця"
+                                           th:field="*{address.street}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє' -]+" title="Допустима кирилиця, пробіл та дефіс">
+                                    <input class="col form-control" type="text" name="houseNumber"
+                                           placeholder="Ном. буд."
+                                           th:field="*{address.houseNumber}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє -/0-9]+"
+                                           title="Допустима кирилиця, цифри, дефіс, пробіл та слеш">
+                                </div>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.region')}"
+                                   th:errors="*{address.region}"></p>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.district')}"
+                                   th:errors="*{address.district}"></p>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.cityOrVillage')}"
+                                   th:errors="*{address.cityOrVillage}"></p>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.street')}"
+                                   th:errors="*{address.street}"></p>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.houseNumber')}"
+                                   th:errors="*{address.houseNumber}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Електронна пошта</label>
+                                <input type="email" name="email" class="form-control" placeholder="Email"
+                                       th:field="*{email}" required>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('email')}"
+                                   th:errors="*{email}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Пароль</label>
+                                <input type="password" name="uniquePassword" class="form-control" placeholder="Password"
+                                       th:field="*{password.uniquePassword}" required>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('password.uniquePassword')}"
+                                   th:errors="*{password.uniquePassword}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>Повторіть пароль</label>
+                                <input type="password" name="confirmPassword" class="form-control"
+                                       placeholder="Confirm password"
+                                       th:field="*{password.confirmPassword}" required>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('password.confirmPassword')}"
+                                   th:errors="*{password.confirmPassword}"></p>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Зареєструватись
+                            </button>
+
+                            <div class="register-link m-t-15 text-center">
+                                <p>Вже маєте акаунт? <a th:href="@{login}"> Увійти</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+
+    <th:block layout:fragment="scripts">
+        <script th:src="@{/app/js/registration-success.js}"></script>
+        <script th:src="@{/assets/js/vendor/sweetalert2.js}"></script>
+    </th:block>
+
+</th:block>

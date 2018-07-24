@@ -1,8 +1,9 @@
 package com.chernivtsi.doctorsoffice.config;
 
+import com.chernivtsi.doctorsoffice.model.token.ExpirationTokenProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -11,10 +12,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("layouts/layoutLogin");
-        registry.addViewController("/").setViewName("layouts/layoutDashboard");
-        registry.addViewController("/logout").setViewName("home");
-    }
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/login").setViewName("authentication/page-login");
+		registry.addViewController("/").setViewName("layouts/layoutDashboard");
+		registry.addViewController("/logout").setViewName("home");
+		registry.addViewController("/forget").setViewName("authentication/pages-forget");
+	}
+
+	@Bean
+	public ExpirationTokenProperties getExpirationTokenProperties() {
+		return new ExpirationTokenProperties();
+	}
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService extends DefaultCrudSupport<User>{
+public class UserService extends DefaultCrudSupport<User> {
 
 	private UserRepository userRepository;
 
@@ -19,5 +19,9 @@ public class UserService extends DefaultCrudSupport<User>{
 
 	public Optional<User> findUserByEmail(final String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	public void updateUserEnabled(final boolean enabled, final Long userId) {
+		userRepository.updateUserEnabled(enabled, userId);
 	}
 }

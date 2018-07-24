@@ -23,6 +23,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userService.findUserByEmail(email).map(SecurityUser::new)
                 .orElseGet(() -> adminService.findAdminByEmail(email).map(SecurityUser::new)
                         .orElseThrow(() -> new UsernameNotFoundException(format("Couldn't find user with email %s", email))));
-    //TODO find and authenticate user by telephone number also
     }
 }
