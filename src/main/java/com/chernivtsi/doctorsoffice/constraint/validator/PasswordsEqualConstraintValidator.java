@@ -22,7 +22,7 @@ public class PasswordsEqualConstraintValidator implements ConstraintValidator<Pa
     @Override
     public boolean isValid(Password password, ConstraintValidatorContext constraintValidatorContext) {
 
-        boolean isValid = password.getUniquePassword().equals(password.getConfirmPassword());
+        boolean isValid = password.getUniquePassword().equalsIgnoreCase(password.getConfirmPassword());
 
         if (!isValid) {
             constraintValidatorContext.buildConstraintViolationWithTemplate(message)
