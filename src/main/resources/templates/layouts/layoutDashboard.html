@@ -22,6 +22,13 @@
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
+    <style>
+        .background {
+            height: 900px;
+            background: url("images/DS.png") no-repeat;
+        }
+    </style>
+
     <th:block layout:fragment="links">
 
     </th:block>
@@ -44,9 +51,26 @@
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <!--user menu-->
+
+            <ul class="nav navbar-nav" sec:authorize="isAnonymous()">
+                <h3 class="menu-title">Інформація</h3><!-- /.menu-title -->
+                <li>
+                    <a href=""> <i class="menu-icon fa fa-comments-o"></i>Відгуки </a>
+                </li>
+                <li>
+                    <a href=""> <i class="menu-icon fa fa-info-circle"></i>Контакти </a>
+                </li>
+                <li>
+                    <a href=""> <i class="menu-icon fa fa-file-text"></i>Статті </a>
+                </li>
+                <li>
+                    <a href=""> <i class="menu-icon fa fa-question-circle"></i>Поширені питання </a>
+                </li>
+            </ul>
+
             <ul class="nav navbar-nav" sec:authorize="hasAuthority('USER')">
                 <li class="active">
-                    <a href="layoutDashboard.html"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
+                    <a th:href="@{/}"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
                 </li>
 
                 <h3 class="menu-title">Візити</h3><!-- /.menu-title -->
@@ -89,7 +113,7 @@
             <!--admin menu-->
             <ul class="nav navbar-nav" sec:authorize="hasAuthority('ADMIN')">
                 <li class="active">
-                    <a href="layoutDashboard.html"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
+                    <a th:href="@{/}"> <i class="menu-icon fa fa-home"></i>Головна сторінка </a>
                 </li>
 
                 <h3 class="menu-title">Меню</h3><!-- /.menu-title -->
@@ -142,21 +166,17 @@
 
             <div class="col-sm-7">
                 <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa-tasks"></i></a>
-                <div class="header-left">
-                    <button class="search-trigger"><i class="fa fa-search"></i></button>
-                    <div class="form-inline">
-                        <form class="search-form">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
-                            <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
-                        </form>
-                    </div>
 
+                <div class="header-left" sec:authorize="isAnonymous()">
+                    <a class="btn btn-outline-info" th:href="@{/login}"> Увійти </a>
+                    <a class="btn btn-outline-success" th:href="@{/registration}"> Зареєструватись </a>
                 </div>
             </div>
 
             <div class="col-sm-5">
-                <div class="user-area dropdown float-right">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="user-area dropdown float-right" sec:authorize="isAuthenticated()">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
                         <img class="user-avatar rounded-circle" th:src="@{/images/user.png}" alt="User Avatar">
                     </a>
 
@@ -164,7 +184,7 @@
                         <a class="nav-link" href="#"><i class="fa fa-user"></i> Профіль</a>
 
                         <a class="nav-link" href="#"><i class="fa ti-email"></i> Повідомлення
-                            <span class="count">2</span>
+                            <!--<span class="count">2</span>-->
                         </a>
 
                         <a class="nav-link" th:href="@{/logout}"><i class="fa fa-power-off"></i> Вийти</a>
@@ -177,29 +197,34 @@
     </header><!-- /header -->
     <!-- Header-->
 
-    <div class="breadcrumbs">
-        <div class="col-sm-4">
-            <div class="page-header float-left">
-                <th:block layout:fragment="title">
-                    <div class="page-title">
-                        <h1>Головне меню</h1>
-                    </div>
-                </th:block>
+    <div class="background">
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <th:block layout:fragment="title">
+                        <div class="page-title">
+                            <h1>Головне меню</h1>
+                        </div>
+                    </th:block>
+                </div>
             </div>
+
         </div>
 
+        <div class="content mt-3">
+            <th:block layout:fragment="body">
+                <div sec:authorize="hasAuthority('USER')">
+                    <div layout:replace="~{fragments/dashboard/dashboardUser}"></div>
+                </div>
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <div layout:replace="~{fragments/dashboard/dashboardAdmin}"></div>
+                </div>
+                <div sec:authorize="(isAnonymous())">
+                    <div layout:replace="~{fragments/dashboard/dashboardAnonymous}"></div>
+                </div>
+            </th:block>
+        </div> <!-- .content -->
     </div>
-
-    <div class="content mt-3">
-        <th:block layout:fragment="body">
-            <div sec:authorize="hasAuthority('USER')">
-                <div layout:replace="~{fragments/dashboard/dashboardUser}"></div>
-            </div>
-            <div sec:authorize="hasAuthority('ADMIN')">
-                <div layout:replace="~{fragments/dashboard/dashboardAdmin}"></div>
-            </div>
-        </th:block>
-    </div> <!-- .content -->
 </div><!-- /#right-panel -->
 
 <!-- Right Panel -->
