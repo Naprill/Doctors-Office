@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserRegistrationDto {
+public class UserRegistrationDTO {
 
 	@NotBlank(message = "Ваше ім'я обов'язкове")
 	@Pattern(regexp = "[\\u0400-\\u04ff-']*", message = "Ім'я містить недопустимі символи. Дозволена тільки кирилиця, апостроф та дефіс")

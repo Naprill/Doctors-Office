@@ -2,7 +2,7 @@ package com.chernivtsi.doctorsoffice.service;
 
 import com.chernivtsi.doctorsoffice.model.Role;
 import com.chernivtsi.doctorsoffice.model.User;
-import com.chernivtsi.doctorsoffice.model.dto.UserRegistrationDto;
+import com.chernivtsi.doctorsoffice.model.dto.UserRegistrationDTO;
 import com.chernivtsi.doctorsoffice.model.token.ConfirmAccountToken;
 import com.chernivtsi.doctorsoffice.repository.AccountTokenRepository;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
@@ -43,7 +43,7 @@ public class AccountService {
 	 * Method which transmits information to Repository layer to save User in DB
 	 */
 	@Transactional
-	public void register(UserRegistrationDto registration, HttpServletRequest request) {
+	public void register(UserRegistrationDTO registration, HttpServletRequest request) {
 
 		User user = new User();
 

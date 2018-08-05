@@ -1,6 +1,6 @@
 package com.chernivtsi.doctorsoffice.controller;
 
-import com.chernivtsi.doctorsoffice.model.dto.UserRegistrationDto;
+import com.chernivtsi.doctorsoffice.model.dto.UserRegistrationDTO;
 import com.chernivtsi.doctorsoffice.service.AccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,8 +25,8 @@ public class UserRegistrationController {
 
 
 	@ModelAttribute("user")
-	public UserRegistrationDto userRegistrationDto() {
-		return new UserRegistrationDto();
+	public UserRegistrationDTO userRegistrationDto() {
+		return new UserRegistrationDTO();
 	}
 
 	@GetMapping
@@ -35,7 +35,7 @@ public class UserRegistrationController {
 	}
 
 	@PostMapping
-	public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDto userDto,
+	public String registerUserAccount(@ModelAttribute("user") @Valid UserRegistrationDTO userDto,
 	                                  BindingResult result, HttpServletRequest request) {
 		log.info("Post request from registration page.");
 		if (result.hasErrors()) {

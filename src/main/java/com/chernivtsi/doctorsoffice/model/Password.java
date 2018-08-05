@@ -1,14 +1,14 @@
 package com.chernivtsi.doctorsoffice.model;
 
 import com.chernivtsi.doctorsoffice.constraint.PasswordsEqualConstraint;
-import com.chernivtsi.doctorsoffice.model.dto.UserRegistrationDto;
+import com.chernivtsi.doctorsoffice.model.dto.UserRegistrationDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.Pattern;
 
 /**
- * Represents {@link UserRegistrationDto} password
+ * Represents {@link UserRegistrationDTO} password
  */
 @Getter
 @Setter
