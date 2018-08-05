@@ -44,7 +44,7 @@ public class ReceptionDTO {
 					reception.getIntervalStart(),
 					reception.getIntervalEnd(),
 					Duration.between(reception.getIntervalStart(), reception.getIntervalEnd()).toMinutes(),
-					Interval.Busy);
+					Interval.BUSY);
 		} else {
 			return new ReceptionDTO(
 					reception.getId(),
@@ -55,7 +55,7 @@ public class ReceptionDTO {
 					reception.getIntervalStart(),
 					reception.getIntervalEnd(),
 					Duration.between(reception.getIntervalStart(), reception.getIntervalEnd()).toMinutes(),
-					Interval.Free);
+					Interval.FREE);
 		}
 	}
 }
