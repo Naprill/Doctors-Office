@@ -27,6 +27,11 @@
             height: 900px;
             background: url("images/DS.png") no-repeat;
         }
+        .dropdown-menu{
+            border: 1px solid rgba(0, 0, 0, .8);
+            border-radius: .25rem
+        }
+
     </style>
 
     <th:block layout:fragment="links">
@@ -81,7 +86,7 @@
 
                 <h3 class="menu-title">Візити</h3><!-- /.menu-title -->
                 <li>
-                    <a href=""> <i class="menu-icon fa fa-calendar"></i>Розклад лікаря </a>
+                    <a th:href="@{/schedule}"> <i class="menu-icon fa fa-calendar"></i>Розклад лікаря </a>
                 </li>
                 <li>
                     <a href=""> <i class="menu-icon fa fa-clock-o"></i>Мої візити </a>
@@ -125,7 +130,7 @@
 
                 <h3 class="menu-title">Меню</h3><!-- /.menu-title -->
                 <li>
-                    <a href=""> <i class="menu-icon fa fa-calendar"></i>Мій розклад </a>
+                    <a th:href="@{/schedule}"> <i class="menu-icon fa fa-calendar"></i>Мій розклад </a>
                 </li>
                 <li>
                     <a href=""> <i class="menu-icon fa fa-list"></i>Список пацієнтів </a>
@@ -236,11 +241,14 @@
 
 <!-- Right Panel -->
 
-<script th:src="@{/assets/js/vendor/jquery-2.1.4.min.js}"></script>
+<script th:src="@{/assets/js/jquery-3.3.1.min.js}"></script>
 <script th:src="@{/assets/js/popper.min.js}"></script>
 <script th:src="@{/assets/js/plugins.js}"></script>
 <script th:src="@{/assets/js/main.js}"></script>
 
+<th:block layout:fragment="scripts">
+
+</th:block>
 
 </body>
 </html>

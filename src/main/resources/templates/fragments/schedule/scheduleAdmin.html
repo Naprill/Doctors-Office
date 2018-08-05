@@ -1,0 +1,94 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml"
+     xmlns:layout="http://www.w3.org/1999/xhtml"
+     xmlns:sec="http://www.w3.org/1999/xhtml"
+     th:fragment="scheduleAdminTable">
+    <div>
+        <div>
+            <input type="button" class="btn btn-primary"
+                   data-toggle="modal" value="Налаштувати"><br>
+        </div>
+        <br>
+
+        <div>
+            <form>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="date" id="date" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <select id="user-day-show" class="form-control" required>
+                            <option value="">Показати всі типи інтервалів</option>
+                            <option th:each="e : ${days}" th:value="${e}"
+                                    th:text="${e}"></option>
+                        </select>
+                    </div>
+                    <div class="col" sec:authorize="hasAuthority('ADMIN')">
+                        <select id="users-show" class="form-control" required>
+                            <option value="">Показати всіх користувачів</option>
+                            <option th:each="user : ${users}" th:value="${user.id}"
+                                    th:text="${user.firstName + ' ' + user.lastName}"></option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type="button" onclick="adminFilterButton()"
+                               class="btn btn-primary"
+                               value="Застосувати"
+                               sec:authorize="hasAuthority('ADMIN')"/>
+                        <input type="button" onclick="userFilterButton()"
+                               class="btn btn-primary"
+                               value="Застосувати"
+                               sec:authorize="hasAuthority('USER')"/>
+                        <input type="button" onclick="resetFilterButton()"
+                               class="btn btn-primary"
+                               value="Скинути"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="hours-div">
+        <table class="table no-footer">
+            <thead>
+            <th scope="col" sec:authorize="hasAuthority('ADMIN')">Пацієнт</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Початок</th>
+            <th scope="col">Кінець</th>
+            <th scope="col">Тривалість, хв</th>
+            <th scope="col"></th>
+            <th scope="col" sec:authorize="hasAuthority('USER')"></th>
+            </thead>
+            <tbody>
+            <tr th:each="reception: ${receptions}">
+                <td sec:authorize="hasAuthority('ADMIN')">
+                    <span
+                        th:if="${reception.userFirstName != null and reception.userLastName != null}"
+                        th:text="${reception.userFirstName + ' ' + reception.userLastName}">
+                    </span>
+                </td>
+                <td th:text="${reception.interval.getIntervalType()}"></td>
+                <td th:text="${#temporals.format(reception.date, 'dd-MM-yyyy')}"></td>
+                <td th:text="${reception.intervalStart}"></td>
+                <td th:text="${reception.intervalEnd}"></td>
+                <td th:text="${reception.duration}"></td>
+                <td>
+                    <button class="btn btn-outline-primary" data-toggle="modal"
+                            id="admin-update-button"
+                            data-target="#update-modal"
+                            th:onclick="'showUpdateModal(\'' + ${reception.id} + '\');'">
+                        <i class="fa fa-edit"></i></button>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(receptions.content)}">
+                <td colspan="20">Немає записів</td>
+            </tr>
+            </tbody>
+        </table>
+        <!--<div layout:replace="~{fragments/schedule/scheduleModals}"></div>-->
+        <div th:replace="fragments/pagination :: pagination (page=${receptions}, pageRequest=${pageRequest})"></div>
+    </div>
+</div>

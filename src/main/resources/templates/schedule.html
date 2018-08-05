@@ -1,0 +1,29 @@
+<th:block xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.w3.org/1999/xhtml"
+          layout:decorate="~{layouts/layoutDashboard}">
+
+    <th:block layout:fragment="links">
+
+        <link rel="stylesheet" th:href="@{/app/css/schedule.css}">
+
+    </th:block>
+
+    <th:block layout:fragment="title">
+
+        <h2 class="card-title mb-4">Розклад прийому лікаря</h2>
+
+    </th:block>
+
+    <th:block layout:fragment="body">
+
+        <div layout:replace="~{fragments/schedule/scheduleAdmin}"></div>
+
+    </th:block>
+
+    <th:block layout:fragment="scripts">
+
+        <script charset="UTF-8" type="text/javascript" th:src="@{/assets/js/sweetalert2.js}"></script>
+
+    </th:block>
+
+</th:block>
