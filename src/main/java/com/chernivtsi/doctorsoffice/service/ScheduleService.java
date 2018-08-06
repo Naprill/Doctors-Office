@@ -1,5 +1,6 @@
 package com.chernivtsi.doctorsoffice.service;
 
+import com.chernivtsi.doctorsoffice.model.Interval;
 import com.chernivtsi.doctorsoffice.model.Reception;
 import com.chernivtsi.doctorsoffice.model.dto.ReceptionDTO;
 import com.chernivtsi.doctorsoffice.repository.ScheduleRepository;
@@ -38,7 +39,7 @@ public class ScheduleService {
 			LocalTime intervalEnd = intervalStart.plusMinutes(RECEPTION_TIME_RANGE.longValue());
 
 			while (count > 0) {
-				saveReception(LocalDate.now(), intervalStart, intervalEnd);
+				saveReception(LocalDate.now(), intervalStart, intervalEnd, Interval.FREE);
 				intervalStart = intervalEnd;
 				intervalEnd = intervalEnd.plusMinutes(RECEPTION_TIME_RANGE.longValue());
 				count--;
@@ -47,16 +48,16 @@ public class ScheduleService {
 
 	}
 
-	private void saveReception(LocalDate date, LocalTime intervalStart, LocalTime intervalEnd) {
-		repository.save(new Reception(date, intervalStart, intervalEnd));
+	private void saveReception(LocalDate date, LocalTime intervalStart, LocalTime intervalEnd, Interval interval) {
+		repository.save(new Reception(date, intervalStart, intervalEnd, interval));
 	}
 
 	public List<ReceptionDTO> getReceptionsByDate(LocalDate date) {
 		return convertToDTO(repository.getReceptionsByDate(date));
 	}
 
-	public Page<ReceptionDTO> getReceptionsByDate(Pageable pageable, LocalDate date) {
-		Page<Reception> page = repository.getReceptionsByDate(pageable, date);
+	public Page<ReceptionDTO> getReceptionsByDateIntervalAndUser(Pageable pageable, LocalDate date, Interval interval, Long userId) {
+		Page<Reception> page = repository.getReceptionsByDateIntervalAndUser(pageable, date, interval, userId);
 		return new PageImpl<>(convertToDTO(page.getContent()), pageable, page.getTotalElements());
 	}
 

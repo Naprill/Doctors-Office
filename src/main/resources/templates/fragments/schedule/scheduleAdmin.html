@@ -13,20 +13,22 @@
             <form>
                 <div class="form-row">
                     <div class="col">
-                        <input type="date" id="date" class="form-control" required>
+                        <input type="date" id="date" class="form-control" th:value="${param.date}">
                     </div>
                     <div class="col">
-                        <select id="user-day-show" class="form-control" required>
-                            <option value="">Показати всі типи інтервалів</option>
-                            <option th:each="e : ${days}" th:value="${e}"
-                                    th:text="${e}"></option>
+                        <select id="interval" class="form-control">
+                            <option value="">Показати всі інтервали</option>
+                            <option th:each="e : ${intervals}" th:value="${e.name()}"
+                                    th:text="${e}"
+                                    th:selected="${e.name()} == ${#request.getParameter('interval')}" ></option>
                         </select>
                     </div>
                     <div class="col" sec:authorize="hasAuthority('ADMIN')">
-                        <select id="users-show" class="form-control" required>
+                        <select id="user" class="form-control">
                             <option value="">Показати всіх користувачів</option>
                             <option th:each="user : ${users}" th:value="${user.id}"
-                                    th:text="${user.firstName + ' ' + user.lastName}"></option>
+                                    th:text="${user.firstName + ' ' + user.lastName}"
+                                    th:selected="${user.id} == ${#request.getParameter('user')}" ></option>
                         </select>
                     </div>
                     <div class="col">

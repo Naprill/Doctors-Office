@@ -49,11 +49,12 @@ public class Reception extends AbstractVersional {
 	@Enumerated(EnumType.STRING)
 	private Interval interval;
 
-	public Reception(LocalDate date, LocalTime intervalStart, LocalTime intervalEnd) {
+	public Reception(LocalDate date, LocalTime intervalStart, LocalTime intervalEnd, Interval interval) {
 		super();
 		this.user = null;
 		this.date = date;
 		this.intervalStart = intervalStart;
 		this.intervalEnd = intervalEnd;
+		this.interval = interval;
 	}
 }
