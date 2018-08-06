@@ -9,7 +9,7 @@
     <meta name="description" content="Doctor`s Office">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" th:href="@{images/people.png}">
+    <link rel="shortcut icon" th:href="@{/images/people.png}">
 
     <link rel="stylesheet" th:href="@{/assets/css/normalize.css}">
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
@@ -25,7 +25,7 @@
     <style>
         .background {
             height: 900px;
-            background: url("images/DS.png") no-repeat;
+            background: url("/images/DS.png") no-repeat;
         }
         .dropdown-menu{
             border: 1px solid rgba(0, 0, 0, .8);
@@ -50,8 +50,8 @@
                     aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="../../../java"><img th:src="@{images/logo.png}" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="../../../java"><img th:src="@{images/logo2.png}" alt="Logo"></a>
+            <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/logo.png}" alt="Logo"></a>
+            <a class="navbar-brand hidden" th:href="@{/}"><img th:src="@{/images/logo2.png}" alt="Logo"></a>
         </div>
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
