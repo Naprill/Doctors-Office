@@ -1,0 +1,49 @@
+<th:block
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.w3.org/1999/xhtml"
+        class="form group">
+
+    <!--  Register reception MODAL -->
+    <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="update-hours-title-label">Записатись на прийом: </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                <div class="modal-body">
+                    <span style="display: none;" id="item-id"></span>
+                    <p>Дата: <span id="item-date"></span></p>
+                    <p>Час початку: <span id="item-begin"></span></p>
+                    <p>Час закінчення: <span id="item-end"></span></p>
+                    <p>Тривалість: <span id="item-duration"></span></p>
+                    <p sec:authorize="hasAuthority('ADMIN')">
+                        Пацієнт:
+                        <select id="user-id" class="form-control" required>
+                            <option value="null">не вибрано</option>
+                            <option th:each="user : ${users}" th:value="${user.id}"
+                                    th:text="${user.firstName + ' ' + user.lastName}"
+                                    th:selected="${user.id} == ${#request.getParameter('user')}"></option>
+                        </select>
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"
+                            class="btn btn-primary"
+                            id="register-admin-button-submit"
+                            sec:authorize="hasAuthority('ADMIN')">Записати</button>
+                    <button type="submit"
+                            class="btn btn-primary"
+                            id="register-user-button-submit"
+                            sec:authorize="hasAuthority('USER')">Записатись</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>

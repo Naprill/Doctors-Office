@@ -3,11 +3,13 @@ package com.chernivtsi.doctorsoffice.service;
 import com.chernivtsi.doctorsoffice.model.Interval;
 import com.chernivtsi.doctorsoffice.model.Reception;
 import com.chernivtsi.doctorsoffice.model.dto.ReceptionDTO;
+import com.chernivtsi.doctorsoffice.model.dto.RegisterReceptionDTO;
 import com.chernivtsi.doctorsoffice.repository.ScheduleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -53,7 +55,7 @@ public class ScheduleService {
 	}
 
 	public List<ReceptionDTO> getReceptionsByDate(LocalDate date) {
-		return convertToDTO(repository.getReceptionsByDate(date));
+		return convertToDTO(repository.getReceptionsByDateOrderByIntervalStartAsc(date));
 	}
 
 	public Page<ReceptionDTO> getReceptionsByDateIntervalAndUser(Pageable pageable, LocalDate date, Interval interval, Long userId) {
@@ -63,5 +65,14 @@ public class ScheduleService {
 
 	private List<ReceptionDTO> convertToDTO(List<Reception> receptions) {
 		return receptions.stream().map(ReceptionDTO::convertToDto).collect(Collectors.toList());
+	}
+
+	public ReceptionDTO getReceptionDtoById(Long id) {
+		return ReceptionDTO.convertToDto(repository.getReceptionById(id));
+	}
+
+	@Transactional
+	public void registerReception(RegisterReceptionDTO dto) {
+		repository.registerReception(dto.getId(), dto.getUserId());
 	}
 }

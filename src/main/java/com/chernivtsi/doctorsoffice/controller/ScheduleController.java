@@ -2,6 +2,8 @@ package com.chernivtsi.doctorsoffice.controller;
 
 import com.chernivtsi.doctorsoffice.model.Interval;
 import com.chernivtsi.doctorsoffice.model.dto.ReceptionDTO;
+import com.chernivtsi.doctorsoffice.model.dto.RegisterReceptionDTO;
+import com.chernivtsi.doctorsoffice.security.SecurityUser;
 import com.chernivtsi.doctorsoffice.service.ScheduleService;
 import com.chernivtsi.doctorsoffice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,11 +12,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -71,5 +80,23 @@ public class ScheduleController {
 		modelAndView.addObject("users", userService.findAll());
 
 		return modelAndView;
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<ReceptionDTO> getReceptionItem(@PathVariable Long id) {
+		log.trace("Get reception item to view with id {}", id);
+		ReceptionDTO receptionDTO = scheduleService.getReceptionDtoById(id);
+		return new ResponseEntity<>(receptionDTO, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@PutMapping
+	public ResponseEntity registerReception(@RequestBody RegisterReceptionDTO dto,
+	                                        @AuthenticationPrincipal SecurityUser currentUser) {
+		Long userId = currentUser.getId();
+		if (dto.getUserId() == null) dto.setUserId(userId);
+		scheduleService.registerReception(dto);
+		log.trace("RegisterReceptionDTO: {}", dto.toString());
+		return new ResponseEntity(HttpStatus.OK);
 	}
 }

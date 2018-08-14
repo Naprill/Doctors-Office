@@ -1,5 +1,4 @@
 <div xmlns:th="http://www.w3.org/1999/xhtml"
-     xmlns:layout="http://www.w3.org/1999/xhtml"
      xmlns:sec="http://www.w3.org/1999/xhtml"
      th:fragment="scheduleAdminTable">
     <div>
@@ -20,7 +19,7 @@
                             <option value="">Показати всі інтервали</option>
                             <option th:each="e : ${intervals}" th:value="${e.name()}"
                                     th:text="${e}"
-                                    th:selected="${e.name()} == ${#request.getParameter('interval')}" ></option>
+                                    th:selected="${e.name()} == ${#request.getParameter('interval')}"></option>
                         </select>
                     </div>
                     <div class="col" sec:authorize="hasAuthority('ADMIN')">
@@ -28,7 +27,7 @@
                             <option value="">Показати всіх користувачів</option>
                             <option th:each="user : ${users}" th:value="${user.id}"
                                     th:text="${user.firstName + ' ' + user.lastName}"
-                                    th:selected="${user.id} == ${#request.getParameter('user')}" ></option>
+                                    th:selected="${user.id} == ${#request.getParameter('user')}"></option>
                         </select>
                     </div>
                     <div class="col">
@@ -68,8 +67,8 @@
             <tr th:each="reception: ${receptions}">
                 <td sec:authorize="hasAuthority('ADMIN')">
                     <span
-                        th:if="${reception.userFirstName != null and reception.userLastName != null}"
-                        th:text="${reception.userFirstName + ' ' + reception.userLastName}">
+                            th:if="${reception.userFirstName != null and reception.userLastName != null}"
+                            th:text="${reception.userFirstName + ' ' + reception.userLastName}">
                     </span>
                 </td>
                 <td th:text="${reception.interval.getIntervalType()}"></td>
@@ -77,12 +76,23 @@
                 <td th:text="${reception.intervalStart}"></td>
                 <td th:text="${reception.intervalEnd}"></td>
                 <td th:text="${reception.duration}"></td>
-                <td>
-                    <button class="btn btn-outline-primary" data-toggle="modal"
-                            id="admin-update-button"
-                            data-target="#update-modal"
-                            th:onclick="'showUpdateModal(\'' + ${reception.id} + '\');'">
-                        <i class="fa fa-edit"></i></button>
+                <td th:if="${reception.interval.getIntervalType()== 'Вільно'}">
+                    <button class="btn btn-outline-success" data-toggle="modal"
+                            id="register-button"
+                            data-target="#register-modal"
+                            th:onclick="'showRegisterModal(\'' + ${reception.id} + '\');'">
+                        Запис
+                    </button>
+                </td>
+                <td th:if="${reception.interval.getIntervalType()== 'Зайнято'
+                && (  reception.userId == #authentication.getPrincipal().getId()
+                 || #authorization.expression('hasRole(''ADMIN'')')  )}">
+                    <button class="btn btn-outline-warning" data-toggle="modal"
+                            id="cancel-button"
+                            data-target="#cancel-modal"
+                            th:onclick="'showCancelModal(\'' + ${reception.id} + '\');'">
+                        Відміна
+                    </button>
                 </td>
             </tr>
             <tr th:if="${#lists.isEmpty(receptions.content)}">
@@ -90,7 +100,6 @@
             </tr>
             </tbody>
         </table>
-        <!--<div layout:replace="~{fragments/schedule/scheduleModals}"></div>-->
         <div th:replace="fragments/pagination :: pagination (page=${receptions}, pageRequest=${pageRequest})"></div>
     </div>
 </div>
