@@ -3,6 +3,8 @@ package com.chernivtsi.doctorsoffice.config;
 import com.chernivtsi.doctorsoffice.model.token.ExpirationTokenProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -23,5 +25,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ExpirationTokenProperties getExpirationTokenProperties() {
 		return new ExpirationTokenProperties();
+	}
+
+	@Bean
+	public DefaultMethodSecurityExpressionHandler defaultMethodSecurityExpressionHandler() {
+		DefaultMethodSecurityExpressionHandler defaultMethodSecurityExpressionHandler = new DefaultMethodSecurityExpressionHandler();
+		defaultMethodSecurityExpressionHandler.setDefaultRolePrefix("");
+		return defaultMethodSecurityExpressionHandler;
+	}
+
+	@Bean
+	public DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler() {
+		DefaultWebSecurityExpressionHandler defaultWebSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
+		defaultWebSecurityExpressionHandler.setDefaultRolePrefix("");
+		return defaultWebSecurityExpressionHandler;
 	}
 }
