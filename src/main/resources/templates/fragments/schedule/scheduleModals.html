@@ -8,7 +8,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="update-hours-title-label">Записатись на прийом: </h5>
+                    <h5 class="modal-title">Записатись на прийом: </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -46,4 +46,39 @@
             </div>
         </div>
     </div>
+
+    <!-- Cancel reception MODAL -->
+    <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Відмінити прийом: </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <span style="display: none;" id="cancel-item-id"></span>
+                        <span style="display: none;" id="cancel-user-id"></span>
+                        <p>Дата: <span id="cancel-item-date"></span></p>
+                        <p>Час початку: <span id="cancel-item-begin"></span></p>
+                        <p>Час закінчення: <span id="cancel-item-end"></span></p>
+                        <p>Тривалість: <span id="cancel-item-duration"></span></p>
+                        <p>Пацієнт: <span id="cancel-item-user"></span></p>
+                        <p>Причина відміни прийому: </p>
+                        <textarea name="message" id="cancel-message" cols="60" rows="4"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"
+                                class="btn btn-primary"
+                                id="cancel-button-submit">Підтвердити</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </th:block>

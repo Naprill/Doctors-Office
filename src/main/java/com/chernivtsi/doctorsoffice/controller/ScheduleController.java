@@ -1,9 +1,15 @@
 package com.chernivtsi.doctorsoffice.controller;
 
+import com.chernivtsi.doctorsoffice.model.Admin;
 import com.chernivtsi.doctorsoffice.model.Interval;
+import com.chernivtsi.doctorsoffice.model.Message;
+import com.chernivtsi.doctorsoffice.model.Role;
+import com.chernivtsi.doctorsoffice.model.dto.CancelReceptionDTO;
 import com.chernivtsi.doctorsoffice.model.dto.ReceptionDTO;
 import com.chernivtsi.doctorsoffice.model.dto.RegisterReceptionDTO;
+import com.chernivtsi.doctorsoffice.repository.MessageRepository;
 import com.chernivtsi.doctorsoffice.security.SecurityUser;
+import com.chernivtsi.doctorsoffice.service.AdminService;
 import com.chernivtsi.doctorsoffice.service.ScheduleService;
 import com.chernivtsi.doctorsoffice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +22,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,11 +45,18 @@ public class ScheduleController {
 
 	private ScheduleService scheduleService;
 	private UserService userService;
+	private MessageRepository messageRepository;
+	private AdminService adminService;
 
 	@Autowired
-	public ScheduleController(ScheduleService scheduleService, UserService userService) {
+	public ScheduleController(ScheduleService scheduleService,
+	                          UserService userService,
+	                          MessageRepository messageRepository,
+	                          AdminService adminService) {
 		this.scheduleService = scheduleService;
 		this.userService = userService;
+		this.messageRepository = messageRepository;
+		this.adminService = adminService;
 	}
 
 	@GetMapping
@@ -97,6 +112,23 @@ public class ScheduleController {
 		if (dto.getUserId() == null) dto.setUserId(userId);
 		scheduleService.registerReception(dto);
 		log.trace("RegisterReceptionDTO: {}", dto.toString());
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@DeleteMapping
+	public ResponseEntity cancelReception(@RequestBody CancelReceptionDTO dto,
+	                                      @AuthenticationPrincipal SecurityUser currentUser) {
+		Admin admin = adminService.getAdminOnDuty();
+		Message message;
+		if (currentUser.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+			message = new Message(admin.getId(), dto.getUserId(), dto.getMessage(), Role.ADMIN, Role.USER);
+		} else {
+			message = new Message(dto.getUserId(), admin.getId(), dto.getMessage(), Role.USER, Role.ADMIN);
+		}
+		messageRepository.save(message);
+		scheduleService.cancelReception(dto);
+		log.trace("CancelReceptionDTO: {}", dto.toString());
 		return new ResponseEntity(HttpStatus.OK);
 	}
 }

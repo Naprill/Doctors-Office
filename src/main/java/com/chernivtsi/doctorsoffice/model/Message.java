@@ -1,34 +1,32 @@
 package com.chernivtsi.doctorsoffice.model;
 
 import com.chernivtsi.doctorsoffice.model.base.AbstractVersional;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "messages")
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 @NoArgsConstructor
-public class Admin extends AbstractVersional{
+public class Message extends AbstractVersional {
 
-	private String hashedPassword;
+	private Long fromWhom;
 
-	@Column(nullable = false)
-	private String email;
+	private Long toWhom;
 
-	private String firstName;
+	private String text;
 
-	private String lastName;
+	private Role fromRole;
 
-	private String patronymic;
-
-	private Boolean onDuty;
+	private Role toRole;
 
 }

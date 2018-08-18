@@ -45,10 +45,32 @@ function showRegisterModal(id) {
     });
 }
 
+function showCancelModal(id) {
+
+    jQuery.ajax({
+        url: '/schedule/' + id,
+        method: 'GET',
+        success: function (object) {
+            jQuery("#cancel-item-id").html(object.id);
+            jQuery("#cancel-user-id").html(object.userId);
+            jQuery("#cancel-item-date").html(object.date.dayOfMonth + "-" + object.date.monthValue + "-" + object.date.year);
+            jQuery("#cancel-item-begin").html(object.intervalStart.hour + ":" + object.intervalStart.minute);
+            jQuery("#cancel-item-end").html(object.intervalEnd.hour + ":" + object.intervalEnd.minute);
+            jQuery("#cancel-item-duration").html(object.duration);
+            jQuery("#cancel-item-user").html(object.userFirstName + " " + object.userLastName);
+
+            jQuery('#cancel-modal').modal("show");
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+        }
+    });
+}
+
 jQuery('#register-user-button-submit').on('click', function (e) {
     //Prevent default submission of form
     e.preventDefault();
-    //Ajax put request
+
     let RegisterReceptionDTO = {};
     RegisterReceptionDTO["id"] = jQuery("#item-id").html();
     registerReception(RegisterReceptionDTO);
@@ -57,7 +79,7 @@ jQuery('#register-user-button-submit').on('click', function (e) {
 jQuery('#register-admin-button-submit').on('click', function (e) {
     //Prevent default submission of form
     e.preventDefault();
-    //Ajax put request
+
     let RegisterReceptionDTO = {};
     RegisterReceptionDTO["id"] = jQuery("#item-id").html();
     RegisterReceptionDTO["userId"] = parseInt(jQuery("#user-id").val(), 10);
@@ -73,7 +95,7 @@ jQuery('#register-admin-button-submit').on('click', function (e) {
     registerReception(RegisterReceptionDTO);
 });
 
-function registerReception(RegisterReceptionDTO){
+function registerReception(RegisterReceptionDTO) {
     jQuery.ajax({
         headers: {
             'Accept': 'application/json',
@@ -102,6 +124,61 @@ function registerReception(RegisterReceptionDTO){
                 type: 'error',
                 title: 'Щось пішло не так...',
                 text: 'Не вдалось записати на прийом',
+                timer: 5000
+            });
+        }
+    });
+}
+
+jQuery('#cancel-button-submit').on('click', function (e) {
+    //Prevent default submission of form
+    e.preventDefault();
+
+    let CancelReceptionDTO = {};
+    CancelReceptionDTO["id"] = jQuery("#cancel-item-id").html();
+    CancelReceptionDTO["userId"] = jQuery("#cancel-user-id").html();
+    CancelReceptionDTO["message"] = jQuery("#cancel-message").val();
+    if ((CancelReceptionDTO["message"]) === "") {
+        swal({
+            type: 'error',
+            title: 'Вкажіть причину відміни',
+            text: 'Не вдалось відмінити прийом',
+            timer: 5000
+        });
+        return;
+    }
+    cancelReception(CancelReceptionDTO);
+});
+
+function cancelReception(CancelReceptionDTO) {
+    jQuery.ajax({
+        headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json"
+        },
+        method: 'DELETE',
+        url: '/schedule/',
+        data: JSON.stringify(CancelReceptionDTO),
+        cash: false,
+        success: function (status) {
+            console.log("SUCCESS: ", status);
+            swal({
+                type: 'success',
+                title: 'Готово!',
+                text: 'Успішно відмінено прийом.',
+                showConfirmButton: false,
+                timer: 2500
+            });
+            setTimeout(function () {
+                location.reload();
+            }, 2500);
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            swal({
+                type: 'error',
+                title: 'Щось пішло не так...',
+                text: 'Не вдалось відмінити прийом',
                 timer: 5000
             });
         }

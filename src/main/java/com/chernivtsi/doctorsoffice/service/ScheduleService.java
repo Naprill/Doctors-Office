@@ -2,6 +2,7 @@ package com.chernivtsi.doctorsoffice.service;
 
 import com.chernivtsi.doctorsoffice.model.Interval;
 import com.chernivtsi.doctorsoffice.model.Reception;
+import com.chernivtsi.doctorsoffice.model.dto.CancelReceptionDTO;
 import com.chernivtsi.doctorsoffice.model.dto.ReceptionDTO;
 import com.chernivtsi.doctorsoffice.model.dto.RegisterReceptionDTO;
 import com.chernivtsi.doctorsoffice.repository.ScheduleRepository;
@@ -74,5 +75,10 @@ public class ScheduleService {
 	@Transactional
 	public void registerReception(RegisterReceptionDTO dto) {
 		repository.registerReception(dto.getId(), dto.getUserId());
+	}
+
+	@Transactional
+	public void cancelReception(CancelReceptionDTO dto) {
+		repository.cancelReception(dto.getId());
 	}
 }

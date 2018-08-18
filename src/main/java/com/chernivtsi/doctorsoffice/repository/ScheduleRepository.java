@@ -32,4 +32,7 @@ public interface ScheduleRepository extends CrudRepository<Reception, Long> {
 	@Query("UPDATE Reception r set r.user.id = :userId, r.interval = 'BUSY' where r.id = :id")
 	void registerReception(@Param("id") Long receptionId, @Param("userId") Long userId);
 
+	@Modifying
+	@Query("UPDATE Reception r set r.user.id = null, r.interval = 'FREE' where r.id = :id")
+	void cancelReception(@Param("id") Long id);
 }
