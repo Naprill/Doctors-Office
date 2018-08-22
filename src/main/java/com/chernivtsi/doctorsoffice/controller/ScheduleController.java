@@ -70,6 +70,7 @@ public class ScheduleController {
 		modelAndView.addObject("pageRequest", pageRequest);
 		modelAndView.addObject("intervals", EnumSet.allOf(Interval.class));
 		modelAndView.addObject("users", userService.findAll());
+		modelAndView.addObject("now", LocalDate.now());
 
 		return modelAndView;
 	}
@@ -94,6 +95,7 @@ public class ScheduleController {
 		modelAndView.addObject("pageRequest", pageRequest);
 		modelAndView.addObject("intervals", EnumSet.allOf(Interval.class));
 		modelAndView.addObject("users", userService.findAll());
+		modelAndView.addObject("now", LocalDate.now());
 
 		return modelAndView;
 	}
