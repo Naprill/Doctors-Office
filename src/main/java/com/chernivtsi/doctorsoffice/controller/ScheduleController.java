@@ -63,7 +63,7 @@ public class ScheduleController {
 	public ModelAndView getReceptions(@PageableDefault(size = 4) Pageable pageRequest) {
 		ModelAndView modelAndView = new ModelAndView("schedule");
 
-		scheduleService.checkAndGenerateReceptions();
+		scheduleService.checkAndGenerateReceptions(LocalDate.now());
 		Page<ReceptionDTO> receptionDTOs =
 				scheduleService.getReceptionsByDateIntervalAndUser(pageRequest, LocalDate.now(), null, null);
 		modelAndView.addObject("receptions", receptionDTOs);
@@ -87,6 +87,7 @@ public class ScheduleController {
 		if (date == null) {
 			newDate = LocalDate.now();
 		}
+		scheduleService.checkAndGenerateReceptions(newDate);
 		Page<ReceptionDTO> receptionDTOs =
 				scheduleService.getReceptionsByDateIntervalAndUser(pageRequest, newDate, interval, userId);
 		modelAndView.addObject("receptions", receptionDTOs);

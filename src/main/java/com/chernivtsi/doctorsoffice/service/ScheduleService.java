@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,33 +31,36 @@ public class ScheduleService {
 		this.repository = repository;
 	}
 
-	public void checkAndGenerateReceptions() {
-		List<ReceptionDTO> list = getReceptionsByDate(LocalDate.now());
+	public void checkAndGenerateReceptions(LocalDate date) {
+		List<Reception> list = getReceptionsByDate(date);
 		if (list.isEmpty()) {
-			int count = (int) ((WORK_END - WORK_BEGIN) * 60 / RECEPTION_TIME_RANGE);
-
-			LocalTime intervalStart = LocalTime.of(
-					WORK_BEGIN.intValue(),
-					0);
-
-			LocalTime intervalEnd = intervalStart.plusMinutes(RECEPTION_TIME_RANGE.longValue());
-
-			while (count > 0) {
-				saveReception(LocalDate.now(), intervalStart, intervalEnd, Interval.FREE);
-				intervalStart = intervalEnd;
-				intervalEnd = intervalEnd.plusMinutes(RECEPTION_TIME_RANGE.longValue());
-				count--;
-			}
+			List<Reception> receptions = generateReceptions(date);
+			receptions.forEach(this::saveReception);
 		}
-
 	}
 
-	private void saveReception(LocalDate date, LocalTime intervalStart, LocalTime intervalEnd, Interval interval) {
-		repository.save(new Reception(date, intervalStart, intervalEnd, interval));
+	private List<Reception> generateReceptions(LocalDate date) {
+		int count = (int) ((WORK_END - WORK_BEGIN) * 60 / RECEPTION_TIME_RANGE);
+
+		LocalTime intervalStart = LocalTime.of(WORK_BEGIN.intValue(), 0);
+		LocalTime intervalEnd = intervalStart.plusMinutes(RECEPTION_TIME_RANGE.longValue());
+
+		List<Reception> receptionList = new ArrayList<>();
+		while (count > 0) {
+			receptionList.add(new Reception(date, intervalStart, intervalEnd, Interval.FREE));
+			intervalStart = intervalEnd;
+			intervalEnd = intervalEnd.plusMinutes(RECEPTION_TIME_RANGE.longValue());
+			count--;
+		}
+		return receptionList;
 	}
 
-	public List<ReceptionDTO> getReceptionsByDate(LocalDate date) {
-		return convertToDTO(repository.getReceptionsByDateOrderByIntervalStartAsc(date));
+	private void saveReception(Reception reception) {
+		repository.save(reception);
+	}
+
+	private List<Reception> getReceptionsByDate(LocalDate date) {
+		return repository.getReceptionsByDateOrderByIntervalStartAsc(date);
 	}
 
 	public Page<ReceptionDTO> getReceptionsByDateIntervalAndUser(Pageable pageable, LocalDate date, Interval interval, Long userId) {
