@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface AdminRepository extends CrudRepository<Admin, Long> {
 	Optional<Admin> findByEmail(String email);
 
-	@Query("select a from Admin a where a.onDuty = true") //TODO is not working
+	@Query("select a from Admin a where a.onDuty = '1'")
 	Optional<Admin> findAdminOnDuty();
 
 	@Query(value = "SELECT * FROM Admin ORDER BY id ASC LIMIT 1", nativeQuery = true)
