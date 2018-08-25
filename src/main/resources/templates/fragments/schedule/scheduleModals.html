@@ -80,5 +80,43 @@
         </div>
     </div>
 
+    <!-- Settings MODAL -->
+    <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Налаштування </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-lg">Початок роботи, година
+                                <input type="number" min="1" id="workStart" name="workStart" required class="form-control">
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg">Кінець роботи, година
+                                <input type="number" min="1" id="workEnd" name="workEnd" required class="form-control">
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg"> Тривалість прийому в хвилинах
+                                <input type="number" min="1" id="receptionTimeRange" name="receptionTimeRange" required class="form-control">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"
+                                class="btn btn-primary"
+                                id="settings-button-submit">Зберегти</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Назад</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </th:block>

@@ -4,6 +4,7 @@ import com.chernivtsi.doctorsoffice.model.Admin;
 import com.chernivtsi.doctorsoffice.model.Interval;
 import com.chernivtsi.doctorsoffice.model.Message;
 import com.chernivtsi.doctorsoffice.model.Role;
+import com.chernivtsi.doctorsoffice.model.ScheduleSettings;
 import com.chernivtsi.doctorsoffice.model.dto.CancelReceptionDTO;
 import com.chernivtsi.doctorsoffice.model.dto.ReceptionDTO;
 import com.chernivtsi.doctorsoffice.model.dto.RegisterReceptionDTO;
@@ -11,6 +12,7 @@ import com.chernivtsi.doctorsoffice.repository.MessageRepository;
 import com.chernivtsi.doctorsoffice.security.SecurityUser;
 import com.chernivtsi.doctorsoffice.service.AdminService;
 import com.chernivtsi.doctorsoffice.service.ScheduleService;
+import com.chernivtsi.doctorsoffice.service.SettingsService;
 import com.chernivtsi.doctorsoffice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +49,19 @@ public class ScheduleController {
 	private UserService userService;
 	private MessageRepository messageRepository;
 	private AdminService adminService;
+	private SettingsService settingsService;
 
 	@Autowired
 	public ScheduleController(ScheduleService scheduleService,
 	                          UserService userService,
 	                          MessageRepository messageRepository,
-	                          AdminService adminService) {
+	                          AdminService adminService,
+	                          SettingsService settingsService) {
 		this.scheduleService = scheduleService;
 		this.userService = userService;
 		this.messageRepository = messageRepository;
 		this.adminService = adminService;
+		this.settingsService = settingsService;
 	}
 
 	@GetMapping
@@ -133,5 +138,12 @@ public class ScheduleController {
 		scheduleService.cancelReception(dto);
 		log.trace("CancelReceptionDTO: {}", dto.toString());
 		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@GetMapping("/settings")
+	public ResponseEntity<ScheduleSettings> getSettings() {
+		ScheduleSettings settings = settingsService.getSettings();
+		log.trace("Get settings of schedule: {}", settings);
+		return new ResponseEntity<>(settings, HttpStatus.OK);
 	}
 }

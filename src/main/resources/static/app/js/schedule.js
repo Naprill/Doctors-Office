@@ -45,28 +45,6 @@ function showRegisterModal(id) {
     });
 }
 
-function showCancelModal(id) {
-
-    jQuery.ajax({
-        url: '/schedule/' + id,
-        method: 'GET',
-        success: function (object) {
-            jQuery("#cancel-item-id").html(object.id);
-            jQuery("#cancel-user-id").html(object.userId);
-            jQuery("#cancel-item-date").html(object.date.dayOfMonth + "-" + object.date.monthValue + "-" + object.date.year);
-            jQuery("#cancel-item-begin").html(object.intervalStart.hour + ":" + object.intervalStart.minute);
-            jQuery("#cancel-item-end").html(object.intervalEnd.hour + ":" + object.intervalEnd.minute);
-            jQuery("#cancel-item-duration").html(object.duration);
-            jQuery("#cancel-item-user").html(object.userFirstName + " " + object.userLastName);
-
-            jQuery('#cancel-modal').modal("show");
-        },
-        error: function (e) {
-            console.log("ERROR : ", e);
-        }
-    });
-}
-
 jQuery('#register-user-button-submit').on('click', function (e) {
     //Prevent default submission of form
     e.preventDefault();
@@ -130,6 +108,28 @@ function registerReception(RegisterReceptionDTO) {
     });
 }
 
+function showCancelModal(id) {
+
+    jQuery.ajax({
+        url: '/schedule/' + id,
+        method: 'GET',
+        success: function (object) {
+            jQuery("#cancel-item-id").html(object.id);
+            jQuery("#cancel-user-id").html(object.userId);
+            jQuery("#cancel-item-date").html(object.date.dayOfMonth + "-" + object.date.monthValue + "-" + object.date.year);
+            jQuery("#cancel-item-begin").html(object.intervalStart.hour + ":" + object.intervalStart.minute);
+            jQuery("#cancel-item-end").html(object.intervalEnd.hour + ":" + object.intervalEnd.minute);
+            jQuery("#cancel-item-duration").html(object.duration);
+            jQuery("#cancel-item-user").html(object.userFirstName + " " + object.userLastName);
+
+            jQuery('#cancel-modal').modal("show");
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+        }
+    });
+}
+
 jQuery('#cancel-button-submit').on('click', function (e) {
     //Prevent default submission of form
     e.preventDefault();
@@ -181,6 +181,24 @@ function cancelReception(CancelReceptionDTO) {
                 text: 'Не вдалось відмінити прийом',
                 timer: 5000
             });
+        }
+    });
+}
+
+function showSettingsModal() {
+
+    jQuery.ajax({
+        url: '/schedule/settings',
+        method: 'GET',
+        success: function (object) {
+            jQuery("#workStart").val(object.workStart);
+            jQuery("#workEnd").val(object.workEnd );
+            jQuery("#receptionTimeRange").val(object.receptionTimeRange);
+
+            jQuery('#settings-modal').modal("show");
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
         }
     });
 }
