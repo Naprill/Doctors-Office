@@ -2,6 +2,7 @@ package com.chernivtsi.doctorsoffice.service;
 
 import com.chernivtsi.doctorsoffice.model.Interval;
 import com.chernivtsi.doctorsoffice.model.Reception;
+import com.chernivtsi.doctorsoffice.model.ScheduleSettings;
 import com.chernivtsi.doctorsoffice.model.dto.CancelReceptionDTO;
 import com.chernivtsi.doctorsoffice.model.dto.ReceptionDTO;
 import com.chernivtsi.doctorsoffice.model.dto.RegisterReceptionDTO;
@@ -21,50 +22,55 @@ import java.util.stream.Collectors;
 @Service
 public class ScheduleService {
 
-	private static final Float WORK_BEGIN = 9f;
-	private static final Float WORK_END = 15f;
-	private static final Float RECEPTION_TIME_RANGE = 15f;
+	private ScheduleRepository scheduleRepository;
+	private SettingsService settingsService;
+	private ScheduleSettings scheduleSettings;
 
-	private ScheduleRepository repository;
-
-	public ScheduleService(ScheduleRepository repository) {
-		this.repository = repository;
+	public ScheduleService(ScheduleRepository scheduleRepository, SettingsService settingsService) {
+		this.scheduleRepository = scheduleRepository;
+		this.settingsService = settingsService;
 	}
 
 	public void checkAndGenerateReceptions(LocalDate date) {
 		List<Reception> list = getReceptionsByDate(date);
-		if (list.isEmpty()) {
+		if (list.isEmpty() || isDayWithoutReceptions(list)) {
+			scheduleSettings = settingsService.getSettings();
+			scheduleRepository.delete(list);
 			List<Reception> receptions = generateReceptions(date);
 			receptions.forEach(this::saveReception);
 		}
 	}
 
-	private List<Reception> generateReceptions(LocalDate date) {
-		int count = (int) ((WORK_END - WORK_BEGIN) * 60 / RECEPTION_TIME_RANGE);
+	private boolean isDayWithoutReceptions(List<Reception> list) {
+		return list.stream().noneMatch(elem -> elem.getInterval() == Interval.BUSY);
+	}
 
-		LocalTime intervalStart = LocalTime.of(WORK_BEGIN.intValue(), 0);
-		LocalTime intervalEnd = intervalStart.plusMinutes(RECEPTION_TIME_RANGE.longValue());
+	private List<Reception> generateReceptions(LocalDate date) {
+		int count = (int) ((scheduleSettings.getWorkEnd() - scheduleSettings.getWorkStart()) * 60 / scheduleSettings.getReceptionTimeRange());
+
+		LocalTime intervalStart = LocalTime.of(scheduleSettings.getWorkStart().intValue(), 0);
+		LocalTime intervalEnd = intervalStart.plusMinutes(scheduleSettings.getReceptionTimeRange().longValue());
 
 		List<Reception> receptionList = new ArrayList<>();
 		while (count > 0) {
 			receptionList.add(new Reception(date, intervalStart, intervalEnd, Interval.FREE));
 			intervalStart = intervalEnd;
-			intervalEnd = intervalEnd.plusMinutes(RECEPTION_TIME_RANGE.longValue());
+			intervalEnd = intervalEnd.plusMinutes(scheduleSettings.getReceptionTimeRange().longValue());
 			count--;
 		}
 		return receptionList;
 	}
 
 	private void saveReception(Reception reception) {
-		repository.save(reception);
+		scheduleRepository.save(reception);
 	}
 
 	private List<Reception> getReceptionsByDate(LocalDate date) {
-		return repository.getReceptionsByDateOrderByIntervalStartAsc(date);
+		return scheduleRepository.getReceptionsByDateOrderByIntervalStartAsc(date);
 	}
 
 	public Page<ReceptionDTO> getReceptionsByDateIntervalAndUser(Pageable pageable, LocalDate date, Interval interval, Long userId) {
-		Page<Reception> page = repository.getReceptionsByDateIntervalAndUser(pageable, date, interval, userId);
+		Page<Reception> page = scheduleRepository.getReceptionsByDateIntervalAndUser(pageable, date, interval, userId);
 		return new PageImpl<>(convertToDTO(page.getContent()), pageable, page.getTotalElements());
 	}
 
@@ -73,16 +79,16 @@ public class ScheduleService {
 	}
 
 	public ReceptionDTO getReceptionDtoById(Long id) {
-		return ReceptionDTO.convertToDto(repository.getReceptionById(id));
+		return ReceptionDTO.convertToDto(scheduleRepository.getReceptionById(id));
 	}
 
 	@Transactional
 	public void registerReception(RegisterReceptionDTO dto) {
-		repository.registerReception(dto.getId(), dto.getUserId());
+		scheduleRepository.registerReception(dto.getId(), dto.getUserId());
 	}
 
 	@Transactional
 	public void cancelReception(CancelReceptionDTO dto) {
-		repository.cancelReception(dto.getId());
+		scheduleRepository.cancelReception(dto.getId());
 	}
 }
