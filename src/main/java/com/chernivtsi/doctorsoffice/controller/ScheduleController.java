@@ -146,4 +146,14 @@ public class ScheduleController {
 		log.trace("Get settings of schedule: {}", settings);
 		return new ResponseEntity<>(settings, HttpStatus.OK);
 	}
+
+	@ResponseBody
+	@PutMapping("/settings")
+	public ResponseEntity updateSettings(@RequestBody ScheduleSettings dto) {
+		dto.setId(1L);
+		settingsService.update(dto);
+		log.trace("ScheduleSettings: {}", dto.toString());
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
 }

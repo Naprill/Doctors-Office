@@ -192,7 +192,7 @@ function showSettingsModal() {
         method: 'GET',
         success: function (object) {
             jQuery("#workStart").val(object.workStart);
-            jQuery("#workEnd").val(object.workEnd );
+            jQuery("#workEnd").val(object.workEnd);
             jQuery("#receptionTimeRange").val(object.receptionTimeRange);
 
             jQuery('#settings-modal').modal("show");
@@ -202,3 +202,42 @@ function showSettingsModal() {
         }
     });
 }
+
+jQuery('#settings-button-submit').on('click', function (e) {
+    //Prevent default submission of form
+    e.preventDefault();
+    var form = jQuery('#settings-form');
+    jQuery.ajax({
+        headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json"
+        },
+        method: 'PUT',
+        url: '/schedule/settings/',
+        data: formToJSON(form),
+        cash: false,
+        success: function (status) {
+            console.log("SUCCESS: ", status);
+            swal({
+                type: 'success',
+                title: 'Готово!',
+                text: 'Успішно збережено налаштування. Вони працюватимуть починаючи з дня в якому немає записів на прийом.',
+                showConfirmButton: false,
+                timer: 5000
+            });
+            setTimeout(function () {
+                location.reload();
+            }, 2500);
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            swal({
+                type: 'error',
+                title: 'Щось пішло не так...',
+                text: 'Не вдалось зберегти налаштування',
+                timer: 5000
+            });
+        }
+    });
+});
+
