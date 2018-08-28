@@ -1,0 +1,114 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml"
+     th:fragment="userProfile">
+
+    <div class="animated fadeIn">
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Особисті дані</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <form th:action="@{/profile}" th:object="${user}" method="put">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Дата народження</label>
+                                    <p th:text="${user.birthDate}"></p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Дата реєстрації</label>
+                                    <p th:text="${user.registrationDate}"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Адреса</label>
+                                <div class="row">
+                                    <input class="col form-control" type="text" name="region" placeholder="Область"
+                                           th:field="*{address.region}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє' -]+"
+                                           title="Допустима тільки кирилиця, пробіл та дефіс">
+                                    <input class="col form-control" type="text" name="district" placeholder="Район"
+                                           th:field="*{address.district}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє' -]+"
+                                           title="Допустима тільки кирилиця, пробіл та дефіс">
+                                    <input class="col form-control" type="text" name="cityOrVillage"
+                                           placeholder="Нас. пункт"
+                                           th:field="*{address.cityOrVillage}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє' -]+"
+                                           title="Допустима тільки кирилиця, пробіл та дефіс">
+                                    <input class="col form-control" type="text" name="street" placeholder="Вулиця"
+                                           th:field="*{address.street}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє' -]+" title="Допустима кирилиця, пробіл та дефіс">
+                                    <input class="col form-control" type="text" name="houseNumber"
+                                           placeholder="Ном. буд."
+                                           th:field="*{address.houseNumber}" required
+                                           pattern="[А-Яа-яІіЙйЇїЄє -/0-9]+"
+                                           title="Допустима кирилиця, цифри, дефіс, пробіл та слеш">
+                                </div>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.region')}"
+                                   th:errors="*{address.region}"></p>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.district')}"
+                                   th:errors="*{address.district}"></p>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.cityOrVillage')}"
+                                   th:errors="*{address.cityOrVillage}"></p>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.street')}"
+                                   th:errors="*{address.street}"></p>
+                                <p class="alert alert-danger"
+                                   th:if="${#fields.hasErrors('address.houseNumber')}"
+                                   th:errors="*{address.houseNumber}"></p>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Електронна пошта</label>
+                                        <input type="email" name="email" class="form-control" placeholder="Email"
+                                               th:field="*{email}" required>
+                                        <p class="alert alert-danger"
+                                           th:if="${#fields.hasErrors('email')}"
+                                           th:errors="*{email}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Номер телефону</label>
+                                        <input type="tel" name="telephone" class="form-control"
+                                               placeholder="Phone number"
+                                               th:field="*{telephone}" required
+                                               pattern="^[0-9\-+]{9,15}$" title="Від 9 до 15 цифр, +, -">
+                                        <p class="alert alert-danger"
+                                           th:if="${#fields.hasErrors('telephone')}"
+                                           th:errors="*{telephone}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-info btn-fill float-right">
+                                Оновити
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <div class="card-body">
+                        <div class="mx-auto d-block">
+                            <img class="rounded-circle mx-auto d-block" th:src="@{/images/user.png}" alt="picture">
+                            <h5 class="text-sm-center mt-2 mb-1" th:text="${user.firstName +' '+ user.lastName +' '+ user.patronymic}"></h5>
+                            <div class=" text-sm-center" th:text="${'Вік: '+ user.age}"><i class="fa fa-user"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

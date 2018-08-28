@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -14,9 +16,13 @@ import javax.validation.constraints.Pattern;
 @Table(name = "address")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "patient")
 @NoArgsConstructor
 public class Address extends AbstractVersional {
+
+	@OneToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User patient;
 
 	@Pattern(regexp = "[\\u0400-\\u04ff-\\s']*", message = "'Область' містить недопустимі символи. Дозволені кирилиця, дефіс, апостроф та пробіл")
 	private String region;
