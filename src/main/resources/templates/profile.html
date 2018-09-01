@@ -16,7 +16,44 @@
 
     <th:block layout:fragment="body">
 
-        <div layout:replace="~{fragments/profile/userdata}"></div>
+        <ul class="nav justify-content-center nav-tabs tab-solid tab-solid-primary" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show" data-toggle="tab" href="#nav-info-user" role="tab" aria-selected="true">
+                    Особисті дані
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#nav-analyses-user" role="tab" aria-selected="false">
+                    Аналізи
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#nav-therapies-user" role="tab" aria-selected="false">
+                    Лікування
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#nav-examinations-user" role="tab" aria-selected="false">
+                    Огляди
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content" >
+            <div class="tab-pane fade show active" id="nav-info-user" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div layout:replace="~{fragments/profile/userdata}"></div>
+            </div>
+            <div class="tab-pane fade" id="nav-analyses-user" role="tabpanel" aria-labelledby="nav-analyses-tab">
+                <!--<div th:replace="fragments/profile/analyses"></div>-->
+            </div>
+            <div class="tab-pane fade" id="nav-therapies-user" role="tabpanel" aria-labelledby="nav-therapies-tab">
+                <!--<div th:replace="fragments/profile/therapies"></div>-->
+            </div>
+            <div class="tab-pane fade" id="nav-examinations-user" role="tabpanel" aria-labelledby="nav-examinations-tab">
+                <!--<div th:replace="fragments/profile/examinations"></div>-->
+            </div>
+        </div>
+
 
     </th:block>
 
