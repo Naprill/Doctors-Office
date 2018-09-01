@@ -31,7 +31,16 @@ public class UserService extends DefaultCrudSupport<User> {
 
 	public UserProfileDTO getUserDTOById(Long userId) {
 		User user = this.findById(userId).orElseThrow(EntityNotFoundException::new);
-		log.trace("USER: {}", user);
+		log.trace("getUserDTOById: {}", user);
 		return new UserProfileDTO(user);
+	}
+
+	public void updateUserProfile(UserProfileDTO dto) {
+		User user = this.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
+		user.setAddress(dto.getAddress());
+		user.setTelephone(dto.getTelephone());
+		user.setEmail(dto.getEmail());
+		log.info("updateUserProfile: {}", user);
+		update(user);
 	}
 }

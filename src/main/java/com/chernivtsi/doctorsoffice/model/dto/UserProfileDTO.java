@@ -8,6 +8,7 @@ import com.chernivtsi.doctorsoffice.model.MedicalExamination;
 import com.chernivtsi.doctorsoffice.model.Therapy;
 import com.chernivtsi.doctorsoffice.model.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
@@ -22,7 +23,10 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class UserProfileDTO {
+
+	private Long id;
 
 	private String firstName;
 
@@ -42,7 +46,7 @@ public class UserProfileDTO {
 
 	@Email(message = "Неправильний формат e-mail")
 	@NotBlank(message = "E-mail необхідний")
-	@EmailExistConstraint
+//	@EmailExistConstraint TODO unique email but allow current
 	private String email;
 
 	private LocalDate registrationDate;
@@ -54,6 +58,7 @@ public class UserProfileDTO {
 	private List<Therapy> therapies;
 
 	public UserProfileDTO(User user) {
+		this.id = user.getId();
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
 		this.patronymic = user.getPatronymic();

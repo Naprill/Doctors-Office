@@ -4,6 +4,19 @@
     <div class="animated fadeIn">
 
         <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <div class="card-body">
+                        <div class="mx-auto d-block">
+                            <img class="rounded-circle mx-auto d-block" th:src="@{/images/user.png}" alt="picture">
+                            <h5 class="text-sm-center mt-2 mb-1" th:text="${user.firstName +' '+ user.lastName +' '+ user.patronymic}"></h5>
+                            <div class=" text-sm-center" th:text="${'Вік: '+ user.age}"><i class="fa fa-user"></i> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
@@ -11,7 +24,9 @@
                     </div>
 
                     <div class="card-body">
-                        <form th:action="@{/profile}" th:object="${user}" method="put">
+                        <form name="updateProfileForm" th:object="${user}" method="post" th:action="@{/profile}">
+                                <input type="hidden" name="id"
+                                       th:field="*{id}" >
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Дата народження</label>
@@ -26,6 +41,8 @@
                             <div class="form-group">
                                 <label>Адреса</label>
                                 <div class="row">
+                                    <input type="hidden" name="id" th:field="*{address.id}">
+                                    <input type="hidden" name="userId" th:field="*{address.patient.id}">
                                     <input class="col form-control" type="text" name="region" placeholder="Область"
                                            th:field="*{address.region}" required
                                            pattern="[А-Яа-яІіЙйЇїЄє' -]+"
@@ -95,20 +112,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-img"></div>
-                    <div class="card-body">
-                        <div class="mx-auto d-block">
-                            <img class="rounded-circle mx-auto d-block" th:src="@{/images/user.png}" alt="picture">
-                            <h5 class="text-sm-center mt-2 mb-1" th:text="${user.firstName +' '+ user.lastName +' '+ user.patronymic}"></h5>
-                            <div class=" text-sm-center" th:text="${'Вік: '+ user.age}"><i class="fa fa-user"></i> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
