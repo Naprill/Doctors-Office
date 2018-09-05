@@ -1,5 +1,7 @@
 package com.chernivtsi.doctorsoffice.service;
 
+import com.chernivtsi.doctorsoffice.controller.FileController;
+import com.chernivtsi.doctorsoffice.model.Analysis;
 import com.chernivtsi.doctorsoffice.model.User;
 import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
@@ -8,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Slf4j
@@ -15,10 +19,12 @@ import java.util.Optional;
 public class UserService extends DefaultCrudSupport<User> {
 
 	private UserRepository userRepository;
+	private AnalysesService analysesService;
 
-	public UserService(UserRepository repository) {
+	public UserService(UserRepository repository, AnalysesService analysesService) {
 		super(repository);
 		this.userRepository = repository;
+		this.analysesService = analysesService;
 	}
 
 	public Optional<User> findUserByEmail(final String email) {
@@ -42,5 +48,18 @@ public class UserService extends DefaultCrudSupport<User> {
 		user.setEmail(dto.getEmail());
 		log.info("updateUserProfile: {}", user);
 		update(user);
+	}
+
+	public void createAnalysesDirectory(Long id) {
+		File directory = new File(FileController.ANALYSES_DIRECTORY + id);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+	}
+
+	public void addAnalysisFile(Long id, String path, String originalFilename) {
+		User user = this.findById(id).orElseThrow(EntityNotFoundException::new);
+		Analysis analysis = new Analysis(path, originalFilename, LocalDate.now(), user);
+		analysesService.create(analysis);
 	}
 }

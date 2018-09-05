@@ -1,0 +1,39 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml"
+     th:fragment="userProfile">
+
+    <div class="animated fadeIn" style="margin-top: 5px">
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mx-auto d-block">
+                            <h5 class="text-sm-center mt-2 mb-1">Завантажити результати аналізів</h5>
+
+                            <form method="POST" enctype="multipart/form-data" th:action="@{/uploadFiles}">
+
+                                <p><input type="file" name="uploadingFiles" multiple></p>
+
+                                <p><button type="submit" class="btn btn-primary">Завантажити</button></p>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Ваші файли</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

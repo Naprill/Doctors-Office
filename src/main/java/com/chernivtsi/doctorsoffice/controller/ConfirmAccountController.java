@@ -37,6 +37,7 @@ public class ConfirmAccountController {
 			model.addAttribute("url", "/login");
 			User user = accountToken.getUser();
 			userService.updateUserEnabled(true, user.getId());
+			userService.createAnalysesDirectory(user.getId());
 			accountTokenService.deleteByToken(accountToken);
 		}
 		return "layouts/layoutConfirmAccount";
