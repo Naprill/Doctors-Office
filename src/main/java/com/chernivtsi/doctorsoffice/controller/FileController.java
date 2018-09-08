@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @PreAuthorize("isAuthenticated()")
@@ -28,18 +29,20 @@ public class FileController {
 	}
 
 	@PostMapping("/uploadFiles")
-	public String uploadFiles(@RequestParam("uploadingFiles") MultipartFile[] uploadingFiles,
+	public String uploadFiles(@RequestParam("uploadingFiles") List<MultipartFile> uploadingFiles,
 	                          @AuthenticationPrincipal SecurityUser currentUser)
 			throws IOException {
-		log.info("uploadFiles: files: {}, User id: {}", uploadingFiles, currentUser.getId());
+		log.info("uploadFiles: files count: {}, User id: {}", uploadingFiles.size(), currentUser.getId());
+		Long entireSize = 0L;
 		for (MultipartFile uploadedFile : uploadingFiles) {
 			String path = ANALYSES_DIRECTORY + currentUser.getId() +
 					System.getProperty("file.separator") + uploadedFile.getOriginalFilename();
 			File file = new File(path);
 			uploadedFile.transferTo(file);
+			entireSize += uploadedFile.getSize();
 			userService.addAnalysisFile(currentUser.getId(), path, uploadedFile.getOriginalFilename());
 		}
-		log.info("upload file");
+		log.info("uploaded files with entire size: {}", entireSize);
 		return "redirect:/profile";
 	}
 
