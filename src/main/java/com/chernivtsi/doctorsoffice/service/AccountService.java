@@ -58,6 +58,7 @@ public class AccountService {
 		user.setHashedPassword(passwordEncoder.encode(registration.getPassword().getUniquePassword()));
 		user.setRegistrationDate(LocalDate.now());
 		user.setRoles(Collections.singletonList(Role.USER));
+		user.getAddress().setPatient(user);
 
 		log.trace("Saving user with data: {}", user);
 		saveTokenAndSendEmail(
