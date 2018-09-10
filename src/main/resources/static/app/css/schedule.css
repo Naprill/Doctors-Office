@@ -1,3 +1,15 @@
-.table{
+.table {
     background-color: rgba(206, 237, 245, 0.9)
+}
+
+.nav-link {
+    background-color: #fff;
+!important
+}
+
+.nav .nav-item .nav-link.active.show {
+    background-color: #4084ff;
+!important;
+    color: #f8fdff;
+!important
 }
