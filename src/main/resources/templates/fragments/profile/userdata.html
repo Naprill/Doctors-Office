@@ -10,8 +10,9 @@
                     <div class="card-body">
                         <div class="mx-auto d-block">
                             <img class="rounded-circle mx-auto d-block" th:src="@{/images/user.png}" alt="picture">
-                            <h5 class="text-sm-center mt-2 mb-1" th:text="${user.firstName +' '+ user.lastName +' '+ user.patronymic}"></h5>
-                            <div class=" text-sm-center" th:text="${'Вік: '+ user.age}"><i class="fa fa-user"></i> </div>
+                            <h5 class="text-sm-center mt-2 mb-1"
+                                th:text="${user.lastName + ' ' + user.firstName + ' ' + user.patronymic}"></h5>
+                            <div class=" text-sm-center" th:text="${'Вік: '+ user.age}"><i class="fa fa-user"></i></div>
                         </div>
                     </div>
                 </div>
@@ -25,8 +26,8 @@
 
                     <div class="card-body">
                         <form name="updateProfileForm" th:object="${user}" method="post" th:action="@{/profile}">
-                                <input type="hidden" name="id"
-                                       th:field="*{id}" >
+                            <input type="hidden" name="id"
+                                   th:field="*{id}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Дата народження</label>
