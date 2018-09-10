@@ -1,7 +1,7 @@
 package com.chernivtsi.doctorsoffice.model.dto;
 
 
-import com.chernivtsi.doctorsoffice.constraint.EmailExistConstraint;
+import com.chernivtsi.doctorsoffice.constraint.UniqueOnUpdateConstraint;
 import com.chernivtsi.doctorsoffice.model.Address;
 import com.chernivtsi.doctorsoffice.model.Analysis;
 import com.chernivtsi.doctorsoffice.model.MedicalExamination;
@@ -24,6 +24,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
+@UniqueOnUpdateConstraint(targetClass = User.class, checkField = "email", targetField = "email")
 public class UserProfileDTO {
 
 	private Long id;
@@ -46,7 +47,6 @@ public class UserProfileDTO {
 
 	@Email(message = "Неправильний формат e-mail")
 	@NotBlank(message = "E-mail необхідний")
-//	@EmailExistConstraint TODO unique email but allow current
 	private String email;
 
 	private LocalDate registrationDate;
