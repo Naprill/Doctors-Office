@@ -20,15 +20,23 @@ public @interface UniqueOnUpdateConstraint {
 
 	String idField() default "";
 
+	/**
+	 * That is value field that must be unique, located in DTO that will be annotated with this constraint
+	 * @return field name
+	 */
 	String checkField();
 
 	Class<? extends AbstractIdentifiable> targetClass();
 
+	/**
+	 * That is value field that is located in entity and corresponds to checkField
+	 * @return field name
+	 */
 	String targetField();
 
 	String message() default "Це значення не є унікальним";
 
-	Class<?>[] groups() default { };
+	Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default { };
+	Class<? extends Payload>[] payload() default {};
 }

@@ -2,7 +2,6 @@ package com.chernivtsi.doctorsoffice.model.dto;
 
 
 import com.chernivtsi.doctorsoffice.constraint.UniqueOnUpdateConstraint;
-import com.chernivtsi.doctorsoffice.model.Address;
 import com.chernivtsi.doctorsoffice.model.Analysis;
 import com.chernivtsi.doctorsoffice.model.MedicalExamination;
 import com.chernivtsi.doctorsoffice.model.Therapy;
@@ -24,7 +23,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@UniqueOnUpdateConstraint(targetClass = User.class, checkField = "email", targetField = "email")
+@UniqueOnUpdateConstraint(targetClass = User.class, checkField = "email", targetField = "email", idField = "id")
 public class UserProfileDTO {
 
 	private Long id;
@@ -43,7 +42,7 @@ public class UserProfileDTO {
 	private String telephone;
 
 	@Valid
-	private Address address;
+	private AddressDTO address;
 
 	@Email(message = "Неправильний формат e-mail")
 	@NotBlank(message = "E-mail необхідний")
@@ -65,7 +64,7 @@ public class UserProfileDTO {
 		this.birthDate = user.getBirthDate();
 		this.age = ChronoUnit.YEARS.between(this.getBirthDate(), LocalDate.now());
 		this.telephone = user.getTelephone();
-		this.address = user.getAddress();
+		this.address = new AddressDTO(user.getAddress());
 		this.email = user.getEmail();
 		this.registrationDate = user.getRegistrationDate();
 		this.medicalExaminations = user.getMedicalExaminations();

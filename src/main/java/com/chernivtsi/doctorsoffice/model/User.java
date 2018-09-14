@@ -49,7 +49,7 @@ public class User extends AbstractVersional {
 	@Column(nullable = false)
 	private String telephone;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "patient")
 	private Address address;
 
 	@Column(nullable = false)

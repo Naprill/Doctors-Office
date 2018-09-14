@@ -43,7 +43,7 @@
                                 <label>Адреса</label>
                                 <div class="row">
                                     <input type="hidden" name="id" th:field="*{address.id}">
-                                    <input type="hidden" name="userId" th:field="*{address.patient.id}">
+                                    <input type="hidden" name="userId" th:field="*{address.patient}">
                                     <input class="col form-control" type="text" name="region" placeholder="Область"
                                            th:field="*{address.region}" required
                                            pattern="[А-Яа-яІіЙйЇїЄє' -]+"

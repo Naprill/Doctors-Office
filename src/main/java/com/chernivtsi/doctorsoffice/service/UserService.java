@@ -3,6 +3,7 @@ package com.chernivtsi.doctorsoffice.service;
 import com.chernivtsi.doctorsoffice.controller.FileController;
 import com.chernivtsi.doctorsoffice.model.Analysis;
 import com.chernivtsi.doctorsoffice.model.User;
+import com.chernivtsi.doctorsoffice.model.dto.AddressDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
@@ -43,7 +44,8 @@ public class UserService extends DefaultCrudSupport<User> {
 
 	public void updateUserProfile(UserProfileDTO dto) {
 		User user = this.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
-		user.setAddress(dto.getAddress());
+		dto.getAddress().setPatient(user.getId());
+		user.setAddress(AddressDTO.dtoToEntity(dto.getAddress(), user));
 		user.setTelephone(dto.getTelephone());
 		user.setEmail(dto.getEmail());
 		log.info("updateUserProfile: {}", user);

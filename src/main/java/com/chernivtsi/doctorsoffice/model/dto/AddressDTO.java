@@ -1,28 +1,23 @@
-package com.chernivtsi.doctorsoffice.model;
+package com.chernivtsi.doctorsoffice.model.dto;
 
-import com.chernivtsi.doctorsoffice.model.base.AbstractVersional;
+import com.chernivtsi.doctorsoffice.model.Address;
+import com.chernivtsi.doctorsoffice.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-@Entity
-@Table(name = "address")
 @Getter
 @Setter
 @ToString(exclude = "patient")
 @NoArgsConstructor
-public class Address extends AbstractVersional {
+public class AddressDTO {
 
-	@OneToOne
-	@JoinColumn(name = "user_id", nullable = false)
-	private User patient;
+	private Long id;
+
+	private Long patient;
 
 	@Pattern(regexp = "[\\u0400-\\u04ff-\\s']*", message = "'Область' містить недопустимі символи. Дозволені кирилиця, дефіс, апостроф та пробіл")
 	private String region;
@@ -39,13 +34,25 @@ public class Address extends AbstractVersional {
 	@Pattern(regexp = "[\\u0400-\\u04ff-\\s0-9/]+", message = "'Номер будинку' містить недопустимі символи. Дозволені кирилиця, цифри, дефіс та пробіл")
 	private String houseNumber;
 
-	public Address(Long id, User patient, String region, String district, String cityOrVillage, String street, String houseNumber) {
-		this.id = id;
-		this.patient = patient;
-		this.region = region;
-		this.district = district;
-		this.cityOrVillage = cityOrVillage;
-		this.street = street;
-		this.houseNumber = houseNumber;
+	public AddressDTO(Address address) {
+		this.id = address.getId();
+		this.patient = address.getPatient().getId();
+		this.region = address.getRegion();
+		this.district = address.getDistrict();
+		this.cityOrVillage = address.getCityOrVillage();
+		this.street = address.getStreet();
+		this.houseNumber = address.getHouseNumber();
+	}
+
+	public static Address dtoToEntity(AddressDTO address, User user) {
+		return new Address(
+				address.getId(),
+				user,
+				address.getRegion(),
+				address.getDistrict(),
+				address.getCityOrVillage(),
+				address.getStreet(),
+				address.getHouseNumber()
+		);
 	}
 }
