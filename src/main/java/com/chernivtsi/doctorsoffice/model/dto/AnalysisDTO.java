@@ -16,11 +16,14 @@ public class AnalysisDTO {
 
 	private String fileDownloadUri;
 
+	private String pathToFile;
+
 	private String fileName;
 
 	private LocalDate date;
 
 	public AnalysisDTO(Analysis analysis) {
+		this.pathToFile = analysis.getPathToFile();
 		this.fileName = analysis.getFileName();
 		this.date = analysis.getDate();
 	}

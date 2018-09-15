@@ -83,9 +83,6 @@ jQuery('#file-upload-submit').on('click', function (e) {
                 content += "</strong> </div> <div class='card-body'></div> </div>";
             }
             document.querySelector('#filesForDownload').innerHTML = content;
-            // setTimeout(function () {
-            //     location.reload();
-            // }, 2500);
         },
         error: function (e) {
             console.log("ERROR : ", e);
