@@ -79,7 +79,7 @@ jQuery('#file-upload-submit').on('click', function (e) {
                 content += " <p class='bg-primary text-light'>Дата: " +
                     response[i].date.dayOfMonth + "." + response[i].date.monthValue + "." + response[i].date.year +
                     "</p>";
-                content += "<button class='btn btn-success float-right' href='" + response[i].fileDownloadUri + "' >Скачати</button></p>";
+                content += "<a class='btn btn-success float-right' href='" + response[i].fileDownloadUri + "' >Скачати</a></p>";
                 content += "</strong> </div> <div class='card-body'></div> </div>";
             }
             document.querySelector('#filesForDownload').innerHTML = content;
