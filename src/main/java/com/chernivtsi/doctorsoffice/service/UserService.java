@@ -4,6 +4,7 @@ import com.chernivtsi.doctorsoffice.controller.FileController;
 import com.chernivtsi.doctorsoffice.model.Analysis;
 import com.chernivtsi.doctorsoffice.model.User;
 import com.chernivtsi.doctorsoffice.model.dto.AddressDTO;
+import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
@@ -59,9 +60,10 @@ public class UserService extends DefaultCrudSupport<User> {
 		}
 	}
 
-	public void addAnalysisFile(Long id, String path, String originalFilename) {
+	public AnalysisDTO addAnalysisFile(Long id, String path, String originalFilename) {
 		User user = this.findById(id).orElseThrow(EntityNotFoundException::new);
 		Analysis analysis = new Analysis(path, originalFilename, LocalDate.now(), user);
 		analysesService.create(analysis);
+		return new AnalysisDTO(analysis);
 	}
 }

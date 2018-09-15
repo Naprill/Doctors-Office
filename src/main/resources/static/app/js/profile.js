@@ -43,16 +43,16 @@ jQuery('#file-upload-submit').on('click', function (e) {
         return;
     }
 
-    if(jQuery('#file-input').val() == ''){
+    if (jQuery('#file-input').val() == '') {
         return;
     }
     var files = jQuery('#file-input')[0].files;
     var filesArr = [];
-    Object.keys(files).forEach(function(key){
+    Object.keys(files).forEach(function (key) {
         filesArr.push(files[key]);
     });
     var data = new FormData();
-    for (var i = 0; i < filesArr.length ; i++) {
+    for (var i = 0; i < filesArr.length; i++) {
         data.append("uploadingFiles", filesArr[i]);
     }
 
@@ -63,8 +63,8 @@ jQuery('#file-upload-submit').on('click', function (e) {
         contentType: false,
         processData: false,
         cache: false,
-        success: function (status) {
-            console.log("SUCCESS: ", status);
+        success: function (response) {
+            console.log("SUCCESS: ", response);
             swal({
                 type: 'success',
                 title: 'Готово!',
@@ -72,9 +72,20 @@ jQuery('#file-upload-submit').on('click', function (e) {
                 showConfirmButton: false,
                 timer: 2500
             });
-            setTimeout(function () {
-                location.reload();
-            }, 2500);
+            var content = "";
+            for (var i = 0; i < response.length; i++) {
+                content += "<div class='card'> <div class='card-header'> <strong class='card-title'>";
+                content += response[i].fileName;
+                content += " <p class='bg-primary text-light'>Дата: " +
+                    response[i].date.dayOfMonth + "." + response[i].date.monthValue + "." + response[i].date.year +
+                    "</p>";
+                content += "<button class='btn btn-success float-right' href='" + response[i].fileDownloadUri + "' >Скачати</button></p>";
+                content += "</strong> </div> <div class='card-body'></div> </div>";
+            }
+            document.querySelector('#filesForDownload').innerHTML = content;
+            // setTimeout(function () {
+            //     location.reload();
+            // }, 2500);
         },
         error: function (e) {
             console.log("ERROR : ", e);

@@ -12,7 +12,10 @@
 
                             <form method="POST" enctype="multipart/form-data" th:action="@{/uploadFiles}">
 
-                                <p><input id="file-input" type="file" name="uploadingFiles" multiple required></p>
+                                <p><input id="file-input"
+                                          type="file"
+                                          name="uploadingFiles"
+                                          multiple required></p>
 
                                 <p id="file-info"></p>
 
@@ -35,7 +38,7 @@
                     </div>
 
                     <div class="card-body">
-
+                        <div id="filesForDownload"></div>
                     </div>
                 </div>
             </div>
