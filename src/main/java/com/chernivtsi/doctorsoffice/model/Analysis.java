@@ -22,7 +22,7 @@ import java.time.LocalDate;
 @Table
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "patient")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Analysis extends AbstractVersional {

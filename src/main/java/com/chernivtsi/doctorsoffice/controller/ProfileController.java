@@ -1,5 +1,6 @@
 package com.chernivtsi.doctorsoffice.controller;
 
+import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
 import com.chernivtsi.doctorsoffice.security.SecurityUser;
 import com.chernivtsi.doctorsoffice.service.UserService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Comparator;
+import java.util.List;
 
 
 @Slf4j
@@ -34,8 +37,12 @@ public class ProfileController {
 
 		Long userId = currentUser.getId();
 		UserProfileDTO user = userService.getUserDTOById(userId);
+		List<AnalysisDTO> analyses = userService.getUserFiles(userId);
+		analyses.sort(Comparator.comparing(AnalysisDTO::getDate).reversed());
+		log.trace("Analyses: {}", analyses);
 		ModelAndView modelAndView = new ModelAndView("profile");
 		modelAndView.addObject("user", user);
+		modelAndView.addObject("analyses", analyses);
 		log.trace("UserProfileDto: {}", user);
 		return modelAndView;
 	}

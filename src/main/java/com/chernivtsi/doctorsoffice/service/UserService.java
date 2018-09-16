@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -65,5 +67,10 @@ public class UserService extends DefaultCrudSupport<User> {
 		Analysis analysis = new Analysis(path, originalFilename, LocalDate.now(), user);
 		analysesService.create(analysis);
 		return new AnalysisDTO(analysis);
+	}
+
+	public List<AnalysisDTO> getUserFiles(Long id){
+		User user = this.findById(id).orElseThrow(EntityNotFoundException::new);
+		return user.getAnalyses().stream().map(AnalysisDTO::new).collect(Collectors.toList());
 	}
 }

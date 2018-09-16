@@ -82,7 +82,8 @@ jQuery('#file-upload-submit').on('click', function (e) {
                 content += "<a class='btn btn-success float-right' href='" + response[i].fileDownloadUri + "' >Скачати</a></p>";
                 content += "</strong> </div> <div class='card-body'></div> </div>";
             }
-            document.querySelector('#filesForDownload').innerHTML = content;
+            var div = document.querySelector('#filesForDownload');
+                div.innerHTML = content + div.innerHTML;
         },
         error: function (e) {
             console.log("ERROR : ", e);

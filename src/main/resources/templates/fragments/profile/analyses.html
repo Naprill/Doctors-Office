@@ -38,7 +38,23 @@
                     </div>
 
                     <div class="card-body">
-                        <div id="filesForDownload"></div>
+                        <div id="filesForDownload">
+                            <div th:each="item : ${analyses}"
+                                 th:unless="${#lists.isEmpty(analyses)}"
+                                class="card">
+                                <div class="card-header">
+                                    <strong class='card-title'>
+                                        <span th:text="${item.fileName}"></span>
+                                        <p class='bg-primary text-light'>
+                                            Дата: <span th:text="${item.date}"></span>
+                                        </p>
+                                        <a class='btn btn-success float-right' th:href="${item.fileDownloadUri}" >Скачати</a>
+                                    </strong>
+                                </div>
+                                <div class="card-body">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
