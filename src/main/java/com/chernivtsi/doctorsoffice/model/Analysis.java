@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Represents result of patient's medical analysis.
@@ -31,7 +33,8 @@ public class Analysis extends AbstractVersional {
 
 	private String fileName;
 
-	private LocalDate date;
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime date;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)

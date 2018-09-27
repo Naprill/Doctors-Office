@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,7 +20,7 @@ public class AnalysisDTO {
 
 	private String fileName;
 
-	private LocalDate date;
+	private LocalDateTime date;
 
 	public AnalysisDTO(Analysis analysis) {
 		this.pathToFile = analysis.getPathToFile();

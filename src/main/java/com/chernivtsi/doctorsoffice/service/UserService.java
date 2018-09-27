@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.File;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,12 +64,15 @@ public class UserService extends DefaultCrudSupport<User> {
 
 	public AnalysisDTO addAnalysisFile(Long id, String path, String originalFilename) {
 		User user = this.findById(id).orElseThrow(EntityNotFoundException::new);
-		Analysis analysis = new Analysis(path, originalFilename, LocalDate.now(), user);
-		analysesService.create(analysis);
-		return new AnalysisDTO(analysis);
+		if (user.getAnalyses().stream().noneMatch(a -> a.getFileName().equals(originalFilename))) {
+			Analysis analysis = new Analysis(path, originalFilename, LocalDateTime.now(), user);
+			analysesService.create(analysis);
+			return new AnalysisDTO(analysis);
+		}
+		return null;
 	}
 
-	public List<AnalysisDTO> getUserFiles(Long id){
+	public List<AnalysisDTO> getUserFiles(Long id) {
 		User user = this.findById(id).orElseThrow(EntityNotFoundException::new);
 		return user.getAnalyses().stream().map(AnalysisDTO::new).collect(Collectors.toList());
 	}

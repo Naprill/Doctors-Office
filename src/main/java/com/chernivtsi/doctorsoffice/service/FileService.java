@@ -29,7 +29,7 @@ public class FileService {
 		this.userService = userService;
 	}
 
-	public List<AnalysisDTO> uploadFiles(List<MultipartFile> uploadingFiles, Long userId) throws IOException{
+	public List<AnalysisDTO> uploadFiles(List<MultipartFile> uploadingFiles, Long userId) throws IOException {
 
 		log.info("uploadFiles: files count: {}, User id: {}", uploadingFiles.size(), userId);
 		Long entireSize = 0L;
@@ -47,8 +47,10 @@ public class FileService {
 					.path(StringUtils.cleanPath(uploadedFile.getOriginalFilename()))
 					.toUriString();
 
-			analysis.setFileDownloadUri(fileDownloadUri);
-			analysisDTOList.add(analysis);
+			if (analysis != null) {
+				analysis.setFileDownloadUri(fileDownloadUri);
+				analysisDTOList.add(analysis);
+			}
 		}
 		log.info("uploaded files with entire size: {}", entireSize);
 		return analysisDTOList;
