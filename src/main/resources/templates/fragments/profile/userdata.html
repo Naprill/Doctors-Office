@@ -1,5 +1,6 @@
 <div xmlns:th="http://www.w3.org/1999/xhtml"
-     th:fragment="userProfile">
+     th:fragment="userProfile"
+     xmlns:sec="http://www.w3.org/1999/xhtml">
 
     <div class="animated fadeIn" style="margin-top: 5px">
 
@@ -107,7 +108,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-info btn-fill float-right">
+                            <button sec:authorize="hasAuthority('USER')"
+                                    type="submit"
+                                    class="btn btn-info btn-fill float-right">
                                 Оновити
                             </button>
                         </form>
