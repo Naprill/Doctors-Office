@@ -28,11 +28,16 @@
                 </thead>
                 <tbody>
                 <tr th:each="patient: ${patients.content}">
-                    <td th:text="${patient.lastName}"></td>
-                    <td th:text="${patient.firstName}"></td>
-                    <td th:text="${patient.patronymic}"></td>
-                    <td th:text="${patient.age}"></td>
-                    <td th:text="${patient.telephone}"></td>
+                    <td th:text="${patient.lastName}"
+                        th:onclick="'javascript:showProfile(\'' + ${patient.id} + '\');'"></td>
+                    <td th:text="${patient.firstName}"
+                        th:onclick="'javascript:showProfile(\'' + ${patient.id} + '\');'"></td>
+                    <td th:text="${patient.patronymic}"
+                        th:onclick="'javascript:showProfile(\'' + ${patient.id} + '\');'"></td>
+                    <td th:text="${patient.age}"
+                        th:onclick="'javascript:showProfile(\'' + ${patient.id} + '\');'"></td>
+                    <td th:text="${patient.telephone}"
+                        th:onclick="'javascript:showProfile(\'' + ${patient.id} + '\');'"></td>
                     <td ></td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(patients.content)}">
@@ -42,6 +47,12 @@
             </table>
             <div th:replace="fragments/pagination :: pagination (page=${patients}, pageRequest=${pageRequest})"></div>
         </div>
+
+    </th:block>
+
+    <th:block layout:fragment="scripts">
+
+        <script charset="UTF-8" type="text/javascript" th:src="@{/app/js/patients.js}"></script>
 
     </th:block>
 

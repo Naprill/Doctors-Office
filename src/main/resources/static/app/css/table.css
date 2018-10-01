@@ -2,3 +2,6 @@
     background-color: rgba(206, 237, 245, 0.9)
 }
 
+.table tr:hover{
+    background-color: aliceblue;
+}
