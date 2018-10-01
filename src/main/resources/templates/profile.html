@@ -39,7 +39,7 @@
             </li>
         </ul>
 
-        <div class="tab-content" >
+        <div class="tab-content">
             <div class="tab-pane fade show active" id="nav-info-user" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div layout:replace="~{fragments/profile/userdata}"></div>
             </div>
@@ -49,7 +49,8 @@
             <div class="tab-pane fade" id="nav-therapies-user" role="tabpanel" aria-labelledby="nav-therapies-tab">
                 <!--<div th:replace="fragments/profile/therapies"></div>-->
             </div>
-            <div class="tab-pane fade" id="nav-examinations-user" role="tabpanel" aria-labelledby="nav-examinations-tab">
+            <div class="tab-pane fade" id="nav-examinations-user" role="tabpanel"
+                 aria-labelledby="nav-examinations-tab">
                 <!--<div th:replace="fragments/profile/examinations"></div>-->
             </div>
         </div>
@@ -63,6 +64,7 @@
         <script charset="UTF-8" type="text/javascript" th:src="@{/assets/js/moment.min.js}"></script>
         <script charset="UTF-8" type="text/javascript" th:src="@{/app/js/profile.js}"></script>
         <script charset="UTF-8" type="text/javascript" th:src="@{/app/js/form-to-json.js}"></script>
+        <script charset="UTF-8" type="text/javascript" th:src="@{/app/js/build-query-url.js}"></script>
 
     </th:block>
 

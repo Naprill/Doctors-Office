@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Comparator;
@@ -49,16 +50,17 @@ public class ProfileController {
 
 	@PostMapping
 	public String updateProfile(@Valid @ModelAttribute("user") UserProfileDTO dto,
-	                            BindingResult result) {
+	                            BindingResult result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			log.trace("Incorrect input in profile form ");
-			return "profile";
+			redirectAttributes.addAttribute("status", "error");
 		} else {
 			log.trace("ProfileDto:{}", dto);
 			userService.updateUserProfile(dto);
 			log.trace("Successfully updated profile");
-			return "redirect:/profile?success";
+			redirectAttributes.addAttribute("status", "success");
 		}
+		return "redirect:/profile";
 	}
 
 }

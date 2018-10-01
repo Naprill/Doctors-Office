@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "therapy")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "patient")
 @NoArgsConstructor
 public class Therapy extends AbstractVersional {
 
