@@ -1,0 +1,48 @@
+<th:block xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.w3.org/1999/xhtml"
+          layout:decorate="~{layouts/layoutDashboard}">
+
+    <th:block layout:fragment="links">
+
+        <link rel="stylesheet" th:href="@{/app/css/table.css}">
+
+    </th:block>
+
+    <th:block layout:fragment="title">
+
+        <h2 class="card-title mb-4">Список пацієнтів</h2>
+
+    </th:block>
+
+    <th:block layout:fragment="body">
+
+        <div class="patients">
+            <table class="table no-footer">
+                <thead>
+                <th scope="col">Прізвище</th>
+                <th scope="col">Ім'я</th>
+                <th scope="col">Побатькові</th>
+                <th scope="col">Вік</th>
+                <th scope="col">Телефон</th>
+                <th scope="col"></th>
+                </thead>
+                <tbody>
+                <tr th:each="patient: ${patients.content}">
+                    <td th:text="${patient.lastName}"></td>
+                    <td th:text="${patient.firstName}"></td>
+                    <td th:text="${patient.patronymic}"></td>
+                    <td th:text="${patient.age}"></td>
+                    <td th:text="${patient.telephone}"></td>
+                    <td ></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(patients.content)}">
+                    <td colspan="20">Немає записів</td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:replace="fragments/pagination :: pagination (page=${patients}, pageRequest=${pageRequest})"></div>
+        </div>
+
+    </th:block>
+
+</th:block>

@@ -9,6 +9,8 @@ import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -75,5 +77,9 @@ public class UserService extends DefaultCrudSupport<User> {
 	public List<AnalysisDTO> getUserFiles(Long id) {
 		User user = this.findById(id).orElseThrow(EntityNotFoundException::new);
 		return user.getAnalyses().stream().map(AnalysisDTO::new).collect(Collectors.toList());
+	}
+
+	public Page<UserProfileDTO> findAll(Pageable pageable) {
+		return userRepository.findAll(pageable).map(UserProfileDTO::new);
 	}
 }
