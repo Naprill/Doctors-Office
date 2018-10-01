@@ -1,10 +1,14 @@
 package com.chernivtsi.doctorsoffice.controller;
 
 import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
+import com.chernivtsi.doctorsoffice.model.dto.TherapyDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
 import com.chernivtsi.doctorsoffice.security.SecurityUser;
+import com.chernivtsi.doctorsoffice.service.TherapyService;
 import com.chernivtsi.doctorsoffice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,7 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,9 +35,12 @@ import java.util.List;
 public class ProfileController {
 
 	private UserService userService;
+	private TherapyService therapyService;
 
-	public ProfileController(UserService userService) {
+	public ProfileController(UserService userService,
+	                          TherapyService therapyService) {
 		this.userService = userService;
+		this.therapyService = therapyService;
 	}
 
 
@@ -89,4 +98,12 @@ public class ProfileController {
 		return "redirect:/profile";
 	}
 
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@ResponseBody
+	@PostMapping("/therapy")
+	public ResponseEntity createTherapy(@RequestBody TherapyDTO therapy) {
+		therapyService.saveTherapy(therapy);
+		log.trace("Therapy: {}", therapy.toString());
+		return new ResponseEntity(HttpStatus.OK);
+	}
 }

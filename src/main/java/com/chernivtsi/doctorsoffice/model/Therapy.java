@@ -29,4 +29,9 @@ public class Therapy extends AbstractVersional {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User patient;
+
+	public Therapy(String text, User patient) {
+		this.text = text;
+		this.patient = patient;
+	}
 }

@@ -1,0 +1,65 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml"
+     th:fragment="userProfile"
+     xmlns:sec="http://www.w3.org/1999/xhtml">
+
+    <div class="animated fadeIn" style="margin-top: 5px">
+
+        <div class="row">
+
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Історія лікування</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <div id="therapies">
+                            <div th:each="item : ${user.therapies}"
+                                 th:unless="${#lists.isEmpty(user.therapies)}"
+                                 class="card">
+                                <div class="card-header">
+                                    <strong class='card-title'>
+                                        <p class='bg-primary text-light'>
+                                            Дата: <span th:text="${item.createdAt}"></span>
+                                        </p>
+                                    </strong>
+                                </div>
+                                <div class="card-body">
+                                    <p th:text="${item.text}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6" sec:authorize="hasAuthority('ADMIN')">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mx-auto d-block">
+                            <h5 class="text-sm-center mt-2 mb-1">Додати новий запис про лікування</h5>
+
+                            <form id="therapy-form">
+                                <input type="hidden" name="patient" th:value="${user.id}">
+
+                                <p><textarea id="text" name="text" cols="60" rows="10"></textarea></p>
+
+                                <p>
+                                    <button type="submit" id="therapy-submit" class="btn btn-primary">Зберегти
+                                    </button>
+                                </p>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
