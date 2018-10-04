@@ -109,12 +109,5 @@ jQuery(document).ready(function () {
             showConfirmButton: false,
             timer: 2500
         });
-    } else if (status === "error") {
-        swal({
-            type: 'error',
-            title: 'Ви ввели помилкові дані',
-            text: 'Не вдалось оновити профіль',
-            timer: 2500
-        });
     }
 });

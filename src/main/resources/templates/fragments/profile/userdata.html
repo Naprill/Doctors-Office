@@ -27,6 +27,11 @@
                     <div class="card-body">
                         <form name="updateProfileForm" th:object="${user}" method="post" th:action="@{/profile}">
 
+                            <p class="alert alert-danger"
+                               th:if="${#fields.hasAnyErrors()}"
+                               th:each="error : ${#fields.allErrors()}"
+                               th:text="${error}">Невірні дані</p>
+
                             <input type="hidden" name="id"
                                    th:field="*{id}">
                             <div class="row">

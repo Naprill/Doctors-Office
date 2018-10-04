@@ -51,7 +51,7 @@ public class UserService extends DefaultCrudSupport<User> {
 		user.setAddress(AddressDTO.dtoToEntity(dto.getAddress(), user));
 		user.setTelephone(dto.getTelephone());
 		user.setEmail(dto.getEmail());
-		log.info("updateUserProfile: {}", user);
+		log.trace("updateUserProfile: {}", user);
 		update(user);
 	}
 

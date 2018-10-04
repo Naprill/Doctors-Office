@@ -53,14 +53,14 @@ public class ProfileController {
 	                            BindingResult result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			log.trace("Incorrect input in profile form ");
-			redirectAttributes.addAttribute("status", "error");
+			return "/profile";
 		} else {
 			log.trace("ProfileDto:{}", dto);
 			userService.updateUserProfile(dto);
 			log.trace("Successfully updated profile");
 			redirectAttributes.addAttribute("status", "success");
+			return "redirect:/profile";
 		}
-		return "redirect:/profile";
 	}
 
 }
