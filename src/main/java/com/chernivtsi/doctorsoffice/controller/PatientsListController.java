@@ -1,6 +1,6 @@
 package com.chernivtsi.doctorsoffice.controller;
 
-import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
+import com.chernivtsi.doctorsoffice.model.dto.UserUpdatableProfileDTO;
 import com.chernivtsi.doctorsoffice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ public class PatientsListController {
 
 	@GetMapping()
 	public ModelAndView getPatientsList(@PageableDefault Pageable pageRequest) {
-		Page<UserProfileDTO> page = userService.findAll(pageRequest);
+		Page<UserUpdatableProfileDTO> page = userService.findAll(pageRequest);
 		ModelAndView modelAndView = new ModelAndView("patients");
 		modelAndView.addObject("patients", page);
 		modelAndView.addObject("pageRequest", pageRequest);

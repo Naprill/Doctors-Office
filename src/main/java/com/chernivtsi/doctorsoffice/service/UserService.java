@@ -5,7 +5,7 @@ import com.chernivtsi.doctorsoffice.model.Analysis;
 import com.chernivtsi.doctorsoffice.model.User;
 import com.chernivtsi.doctorsoffice.model.dto.AddressDTO;
 import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
-import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
+import com.chernivtsi.doctorsoffice.model.dto.UserUpdatableProfileDTO;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
 import lombok.extern.slf4j.Slf4j;
@@ -41,13 +41,13 @@ public class UserService extends DefaultCrudSupport<User> {
 		userRepository.updateUserEnabled(enabled, userId);
 	}
 
-	public UserProfileDTO getUserDTOById(Long userId) {
+	public UserUpdatableProfileDTO getUserUpdatableProfileDTOById(Long userId) {
 		User user = this.findById(userId).orElseThrow(EntityNotFoundException::new);
-		log.trace("getUserDTOById: {}", user);
-		return new UserProfileDTO(user);
+		log.trace("getUserUpdatableProfileDTOById: {}", user);
+		return new UserUpdatableProfileDTO(user);
 	}
 
-	public void updateUserProfile(UserProfileDTO dto) {
+	public void updateUserProfile(UserUpdatableProfileDTO dto) {
 		User user = this.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
 		dto.getAddress().setPatient(user.getId());
 		user.setAddress(AddressDTO.dtoToEntity(dto.getAddress(), user));
@@ -79,7 +79,7 @@ public class UserService extends DefaultCrudSupport<User> {
 		return user.getAnalyses().stream().map(AnalysisDTO::new).collect(Collectors.toList());
 	}
 
-	public Page<UserProfileDTO> findAll(Pageable pageable) {
-		return userRepository.findAll(pageable).map(UserProfileDTO::new);
+	public Page<UserUpdatableProfileDTO> findAll(Pageable pageable) {
+		return userRepository.findAll(pageable).map(UserUpdatableProfileDTO::new);
 	}
 }

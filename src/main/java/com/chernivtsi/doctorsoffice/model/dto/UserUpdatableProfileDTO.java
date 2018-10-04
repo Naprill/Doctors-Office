@@ -24,7 +24,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @UniqueOnUpdateConstraint(targetClass = User.class, checkField = "email", targetField = "email", idField = "id")
-public class UserProfileDTO {
+public class UserUpdatableProfileDTO {
 
 	private Long id;
 
@@ -56,7 +56,7 @@ public class UserProfileDTO {
 
 	private List<Therapy> therapies;
 
-	public UserProfileDTO(User user) {
+	public UserUpdatableProfileDTO(User user) {
 		this.id = user.getId();
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();

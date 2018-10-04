@@ -1,7 +1,7 @@
 package com.chernivtsi.doctorsoffice.controller;
 
 import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
-import com.chernivtsi.doctorsoffice.model.dto.UserProfileDTO;
+import com.chernivtsi.doctorsoffice.model.dto.UserUpdatableProfileDTO;
 import com.chernivtsi.doctorsoffice.security.SecurityUser;
 import com.chernivtsi.doctorsoffice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,7 @@ public class ProfileController {
 	public ModelAndView getProfile(@AuthenticationPrincipal SecurityUser currentUser) {
 
 		Long userId = currentUser.getId();
-		UserProfileDTO user = userService.getUserDTOById(userId);
+		UserUpdatableProfileDTO user = userService.getUserUpdatableProfileDTOById(userId);
 		List<AnalysisDTO> analyses = userService.getUserFiles(userId);
 		analyses.sort(Comparator.comparing(AnalysisDTO::getDate).reversed());
 		log.trace("Analyses: {}", analyses);
@@ -63,7 +63,7 @@ public class ProfileController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/{id}")
 	public ModelAndView getProfileForAdmin(@PathVariable Long id) {
-		UserProfileDTO user = userService.getUserDTOById(id);
+		UserUpdatableProfileDTO user = userService.getUserUpdatableProfileDTOById(id);
 		List<AnalysisDTO> analyses = userService.getUserFiles(id);
 		analyses.sort(Comparator.comparing(AnalysisDTO::getDate).reversed());
 		log.trace("Analyses: {}", analyses);
@@ -75,7 +75,7 @@ public class ProfileController {
 	}
 
 	@PostMapping
-	public String updateProfile(@Valid @ModelAttribute("user") UserProfileDTO dto,
+	public String updateProfile(@Valid @ModelAttribute("user") UserUpdatableProfileDTO dto,
 	                            BindingResult result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			log.trace("Incorrect input in profile form ");
