@@ -100,7 +100,6 @@ jQuery('#file-upload-submit').on('click', function (e) {
 });
 
 jQuery(document).ready(function () {
-    var status = decodeURIComponent(getParameterVal('status'));
     if (status === "success") {
         swal({
             type: 'success',

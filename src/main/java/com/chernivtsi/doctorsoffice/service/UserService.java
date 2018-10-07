@@ -5,6 +5,7 @@ import com.chernivtsi.doctorsoffice.model.Analysis;
 import com.chernivtsi.doctorsoffice.model.User;
 import com.chernivtsi.doctorsoffice.model.dto.AddressDTO;
 import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
+import com.chernivtsi.doctorsoffice.model.dto.UserImmutableProfileDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserUpdatableProfileDTO;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
@@ -45,6 +46,12 @@ public class UserService extends DefaultCrudSupport<User> {
 		User user = this.findById(userId).orElseThrow(EntityNotFoundException::new);
 		log.trace("getUserUpdatableProfileDTOById: {}", user);
 		return new UserUpdatableProfileDTO(user);
+	}
+
+	public UserImmutableProfileDTO getUserImmutableProfileDTOById(Long userId) {
+		User user = this.findById(userId).orElseThrow(EntityNotFoundException::new);
+		log.trace("getUserImmutableProfileDTOById: {}", user);
+		return new UserImmutableProfileDTO(user);
 	}
 
 	public void updateUserProfile(UserUpdatableProfileDTO dto) {
