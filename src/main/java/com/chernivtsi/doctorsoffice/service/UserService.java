@@ -6,6 +6,7 @@ import com.chernivtsi.doctorsoffice.model.User;
 import com.chernivtsi.doctorsoffice.model.dto.AddressDTO;
 import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserImmutableProfileDTO;
+import com.chernivtsi.doctorsoffice.model.dto.UserListDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserUpdatableProfileDTO;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
@@ -86,7 +87,7 @@ public class UserService extends DefaultCrudSupport<User> {
 		return user.getAnalyses().stream().map(AnalysisDTO::new).collect(Collectors.toList());
 	}
 
-	public Page<UserUpdatableProfileDTO> findAll(Pageable pageable) {
-		return userRepository.findAll(pageable).map(UserUpdatableProfileDTO::new);
+	public Page<UserListDTO> findAll(Pageable pageable) {
+		return userRepository.findAll(pageable).map(UserListDTO::new);
 	}
 }
