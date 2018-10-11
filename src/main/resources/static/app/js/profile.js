@@ -18,7 +18,7 @@ jQuery('#file-input').change(function () {
     document.getElementById('file-info').innerHTML = fileInfo +
         "<br/> Всього " + entireSize / 1000000 + " з доступних 2.097152";
 
-    if (entireSize > 2097152) {
+    if (entireSize > 2097152) { //TODO function checkSize(entireSize){ return true}
         swal({
             type: 'error',
             title: 'Завеликий розмір файлів',
@@ -154,3 +154,75 @@ jQuery(document).ready(function () {
         });
     }
 });
+
+function showUpdateTherapyModal(id) {
+
+    jQuery.ajax({
+        url: '/profile/therapy/' + id,
+        method: 'GET',
+        success: function (object) {
+            jQuery("#therapy-id-update").val(object.id);
+            jQuery("#therapy-text-update").val(object.text);
+            jQuery("#therapy-patient-update").val(object.patient);
+
+            jQuery('#therapy-update-modal').modal("show");
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+        }
+    });
+}
+
+jQuery('#therapy-update-submit').on('click', function (e) {
+    //Prevent default submission of form
+    e.preventDefault();
+
+    let therapyDTO = {};
+    therapyDTO["id"] = jQuery("#therapy-id-update").val();
+    therapyDTO["text"] = jQuery("#therapy-text-update").val();
+    if ((jQuery.trim(therapyDTO["text"]).length === 0)) {
+        swal({
+            type: 'error',
+            title: 'Ви нічого не ввели',
+            text: 'Запишіть лікування щоб мати змогу зберегти',
+            timer: 5000
+        });
+        return;
+    }
+    updateTherapy(therapyDTO);
+});
+
+function updateTherapy(therapyDTO) {
+    jQuery.ajax({
+        headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json"
+        },
+        method: 'PUT',
+        url: '/profile/therapy',
+        data: JSON.stringify(therapyDTO),
+        cash: false,
+        success: function (status) {
+            console.log("SUCCESS: ", status);
+            swal({
+                type: 'success',
+                title: 'Готово!',
+                text: 'Успішно оновлено лікування',
+                showConfirmButton: false,
+                timer: 2500
+            });
+            setTimeout(function () {
+                location.reload();
+            }, 2500);
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+            swal({
+                type: 'error',
+                title: 'Щось пішло не так...',
+                text: 'Не вдалось оновити лікування',
+                timer: 5000
+            });
+        }
+    });
+}

@@ -15,14 +15,19 @@
 
                     <div class="card-body">
                         <div id="therapies">
-                            <div th:each="item : ${user.therapies}"
-                                 th:unless="${#lists.isEmpty(user.therapies)}"
+                            <div th:each="item : ${therapies}"
+                                 th:unless="${#lists.isEmpty(therapies)}"
                                  class="card">
                                 <div class="card-header">
                                     <strong class='card-title'>
                                         <p class='bg-primary text-light'>
                                             Дата: <span th:text="${item.createdAt}"></span>
                                         </p>
+                                        <button id="updateTherapy" class="btn btn-success"
+                                                th:onclick="'showUpdateTherapyModal(\'' + ${item.id} + '\');'"
+                                                sec:authorize="hasAuthority('ADMIN')">
+                                            Редагувати
+                                        </button>
                                     </strong>
                                 </div>
                                 <div class="card-body">
@@ -62,4 +67,26 @@
 
 
     </div>
+    <div class="modal fade" id="therapy-update-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редагувати терапію </h5>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <input type="hidden" id="therapy-id-update">
+                        <input type="hidden" id="therapy-patient-update">
+
+                        <p><textarea id="therapy-text-update" name="text" cols="60" rows="10"></textarea></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="therapy-update-submit" class="btn btn-primary">Зберегти
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,7 +39,7 @@ public class ProfileController {
 	private TherapyService therapyService;
 
 	public ProfileController(UserService userService,
-	                          TherapyService therapyService) {
+	                         TherapyService therapyService) {
 		this.userService = userService;
 		this.therapyService = therapyService;
 	}
@@ -46,6 +47,7 @@ public class ProfileController {
 
 	/**
 	 * GET request for profile page of currently logged in patient
+	 *
 	 * @param currentUser - patient
 	 * @return model and view
 	 */
@@ -57,15 +59,18 @@ public class ProfileController {
 		List<AnalysisDTO> analyses = userService.getUserFiles(userId);
 		analyses.sort(Comparator.comparing(AnalysisDTO::getDate).reversed());
 		log.trace("Analyses: {}", analyses);
+		List<TherapyDTO> therapies = therapyService.getTherapiesByPatient(userId);
 		ModelAndView modelAndView = new ModelAndView("profile");
 		modelAndView.addObject("user", user);
 		modelAndView.addObject("analyses", analyses);
+		modelAndView.addObject("therapies", therapies);
 		log.trace("UserProfileDto: {}", user);
 		return modelAndView;
 	}
 
 	/**
 	 * GET request for patient profile page for Admin
+	 *
 	 * @param id - id of patient
 	 * @return - model and view
 	 */
@@ -76,9 +81,11 @@ public class ProfileController {
 		List<AnalysisDTO> analyses = userService.getUserFiles(id);
 		analyses.sort(Comparator.comparing(AnalysisDTO::getDate).reversed());
 		log.trace("Analyses: {}", analyses);
+		List<TherapyDTO> therapies = therapyService.getTherapiesByPatient(id);
 		ModelAndView modelAndView = new ModelAndView("profile");
 		modelAndView.addObject("user", user);
 		modelAndView.addObject("analyses", analyses);
+		modelAndView.addObject("therapies", therapies);
 		log.trace("UserProfileDto: {}", user);
 		return modelAndView;
 	}
@@ -104,6 +111,19 @@ public class ProfileController {
 	public ResponseEntity createTherapy(@RequestBody TherapyDTO therapy) {
 		therapyService.saveTherapy(therapy);
 		log.trace("Therapy: {}", therapy.toString());
+		return new ResponseEntity(HttpStatus.OK);
+	}
+
+	@GetMapping("/therapy/{id}")
+	public ResponseEntity<TherapyDTO> getTherapy(@PathVariable Long id) {
+		TherapyDTO therapyDTO = therapyService.getTherapyById(id);
+		return new ResponseEntity<>(therapyDTO, HttpStatus.OK);
+	}
+
+	@PutMapping("/therapy")
+	public ResponseEntity updateTherapy(@RequestBody TherapyDTO therapy) {
+		log.info("Controller updateTherapy(): {}", therapy.toString());
+		therapyService.updateTherapy(therapy);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 }

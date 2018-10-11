@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 /**
  * Represents treatment of patient.
@@ -30,8 +31,10 @@ public class Therapy extends AbstractVersional {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User patient;
 
-	public Therapy(String text, User patient) {
+	public Therapy(Long id, String text, LocalDateTime createdAt, User patient) {
+		this.id = id;
 		this.text = text;
+		this.createdAt = createdAt;
 		this.patient = patient;
 	}
 }

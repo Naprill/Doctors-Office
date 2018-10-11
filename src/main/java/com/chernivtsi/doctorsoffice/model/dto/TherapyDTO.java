@@ -24,6 +24,17 @@ public class TherapyDTO {
 	private LocalDateTime createdAt;
 
 	public Therapy toEntity(User user) {
-		return new Therapy(this.text, user);
+		return new Therapy(
+				this.id,
+				this.text,
+				this.createdAt,
+				user);
+	}
+
+	public TherapyDTO(Therapy therapy) {
+		this.id = therapy.getId();
+		this.text = therapy.getText();
+		this.patient = therapy.getPatient().getId();
+		this.createdAt = therapy.getCreatedAt();
 	}
 }
