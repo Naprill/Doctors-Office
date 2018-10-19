@@ -34,7 +34,7 @@ public @interface UniqueOnUpdateConstraint {
 	 */
 	String targetField();
 
-	String message() default "Це значення не є унікальним";
+	String message() default "Користувач з таким email вже зареєстрований";
 
 	Class<?>[] groups() default {};
 

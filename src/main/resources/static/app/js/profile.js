@@ -136,20 +136,12 @@ jQuery('#therapy-submit').on('click', function (e) {
 });
 
 jQuery(document).ready(function () {
-    var status = decodeURIComponent(getParameterVal('status'));
     if (status === "success") {
         swal({
             type: 'success',
             title: 'Готово!',
             text: 'Успішно оновлено профіль',
             showConfirmButton: false,
-            timer: 2500
-        });
-    } else if (status === "error") {
-        swal({
-            type: 'error',
-            title: 'Ви ввели помилкові дані',
-            text: 'Не вдалось оновити профіль',
             timer: 2500
         });
     }
