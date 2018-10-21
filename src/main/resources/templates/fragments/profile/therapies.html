@@ -46,10 +46,10 @@
                         <div class="mx-auto d-block">
                             <h5 class="text-sm-center mt-2 mb-1">Додати новий запис про лікування</h5>
 
-                            <form id="therapy-form">
+                            <form id="therapy-form" th:object="${therapy}" method="post" th:action="@{/profile/therapy}">
                                 <input type="hidden" name="patient" th:value="${userUpdatable.id}">
 
-                                <p><textarea id="text" name="text" cols="60" rows="10"></textarea></p>
+                                <p><textarea id="text" name="text" th:field="*{text}" cols="60" rows="10"></textarea></p>
 
                                 <p>
                                     <button type="submit" id="therapy-submit" class="btn btn-primary">Зберегти

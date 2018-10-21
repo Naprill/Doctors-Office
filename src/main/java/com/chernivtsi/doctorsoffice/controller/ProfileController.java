@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -122,13 +121,17 @@ public class ProfileController {
 		}
 	}
 
+	@ModelAttribute("therapy")
+	public TherapyDTO userTherapyDTO() {
+		return new TherapyDTO();
+	}
+
 	@PreAuthorize("hasAuthority('ADMIN')")
-	@ResponseBody
 	@PostMapping("/therapy")
-	public ResponseEntity createTherapy(@RequestBody TherapyDTO therapy) {
+	public String createTherapy(@ModelAttribute("therapy") TherapyDTO therapy, BindingResult result) {
 		therapyService.saveTherapy(therapy);
 		log.trace("Therapy: {}", therapy.toString());
-		return new ResponseEntity(HttpStatus.OK);
+		return "redirect:/profile/" + therapy.getPatient();
 	}
 
 	@GetMapping("/therapy/{id}")

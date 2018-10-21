@@ -97,52 +97,21 @@ jQuery('#file-upload-submit').on('click', function (e) {
     });
 });
 
-jQuery('#therapy-submit').on('click', function (e) {
-    //Prevent default submission of form
-    e.preventDefault();
-    var form = jQuery('#therapy-form');
-    jQuery.ajax({
-        headers: {
-            'Accept': 'application/json',
-            "Content-Type": "application/json"
-        },
-        method: 'POST',
-        url: '/profile/therapy/',
-        data: formToJSON(form),
-        cash: false,
-        success: function (status) {
-            console.log("SUCCESS: ", status);
-            swal({
-                type: 'success',
-                title: 'Готово!',
-                text: 'Успішно збережено лікування',
-                showConfirmButton: false,
-                timer: 5000
-            });
-            setTimeout(function () {
-                location.reload();
-            }, 2500);
-        },
-        error: function (e) {
-            console.log("ERROR : ", e);
-            swal({
-                type: 'error',
-                title: 'Щось пішло не так...',
-                text: 'Не вдалось зберегти лікування',
-                timer: 5000
-            });
-        }
-    });
-});
-
 jQuery(document).ready(function () {
     if (status === "success") {
         swal({
             type: 'success',
             title: 'Готово!',
             text: 'Успішно оновлено профіль',
-            showConfirmButton: false,
+            // showConfirmButton: false,
             timer: 2500
+        });
+    } else if (status === "failure") {
+        swal({
+            type: 'error',
+            title: 'Щось пішло не так...',
+            text: 'Не вдалось зберегти дані',
+            timer: 5000
         });
     }
 });
