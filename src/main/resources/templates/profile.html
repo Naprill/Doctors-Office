@@ -40,13 +40,16 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="nav-info-user" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="tab-pane fade" id="nav-info-user" role="tabpanel" aria-labelledby="nav-home-tab"
+                 th:classappend="${#strings.equals(tab,'user')} ? 'show active'">
                 <div layout:replace="~{fragments/profile/userdata}"></div>
             </div>
-            <div class="tab-pane fade" id="nav-analyses-user" role="tabpanel" aria-labelledby="nav-analyses-tab">
+            <div class="tab-pane fade" id="nav-analyses-user" role="tabpanel" aria-labelledby="nav-analyses-tab"
+                 th:classappend="${#strings.equals(tab,'analyses')} ? 'show active'">
                 <div layout:replace="~{fragments/profile/analyses}"></div>
             </div>
-            <div class="tab-pane fade" id="nav-therapies-user" role="tabpanel" aria-labelledby="nav-therapies-tab">
+            <div class="tab-pane fade" id="nav-therapies-user" role="tabpanel" aria-labelledby="nav-therapies-tab"
+                 th:classappend="${#strings.equals(tab,'therapies')} ? 'show active'">
                 <div th:replace="fragments/profile/therapies"></div>
             </div>
             <div class="tab-pane fade" id="nav-examinations-user" role="tabpanel"

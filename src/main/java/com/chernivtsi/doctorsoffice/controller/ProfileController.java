@@ -68,6 +68,7 @@ public class ProfileController {
 		modelAndView.addObject(USER_UPDATABLE, userUpdatable);
 		modelAndView.addObject(USER_IMMUTABLE, userImmutable);
 		modelAndView.addObject(ANALYSES, analyses);
+		modelAndView.addObject("tab", "user");
 		modelAndView.addObject("therapies", therapies);
 		log.trace("UserUpdatableProfileDTO: {}", userUpdatable);
 		return modelAndView;
@@ -80,8 +81,8 @@ public class ProfileController {
 	 * @return - model and view
 	 */
 	@PreAuthorize("hasAuthority('ADMIN')")
-	@GetMapping("/{id}")
-	public ModelAndView getProfileForAdmin(@PathVariable Long id) {
+	@GetMapping("/{id}/{tab}")
+	public ModelAndView getProfileForAdmin(@PathVariable Long id, @PathVariable String tab) {
 
 		UserUpdatableProfileDTO userUpdatable = userService.getUserUpdatableProfileDTOById(id);
 		UserImmutableProfileDTO userImmutable = userService.getUserImmutableProfileDTOById(id);
@@ -94,6 +95,7 @@ public class ProfileController {
 		modelAndView.addObject(USER_IMMUTABLE, userImmutable);
 		modelAndView.addObject(ANALYSES, analyses);
 		modelAndView.addObject("therapies", therapies);
+		modelAndView.addObject("tab", tab);
 		log.trace("UserUpdatableProfileDTO: {}", userUpdatable);
 		return modelAndView;
 	}
@@ -131,7 +133,7 @@ public class ProfileController {
 	public String createTherapy(@ModelAttribute("therapy") TherapyDTO therapy, BindingResult result) {
 		therapyService.saveTherapy(therapy);
 		log.trace("Therapy: {}", therapy.toString());
-		return "redirect:/profile/" + therapy.getPatient();
+		return "redirect:/profile/" + therapy.getPatient() + "/therapies";
 	}
 
 	@GetMapping("/therapy/{id}")
