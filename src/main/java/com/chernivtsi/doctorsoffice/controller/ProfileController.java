@@ -110,6 +110,7 @@ public class ProfileController {
 		analyses.sort(Comparator.comparing(AnalysisDTO::getDate).reversed());
 		modelAndView.addObject(USER_IMMUTABLE, userImmutable);
 		modelAndView.addObject(ANALYSES, analyses);
+		modelAndView.addObject("tab", "user");
 
 		if (result.hasErrors()) {
 			log.trace("Incorrect input in profile form ");
