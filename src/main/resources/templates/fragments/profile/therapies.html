@@ -20,9 +20,9 @@
                                  class="card">
                                 <div class="card-header">
                                     <strong class='card-title'>
-                                        <p class='bg-primary text-light'>
-                                            Дата: <span th:text="${item.createdAt}"></span>
-                                        </p>
+                                        <span class='btn btn-info'>
+                                            Дата: <span th:text="${#temporals.format(item.createdAt, 'dd-MMM-yyyy')}"></span>
+                                        </span>
                                         <button id="updateTherapy" class="btn btn-success"
                                                 th:onclick="'showUpdateTherapyModal(\'' + ${item.id} + '\');'"
                                                 sec:authorize="hasAuthority('ADMIN')">
