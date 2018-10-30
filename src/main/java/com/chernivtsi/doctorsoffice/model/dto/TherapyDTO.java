@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,8 @@ import java.time.LocalDateTime;
 public class TherapyDTO {
 
 	private Long id;
-	
+
+	@NotBlank(message = "Введіть опис лікування")
 	private String text;
 	
 	private Long patient;

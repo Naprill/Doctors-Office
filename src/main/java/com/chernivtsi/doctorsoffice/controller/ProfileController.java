@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Comparator;
@@ -131,10 +132,18 @@ public class ProfileController {
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping("/therapy")
-	public String createTherapy(@ModelAttribute("therapy") TherapyDTO therapy, BindingResult result) {
-		therapyService.saveTherapy(therapy);
-		log.trace("Therapy: {}", therapy.toString());
-		return "redirect:/profile/" + therapy.getPatient() + "/therapies";
+	public String createTherapy(@ModelAttribute("therapy") @Valid TherapyDTO therapy,
+	                            BindingResult result,
+	                            final RedirectAttributes redirectAttributes) {
+		if(result.hasErrors()){
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.therapy", result);
+			redirectAttributes.addFlashAttribute("therapy", therapy);
+			return "redirect:/profile/" + therapy.getPatient() + "/therapies";
+		}else {
+			therapyService.saveTherapy(therapy);
+			log.trace("Therapy: {}", therapy.toString());
+			return "redirect:/profile/" + therapy.getPatient() + "/therapies";
+		}
 	}
 
 	@GetMapping("/therapy/{id}")
