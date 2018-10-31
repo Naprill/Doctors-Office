@@ -49,7 +49,7 @@
                             <form id="therapy-form" th:object="${therapy}" method="post" th:action="@{/profile/therapy}">
                                 <input type="hidden" name="patient" th:value="${userUpdatable.id}">
 
-                                <p><textarea id="text" name="text" th:field="*{text}" cols="60" rows="10"></textarea></p>
+                                <p><textarea id="text" name="text" th:field="*{text}" cols="50" rows="10"></textarea></p>
 
                                 <p class="alert alert-danger"
                                    th:if="${#fields.hasErrors('text')}"
@@ -76,12 +76,12 @@
                 <div class="modal-header">
                     <h5 class="modal-title">Редагувати терапію </h5>
                 </div>
-                <form>
+                <form th:object="${therapy}" method="POST" th:action="@{/profile/therapy/update}">
                     <div class="modal-body">
-                        <input type="hidden" id="therapy-id-update">
-                        <input type="hidden" id="therapy-patient-update">
+                        <input type="hidden" name="id" id="therapy-id-update">
+                        <input type="hidden" name="patient" id="therapy-patient-update">
 
-                        <p><textarea id="therapy-text-update" name="text" cols="60" rows="10"></textarea></p>
+                        <p><textarea id="therapy-text-update" name="text" cols="50" rows="10"></textarea></p>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" id="therapy-update-submit" class="btn btn-primary">Зберегти

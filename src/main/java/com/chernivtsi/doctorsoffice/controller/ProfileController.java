@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -152,10 +150,18 @@ public class ProfileController {
 		return new ResponseEntity<>(therapyDTO, HttpStatus.OK);
 	}
 
-	@PutMapping("/therapy")
-	public ResponseEntity updateTherapy(@RequestBody TherapyDTO therapy) {
-		log.info("Controller updateTherapy(): {}", therapy.toString());
-		therapyService.updateTherapy(therapy);
-		return new ResponseEntity(HttpStatus.OK);
+	@PostMapping("/therapy/update")
+	public String updateTherapy(@ModelAttribute("therapy") @Valid TherapyDTO therapy,
+	                                    BindingResult result,
+	                                    final RedirectAttributes redirectAttributes) {
+		if(result.hasErrors()){
+			redirectAttributes.addFlashAttribute("status", "failure");
+			return "redirect:/profile/" + therapy.getPatient() + "/therapies";
+		}else {
+			therapyService.updateTherapy(therapy);
+			log.trace("updateTherapy(): {}", therapy.toString());
+			redirectAttributes.addFlashAttribute("status", "success");
+			return "redirect:/profile/" + therapy.getPatient() + "/therapies";
+		}
 	}
 }
