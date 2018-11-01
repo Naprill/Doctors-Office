@@ -26,5 +26,6 @@ public class AnalysisDTO {
 		this.pathToFile = analysis.getPathToFile();
 		this.fileName = analysis.getFileName();
 		this.date = analysis.getDate();
+		this.fileDownloadUri = analysis.getFileDownloadUrl();
 	}
 }

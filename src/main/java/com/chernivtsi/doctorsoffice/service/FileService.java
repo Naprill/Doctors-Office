@@ -40,15 +40,17 @@ public class FileService {
 			File file = new File(path);
 			uploadedFile.transferTo(file);
 			entireSize += uploadedFile.getSize();
-			AnalysisDTO analysis = userService.addAnalysisFile(userId, path, uploadedFile.getOriginalFilename());
 			//create url for file downloading
 			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
 					.path("/downloadFile/")
 					.path(StringUtils.cleanPath(uploadedFile.getOriginalFilename()))
 					.toUriString();
-
+			AnalysisDTO analysis = userService.addAnalysisFile(
+					userId,
+					path,
+					uploadedFile.getOriginalFilename(),
+					fileDownloadUri);
 			if (analysis != null) {
-				analysis.setFileDownloadUri(fileDownloadUri);
 				analysisDTOList.add(analysis);
 			}
 		}
