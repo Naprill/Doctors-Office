@@ -42,6 +42,7 @@ public class FileService {
 			entireSize += uploadedFile.getSize();
 			//create url for file downloading
 			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/" + userId)
 					.path("/downloadFile/")
 					.path(StringUtils.cleanPath(uploadedFile.getOriginalFilename()))
 					.toUriString();

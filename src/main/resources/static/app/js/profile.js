@@ -58,7 +58,7 @@ jQuery('#file-upload-submit').on('click', function (e) {
 
     jQuery.ajax({
         type: "POST",
-        url: "/uploadFiles",
+        url: "/" + userId + "/uploadFiles",
         data: data,
         contentType: false,
         processData: false,
