@@ -44,14 +44,14 @@
                                 class="card">
                                 <div class="card-header">
                                     <strong class='card-title'>
-                                        <span th:text="${item.fileName}"></span>
-                                        <p class='bg-primary text-light'>
-                                            Дата: <span th:text="${item.date}"></span>
-                                        </p>
-                                        <a class='btn btn-success float-right' th:href="${item.fileDownloadUri}" >Скачати</a>
+                                        <span class='btn btn-info'>
+                                            Дата: <span th:text="${#temporals.format(item.date, 'dd-MMM-yyyy')}"></span>
+                                        </span>
+                                        <a class='btn btn-success' th:href="${item.fileDownloadUri}">Скачати</a>
                                     </strong>
                                 </div>
                                 <div class="card-body">
+                                    <span th:text="${item.fileName}"></span>
                                 </div>
                             </div>
                         </div>
