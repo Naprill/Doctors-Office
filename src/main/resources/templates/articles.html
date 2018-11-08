@@ -1,0 +1,50 @@
+<th:block xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.w3.org/1999/xhtml"
+          layout:decorate="~{layouts/layoutDashboard}"
+>
+
+    <th:block layout:fragment="links">
+
+    </th:block>
+
+    <th:block layout:fragment="title">
+
+        <h2 class="card-title mb-4">Статті</h2>
+
+    </th:block>
+
+    <th:block layout:fragment="body">
+
+        <div class="col-md-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div id="therapies">
+                        <div th:each="item : ${articles}"
+                             th:unless="${#lists.isEmpty(articles)}"
+                             class="col-md-6">
+                            <div class="card border-primary">
+                                <div class="card-header">
+                                    <strong class='card-title'>
+                                        <a th:href="${item.link}" th:text="${item.name}"></a>
+                                    </strong>
+                                </div>
+                                <div class="card-body text-white bg-primary">
+                                    <p class="card-text text-light" th:text="${item.description}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </th:block>
+
+    <th:block layout:fragment="scripts">
+
+    </th:block>
+
+</th:block>
