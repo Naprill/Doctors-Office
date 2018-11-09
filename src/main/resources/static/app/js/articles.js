@@ -34,3 +34,29 @@ function showUpdateArticleModal(id) {
         }
     });
 }
+
+
+function showDeleteArticleModal(id) {
+    jQuery("#article-id-delete").val(id);
+    jQuery('#article-delete-modal').modal("show");
+}
+
+
+jQuery('#article-delete-submit').on('click', function (e) {
+    //Prevent default submission of form
+    e.preventDefault();
+
+    var id = jQuery("#article-id-delete").val();
+    jQuery.ajax({
+        url: '/articles/' + id,
+        method: 'DELETE',
+        success: function () {
+            console.log("Success");
+            location.reload();
+        },
+        error: function (e) {
+            console.log("ERROR : ", e);
+        }
+    });
+
+});

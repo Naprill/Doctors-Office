@@ -38,7 +38,7 @@ public class ArticlesController {
     @GetMapping("/{id}")
     public ResponseEntity<Article> getArticle(@PathVariable Long id) {
         Article article = articlesService.findById(id).orElseThrow(EntityNotFoundException::new);
-        log.info("getArticle: {}",article);
+        log.info("getArticle: {}", article);
         return new ResponseEntity<>(article, HttpStatus.OK);
     }
 
@@ -56,5 +56,11 @@ public class ArticlesController {
             return "redirect:/articles";
         }
 
+    }
+
+    @DeleteMapping("/{id}")
+    public @ResponseBody String deleteArticle(@PathVariable Long id) {
+        articlesService.delete(id);
+        return "redirect:/articles";
     }
 }

@@ -53,7 +53,8 @@
         </div>
 
 
-        <div class="modal fade" id="article-update-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal fade" id="article-update-modal" tabindex="-1" role="dialog" aria-labelledby=""
+             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -69,7 +70,8 @@
                                 <input type="text" name="link" id="article-link-update">
                             </label>
                             <p>Короткий опис статті
-                                <textarea id="article-description-update" name="description" cols="50" rows="10"></textarea>
+                                <textarea id="article-description-update" name="description" cols="50"
+                                          rows="10"></textarea>
                             </p>
                         </div>
                         <div class="modal-footer">
@@ -77,6 +79,27 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="article-delete-modal" tabindex="-1" role="dialog" aria-labelledby=""
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Видалити статтю </h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="article-id-delete">
+                        Ви справді хочете видалити статтю?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="article-delete-submit" class="btn btn-primary">Видалити
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
