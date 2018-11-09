@@ -5,6 +5,7 @@ import com.chernivtsi.doctorsoffice.service.ArticlesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("/articles")
 public class ArticlesController {
 
@@ -24,6 +26,31 @@ public class ArticlesController {
 
     public ArticlesController(ArticlesService articlesService) {
         this.articlesService = articlesService;
+    }
+
+    @GetMapping("/add")
+    public String getCreateArticlePage(){
+        return "add-article";
+    }
+
+    @ModelAttribute("article")
+    public Article userTherapyDTO() {
+        return new Article();
+    }
+
+    @PostMapping
+    public String createArticle(@ModelAttribute("article") @Valid Article article,
+                                BindingResult result,
+                                final RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "add-article";
+        } else {
+            articlesService.create(article);
+            log.trace("updateArticle(): {}", article.toString());
+            redirectAttributes.addFlashAttribute("status", "success");
+            return "redirect:/articles";
+        }
+
     }
 
     @GetMapping

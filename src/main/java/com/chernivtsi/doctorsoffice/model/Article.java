@@ -18,13 +18,13 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Article extends AbstractIdentifiable{
 
-    @NotBlank
+    @NotBlank(message = "Назва обов'язкова")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Посилання обов'язкове")
     private String link;
 
-    @NotBlank
+    @NotBlank(message = "Опис обов'язковий")
     private String description;
 
 }
