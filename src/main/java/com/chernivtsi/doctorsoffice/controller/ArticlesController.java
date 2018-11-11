@@ -18,7 +18,6 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("/articles")
 public class ArticlesController {
 
@@ -28,6 +27,7 @@ public class ArticlesController {
         this.articlesService = articlesService;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/add")
     public String getCreateArticlePage(){
         return "add-article";
@@ -38,6 +38,7 @@ public class ArticlesController {
         return new Article();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public String createArticle(@ModelAttribute("article") @Valid Article article,
                                 BindingResult result,
@@ -69,6 +70,7 @@ public class ArticlesController {
         return new ResponseEntity<>(article, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/update")
     public String updateArticle(@ModelAttribute("article") @Valid Article article,
                                 BindingResult result,
@@ -85,6 +87,7 @@ public class ArticlesController {
 
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public @ResponseBody String deleteArticle(@PathVariable Long id) {
         articlesService.delete(id);
