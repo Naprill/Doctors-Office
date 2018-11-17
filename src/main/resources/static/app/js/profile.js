@@ -75,12 +75,13 @@ jQuery('#file-upload-submit').on('click', function (e) {
             var content = "";
             for (var i = 0; i < response.length; i++) {
                 content += "<div class='card'> <div class='card-header'> <strong class='card-title'>";
-                content += response[i].fileName;
-                content += " <p class='bg-primary text-light'>Дата: " +
+                content += " <span class='btn btn-info'>Дата: " +
                     response[i].date.dayOfMonth + "." + response[i].date.monthValue + "." + response[i].date.year +
-                    "</p>";
-                content += "<a class='btn btn-success float-right' href='" + response[i].fileDownloadUri + "' >Скачати</a></p>";
-                content += "</strong> </div> <div class='card-body'></div> </div>";
+                    "</span>&#010;";
+                content += "<a class='btn btn-success' href='" + response[i].fileDownloadUri + "' >Скачати</a>";
+                content += "</strong> </div> <div class='card-body'><span>";
+                content += response[i].fileName;
+                content += "</span> </div> </div>";
             }
             var div = document.querySelector('#filesForDownload');
             div.innerHTML = content + div.innerHTML;
