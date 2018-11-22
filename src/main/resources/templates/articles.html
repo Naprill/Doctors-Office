@@ -1,0 +1,124 @@
+<th:block xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.w3.org/1999/xhtml"
+          layout:decorate="~{layouts/layoutDashboard}"
+          xmlns:sec="http://www.w3.org/1999/xhtml">
+
+    <th:block layout:fragment="links">
+
+        <link rel="stylesheet" th:href="@{/app/css/articles.css}">
+
+    </th:block>
+
+    <th:block layout:fragment="title">
+
+        <h2 class="card-title mb-4">Статті</h2>
+
+    </th:block>
+
+    <th:block layout:fragment="body">
+
+        <div class="col-md-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div id="therapies">
+                        <div th:each="item : ${articles}"
+                             th:unless="${#lists.isEmpty(articles)}"
+                             class="col-md-6">
+                            <div class="card border-primary">
+                                <div class="card-header">
+                                    <strong class='card-title'>
+                                        <button id="updateArticle" class="btn btn-success"
+                                                th:onclick="'showUpdateArticleModal(\'' + ${item.id} + '\');'"
+                                                sec:authorize="hasAuthority('ADMIN')">
+                                            Редагувати
+                                        </button>
+                                        <button id="deleteArticle" class="btn btn-outline-danger"
+                                                th:onclick="'showDeleteArticleModal(\'' + ${item.id} + '\');'"
+                                                sec:authorize="hasAuthority('ADMIN')">
+                                            Видалити
+                                        </button>
+                                        <a th:href="${item.link}" th:text="${item.title}"></a>
+                                    </strong>
+                                </div>
+                                <div class="card-body text-white bg-primary">
+                                    <p class="card-text text-light" th:text="${item.description}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="article-update-modal" tabindex="-1" role="dialog" aria-labelledby=""
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Редагувати статтю </h5>
+                    </div>
+                    <form th:object="${article}" method="POST" th:action="@{/articles/update}">
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="article-id-update">
+                            <label>Назва статті
+                                <input type="text" name="title" id="article-title-update">
+                            </label>
+                            <label>Посилання на статтю
+                                <input type="text" name="link" id="article-link-update">
+                            </label>
+                            <p>Короткий опис статті
+                                <textarea id="article-description-update" name="description" cols="50"
+                                          rows="10"></textarea>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Зберегти
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="article-delete-modal" tabindex="-1" role="dialog" aria-labelledby=""
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Видалити статтю </h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="article-id-delete">
+                        Ви справді хочете видалити статтю?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="article-delete-submit" class="btn btn-primary">Видалити
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+
+    <th:block layout:fragment="scripts">
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            var status = /*[[${status}]]*/ 'failure';
+
+            /*]]>*/
+        </script>
+        <script charset="UTF-8" type="text/javascript" th:src="@{/assets/js/sweetalert2.js}"></script>
+        <script charset="UTF-8" type="text/javascript" th:src="@{/assets/js/moment.min.js}"></script>
+        <script charset="UTF-8" type="text/javascript" th:src="@{/app/js/articles.js}"></script>
+
+    </th:block>
+
+</th:block>

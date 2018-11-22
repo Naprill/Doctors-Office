@@ -1,0 +1,73 @@
+<th:block xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.w3.org/1999/xhtml"
+          layout:decorate="~{layouts/layoutDashboard}">
+
+    <th:block layout:fragment="links">
+
+    </th:block>
+
+    <th:block layout:fragment="title">
+
+        <h2 class="card-title mb-4">Статті</h2>
+
+    </th:block>
+
+    <th:block layout:fragment="body">
+
+        <div class="col-md-12">
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="card">
+                        <div class="card-header">Додати статтю</div>
+                        <div class="card-body card-block">
+                            <form th:object="${article}" method="POST" th:action="@{/articles}">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="title" class="form-control-label">Заголовок:&nbsp;</label>
+                                        <input type="text" id="title" name="title" placeholder="title" class="form-control">
+                                        <div class="input-group-addon"><i class="fa fa-info"></i></div>
+                                    </div>
+                                    <p class="alert alert-danger"
+                                       th:if="${#fields.hasErrors('title')}"
+                                       th:errors="*{title}"></p>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="title" class="form-control-label">Посилання:&nbsp;</label>
+                                        <input type="text" id="link" name="link" placeholder="link" class="form-control">
+                                        <div class="input-group-addon"><i class="fa fa-globe"></i></div>
+                                    </div>
+                                    <p class="alert alert-danger"
+                                       th:if="${#fields.hasErrors('link')}"
+                                       th:errors="*{link}"></p>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="title" class="form-control-label">Опис:&nbsp;</label>
+                                        <input type="text" id="description" name="description" placeholder="description" class="form-control">
+                                        <div class="input-group-addon"><i class="fa fa-pencil"></i></div>
+                                    </div>
+                                    <p class="alert alert-danger"
+                                       th:if="${#fields.hasErrors('description')}"
+                                       th:errors="*{description}"></p>
+                                </div>
+                                <div class="form-actions form-group"><button type="submit" class="btn btn-success btn-sm">Зберегти</button></div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </th:block>
+
+    <th:block layout:fragment="scripts">
+
+    </th:block>
+
+</th:block>
