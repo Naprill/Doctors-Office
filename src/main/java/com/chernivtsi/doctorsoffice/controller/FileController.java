@@ -1,7 +1,6 @@
 package com.chernivtsi.doctorsoffice.controller;
 
 import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
-import com.chernivtsi.doctorsoffice.security.SecurityUser;
 import com.chernivtsi.doctorsoffice.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,21 +34,22 @@ public class FileController {
 		this.fileService = fileService;
 	}
 
-	@PostMapping("/uploadFiles")
+	@PostMapping("/{userId}/uploadFiles")
 	public ResponseEntity<List<AnalysisDTO>> uploadFiles(
-			@RequestParam("uploadingFiles") List<MultipartFile> uploadingFiles,
-			@AuthenticationPrincipal SecurityUser currentUser) throws IOException{
+            @PathVariable Long userId,
+			@RequestParam("uploadingFiles") List<MultipartFile> uploadingFiles) throws IOException{
 
-		List<AnalysisDTO> analysisDTOList = fileService.uploadFiles(uploadingFiles, currentUser.getId());
+		List<AnalysisDTO> analysisDTOList = fileService.uploadFiles(uploadingFiles, userId);
 		return new ResponseEntity<>(analysisDTOList, HttpStatus.OK);
 	}
 
-	@GetMapping("/downloadFile/{fileName:.+}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
-	                                             HttpServletRequest request,
-	                                             @AuthenticationPrincipal SecurityUser currentUser) {
-		// Load file as Resource
-		Resource resource = fileService.loadFileAsResource(fileName,currentUser.getId());
+	@GetMapping("/{userId}/downloadFile/{fileName:.+}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable Long userId,
+                                                 @PathVariable String fileName,
+	                                             HttpServletRequest request){
+
+        // Load file as Resource
+		Resource resource = fileService.loadFileAsResource(fileName, userId);
 
 		// Try to determine file's content type
 		String contentType = null;

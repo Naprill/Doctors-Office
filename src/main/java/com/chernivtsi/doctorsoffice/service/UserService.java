@@ -72,10 +72,10 @@ public class UserService extends DefaultCrudSupport<User> {
 		}
 	}
 
-	public AnalysisDTO addAnalysisFile(Long id, String path, String originalFilename) {
+	public AnalysisDTO addAnalysisFile(Long id, String path, String originalFilename, String fileDownloadUrl) {
 		User user = this.findById(id).orElseThrow(EntityNotFoundException::new);
 		if (user.getAnalyses().stream().noneMatch(a -> a.getFileName().equals(originalFilename))) {
-			Analysis analysis = new Analysis(path, originalFilename, LocalDateTime.now(), user);
+			Analysis analysis = new Analysis(path, originalFilename, LocalDateTime.now(), user, fileDownloadUrl);
 			analysesService.create(analysis);
 			return new AnalysisDTO(analysis);
 		}
