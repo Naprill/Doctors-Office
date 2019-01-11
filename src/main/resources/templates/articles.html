@@ -21,28 +21,30 @@
             <div class="card">
 
                 <div class="card-body">
-                    <div id="therapies">
-                        <div th:each="item : ${articles}"
-                             th:unless="${#lists.isEmpty(articles)}"
-                             class="col-md-6">
-                            <div class="card border-primary">
-                                <div class="card-header">
-                                    <strong class='card-title'>
-                                        <button id="updateArticle" class="btn btn-success"
-                                                th:onclick="'showUpdateArticleModal(\'' + ${item.id} + '\');'"
-                                                sec:authorize="hasAuthority('ADMIN')">
-                                            Редагувати
-                                        </button>
-                                        <button id="deleteArticle" class="btn btn-outline-danger"
-                                                th:onclick="'showDeleteArticleModal(\'' + ${item.id} + '\');'"
-                                                sec:authorize="hasAuthority('ADMIN')">
-                                            Видалити
-                                        </button>
-                                        <a th:href="${item.link}" th:text="${item.title}"></a>
-                                    </strong>
-                                </div>
-                                <div class="card-body text-white bg-primary">
-                                    <p class="card-text text-light" th:text="${item.description}"></p>
+                    <div>
+                        <div class="row display-flex">
+                            <div th:each="item : ${articles}"
+                                 th:unless="${#lists.isEmpty(articles)}"
+                                 class="col-md-6">
+                                <div class="card border-primary">
+                                    <div class="card-header">
+                                        <strong class='card-title'>
+                                            <button id="updateArticle" class="btn btn-success"
+                                                    th:onclick="'showUpdateArticleModal(\'' + ${item.id} + '\');'"
+                                                    sec:authorize="hasAuthority('ADMIN')">
+                                                Редагувати
+                                            </button>
+                                            <button id="deleteArticle" class="btn btn-outline-danger"
+                                                    th:onclick="'showDeleteArticleModal(\'' + ${item.id} + '\');'"
+                                                    sec:authorize="hasAuthority('ADMIN')">
+                                                Видалити
+                                            </button>
+                                            <a th:href="${item.link}" th:text="${item.title}"></a>
+                                        </strong>
+                                    </div>
+                                    <div class="card-body text-white bg-primary">
+                                        <p class="card-text text-light" th:text="${item.description}"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

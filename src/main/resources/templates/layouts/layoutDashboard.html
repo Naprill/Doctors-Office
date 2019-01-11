@@ -22,6 +22,9 @@
     <link rel="stylesheet" th:href="@{/assets/scss/style.css}">
     <link th:href="@{/assets/css/lib/vector-map/jqvmap.min.css}" rel="stylesheet">
 
+    <link rel="stylesheet" th:href="@{/app/css/style.css}">
+
+
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
     <style>
@@ -195,7 +198,8 @@
                     </a>
 
                     <div class="user-menu dropdown-menu">
-                        <a class="nav-link" th:href="@{/profile}"><i class="fa fa-user"></i> Профіль</a>
+                        <a class="nav-link" th:href="@{/profile}" sec:authorize="hasAuthority('USER')">
+                            <i class="fa fa-user"></i> Профіль</a>
 
                         <a class="nav-link" href="#"><i class="fa ti-email"></i> Повідомлення
                             <!--<span class="count">2</span>-->

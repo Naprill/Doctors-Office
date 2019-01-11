@@ -65,7 +65,7 @@ public class ScheduleController {
 	}
 
 	@GetMapping
-	public ModelAndView getReceptions(@PageableDefault(size = 4) Pageable pageRequest) {
+	public ModelAndView getReceptions(@PageableDefault Pageable pageRequest) {
 		ModelAndView modelAndView = new ModelAndView("schedule");
 
 		scheduleService.checkAndGenerateReceptions(LocalDate.now());
@@ -82,7 +82,7 @@ public class ScheduleController {
 
 	@GetMapping(value = "filter")
 	public ModelAndView getReceptions(
-			@PageableDefault(size = 4) Pageable pageRequest,
+			@PageableDefault Pageable pageRequest,
 			@RequestParam(name = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
 			@RequestParam(name = "interval", required = false) Interval interval,
 			@RequestParam(name = "user", required = false) Long userId
