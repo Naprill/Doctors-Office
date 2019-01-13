@@ -8,15 +8,13 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Entity
-@Table
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Admin extends AbstractVersional{
+public class Admin extends AbstractVersional {
 
 	private String hashedPassword;
 

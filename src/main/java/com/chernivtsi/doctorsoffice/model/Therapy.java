@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -19,14 +18,13 @@ import java.time.LocalDateTime;
  * that is created by doctor
  */
 @Entity
-@Table(name = "therapy")
 @Getter
 @Setter
 @ToString(exclude = "patient")
 @NoArgsConstructor
 public class Therapy extends AbstractVersional {
 
-	@Column(columnDefinition="text", length=10485760)
+	@Column(columnDefinition = "text", length = 10485760)
 	private String text;
 
 	@ManyToOne

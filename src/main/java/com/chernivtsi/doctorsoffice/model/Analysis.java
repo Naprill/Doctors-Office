@@ -12,7 +12,6 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -21,7 +20,6 @@ import java.time.LocalDateTime;
  * or picture like jpg
  */
 @Entity
-@Table
 @Getter
 @Setter
 @ToString(exclude = "patient")
