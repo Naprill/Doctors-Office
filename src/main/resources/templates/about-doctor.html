@@ -14,9 +14,7 @@
     <th:block layout:fragment="body">
 
         <div class="col-md-12">
-            <div class="card">
 
-                <div class="card-body">
                     <div>
                         <div class="row display-flex">
                             <div th:each="item : ${chapters}"
@@ -25,17 +23,18 @@
                                 <div class="card border-primary">
                                     <div class="card-header text-white bg-primary">
                                         <strong class='card-title'>
-                                            <button id="updateChapter" class="btn btn-success"
+                                            <span th:text="${item.title}"></span>
+
+                                            <button id="updateChapter" class="btn btn-success float-right"
                                                     th:onclick="'showUpdateChapterModal(\'' + ${item.id} + '\');'"
                                                     sec:authorize="hasAuthority('ADMIN')">
                                                 Редагувати
                                             </button>
-                                            <button id="deleteChapter" class="btn btn-outline-danger"
+                                            <button id="deleteChapter" class="btn btn-outline-danger float-right"
                                                     th:onclick="'showDeleteChapterModal(\'' + ${item.id} + '\');'"
                                                     sec:authorize="hasAuthority('ADMIN')">
                                                 Видалити
                                             </button>
-                                            <span th:text="${item.title}"></span>
                                         </strong>
                                     </div>
                                     <div class="card-body ">
@@ -45,9 +44,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
         </div>
 
 
