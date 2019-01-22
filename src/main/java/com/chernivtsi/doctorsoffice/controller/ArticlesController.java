@@ -21,6 +21,8 @@ import java.util.List;
 @RequestMapping("/articles")
 public class ArticlesController {
 
+	private static final String REDIRECT_ARTICLES =  "redirect:/articles";
+	private static final String STATUS = "status";
     private ArticlesService articlesService;
 
     public ArticlesController(ArticlesService articlesService) {
@@ -34,7 +36,7 @@ public class ArticlesController {
     }
 
     @ModelAttribute("article")
-    public Article userTherapyDTO() {
+    public Article newArticle() {
         return new Article();
     }
 
@@ -48,8 +50,8 @@ public class ArticlesController {
         } else {
             articlesService.create(article);
             log.trace("updateArticle(): {}", article.toString());
-            redirectAttributes.addFlashAttribute("status", "success");
-            return "redirect:/articles";
+            redirectAttributes.addFlashAttribute(STATUS, "success");
+            return REDIRECT_ARTICLES;
         }
 
     }
@@ -76,13 +78,13 @@ public class ArticlesController {
                                 BindingResult result,
                                 final RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("status", "failure");
-            return "redirect:/articles";
+            redirectAttributes.addFlashAttribute(STATUS, "failure");
+            return REDIRECT_ARTICLES;
         } else {
             articlesService.update(article);
             log.trace("updateArticle(): {}", article.toString());
-            redirectAttributes.addFlashAttribute("status", "success");
-            return "redirect:/articles";
+            redirectAttributes.addFlashAttribute(STATUS, "success");
+            return REDIRECT_ARTICLES;
         }
 
     }
@@ -91,6 +93,6 @@ public class ArticlesController {
     @DeleteMapping("/{id}")
     public @ResponseBody String deleteArticle(@PathVariable Long id) {
         articlesService.delete(id);
-        return "redirect:/articles";
+        return REDIRECT_ARTICLES;
     }
 }
