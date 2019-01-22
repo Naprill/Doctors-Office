@@ -1,16 +1,16 @@
 package com.chernivtsi.doctorsoffice.service;
 
 import com.chernivtsi.doctorsoffice.model.Chapter;
-import com.chernivtsi.doctorsoffice.repository.DoctorPageRepository;
+import com.chernivtsi.doctorsoffice.repository.AboutDoctorRepository;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DoctorsPageService extends DefaultCrudSupport<Chapter> {
+public class AboutDoctorService extends DefaultCrudSupport<Chapter> {
 
-	private DoctorPageRepository repository;
+	private AboutDoctorRepository repository;
 
-	public DoctorsPageService(DoctorPageRepository repository) {
+	public AboutDoctorService(AboutDoctorRepository repository) {
 		super(repository);
 		this.repository = repository;
 	}
