@@ -8,6 +8,12 @@
     <th:block layout:fragment="title">
 
         <h2 class="card-title mb-4">Персональна інформація лікаря</h2>
+        <button id="createChapter" class="btn btn-success" style="margin-bottom: 20px"
+                data-toggle="modal" data-target="#chapter-create-modal"
+                sec:authorize="hasAuthority('ADMIN')">
+            Створити розділ
+        </button>
+
 
     </th:block>
 
@@ -47,6 +53,32 @@
 
         </div>
 
+        <div class="modal fade" id="chapter-create-modal" tabindex="-1" role="dialog" aria-labelledby=""
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Створити блок </h5>
+                    </div>
+                    <form th:object="${chapter}" method="POST" th:action="@{/about-doctor}">
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="chapter-id-create">
+                            <label>Назва блоку
+                                <input type="text" name="title" id="chapter-title-create">
+                            </label>
+                            <p>Текст блоку
+                                <textarea id="chapter-text-create" name="text" cols="50"
+                                          rows="10"></textarea>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Зберегти
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="chapter-update-modal" tabindex="-1" role="dialog" aria-labelledby=""
              aria-hidden="true">

@@ -28,10 +28,31 @@ import java.util.List;
 public class AboutDoctorController {
 
 	private static final String REDIRECT_ABOUT_DOCTOR = "redirect:/about-doctor";
+	private static final String STATUS = "status";
 	private AboutDoctorService service;
 
 	public AboutDoctorController(AboutDoctorService service) {
 		this.service = service;
+	}
+
+	@ModelAttribute
+	public Chapter newChapter() {
+		return new Chapter();
+	}
+
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@PostMapping
+	public String createChapter(@ModelAttribute @Valid Chapter chapter,
+	                            BindingResult result,
+	                            RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			return "/about-doctor";
+		} else {
+			service.create(chapter);
+			log.trace("createChapter(): {}", chapter);
+			redirectAttributes.addAttribute(STATUS, "success");
+			return REDIRECT_ABOUT_DOCTOR;
+		}
 	}
 
 	@GetMapping
@@ -57,12 +78,12 @@ public class AboutDoctorController {
 	                            BindingResult result,
 	                            RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
-			redirectAttributes.addAttribute("status", "failure");
+			redirectAttributes.addAttribute(STATUS, "failure");
 			return REDIRECT_ABOUT_DOCTOR;
 		} else {
 			service.update(chapter);
 			log.trace("updateChapter(): {}", chapter);
-			redirectAttributes.addAttribute("status", "success");
+			redirectAttributes.addAttribute(STATUS, "success");
 			return REDIRECT_ABOUT_DOCTOR;
 		}
 	}
