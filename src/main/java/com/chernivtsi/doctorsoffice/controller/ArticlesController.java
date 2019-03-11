@@ -49,7 +49,7 @@ public class ArticlesController {
             return "add-article";
         } else {
             articlesService.create(article);
-            log.trace("updateArticle(): {}", article.toString());
+            log.trace("createArticle(): {}", article.toString());
             redirectAttributes.addFlashAttribute(STATUS, "success");
             return REDIRECT_ARTICLES;
         }

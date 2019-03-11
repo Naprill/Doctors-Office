@@ -46,11 +46,12 @@ public class AboutDoctorController {
 	                            BindingResult result,
 	                            RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
-			return "/about-doctor";
+			redirectAttributes.addFlashAttribute(STATUS, "failure");
+			return REDIRECT_ABOUT_DOCTOR;
 		} else {
 			service.create(chapter);
 			log.trace("createChapter(): {}", chapter);
-			redirectAttributes.addAttribute(STATUS, "success");
+			redirectAttributes.addFlashAttribute(STATUS, "success");
 			return REDIRECT_ABOUT_DOCTOR;
 		}
 	}
