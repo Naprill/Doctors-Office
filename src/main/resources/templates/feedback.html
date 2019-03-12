@@ -1,0 +1,90 @@
+<th:block xmlns:th="http://www.w3.org/1999/xhtml"
+          xmlns:layout="http://www.w3.org/1999/xhtml"
+          layout:decorate="~{layouts/layoutDashboard}"
+          xmlns:sec="http://www.w3.org/1999/xhtml">
+
+    <th:block layout:fragment="links">
+
+    </th:block>
+
+    <th:block layout:fragment="title">
+
+        <h2 class="card-title mb-4">Відгуки</h2>
+        <button id="createFeedback" class="btn btn-success" style="margin-bottom: 20px"
+                data-toggle="modal" data-target="#feedback-create-modal"
+                sec:authorize="hasAuthority('USER')">
+            Написати відгук
+        </button>
+
+    </th:block>
+
+    <th:block layout:fragment="body">
+
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="row display-flex">
+                        <div th:each="item : ${feedback}"
+                             th:unless="${#lists.isEmpty(feedback)}"
+                             class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong class='card-title' th:text="${item.author}"></strong>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text" th:text="${item.text}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="feedback-create-modal" tabindex="-1" role="dialog" aria-labelledby=""
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Написати відгук</h5>
+                    </div>
+                    <form th:object="${feedback}" method="POST" th:action="@{/feedback}">
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="feedback-id">
+                            <label>Анонімно
+                                <input type="checkbox" name="title" id="feedback-anonymous">
+                            </label>
+                            <p>Відгук
+                                <textarea id="feedback-text" name="text" cols="50"
+                                          rows="10"></textarea>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Зберегти
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+
+    <th:block layout:fragment="scripts">
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            var status = /*[[${status}]]*/ 'failure';
+
+            /*]]>*/
+        </script>
+        <script charset="UTF-8" type="text/javascript" th:src="@{/assets/js/sweetalert2.js}"></script>
+        <script charset="UTF-8" type="text/javascript" th:src="@{/app/js/alert.js}"></script>
+
+    </th:block>
+
+</th:block>
