@@ -8,6 +8,7 @@ import com.chernivtsi.doctorsoffice.security.SecurityUser;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 
 @Service
@@ -21,10 +22,10 @@ public class FeedbackService extends DefaultCrudSupport<Feedback> {
 		this.userService = userService;
 	}
 
-	public void create(FeedbackDTO feedbackDTO, SecurityUser currentUser) throws Exception {
+	public void create(FeedbackDTO feedbackDTO, SecurityUser currentUser) {
 		String author = "Анонім";
 		if (!feedbackDTO.getAnonymous()) {
-			User user = userService.findById(currentUser.getId()).orElseThrow(() -> new Exception("no such user in db"));
+			User user = userService.findById(currentUser.getId()).orElseThrow(() -> new EntityNotFoundException("no such user in db"));
 			author = user.getFirstName() + " " + user.getLastName();
 		}
 		Feedback feedback = new Feedback(author, feedbackDTO.getText(), LocalDate.now());

@@ -43,11 +43,6 @@ public class FeedbackController {
 		return modelAndView;
 	}
 
-	@ModelAttribute
-	public FeedbackDTO newFeedbackDTO() {
-		return new FeedbackDTO();
-	}
-
 	@PostMapping
 	public String createFeedback(@ModelAttribute @Valid FeedbackDTO feedback,
 	                             BindingResult result,

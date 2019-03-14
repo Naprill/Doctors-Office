@@ -35,11 +35,6 @@ public class AboutDoctorController {
 		this.service = service;
 	}
 
-	@ModelAttribute
-	public Chapter newChapter() {
-		return new Chapter();
-	}
-
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping
 	public String createChapter(@ModelAttribute @Valid Chapter chapter,
