@@ -42,7 +42,7 @@ public class EmailService {
 		model.put("signature", "https://doctors-office.com/");
 		model.put("url", url + "/confirm-account?token=" + token.getToken());
 		mail.setModel(model);
-		sendEmail(mail, "/layouts/registrationEmailTemplate");
+		sendEmail(mail, "/mail/registrationEmailTemplate");
 	}
 
 	@Async
@@ -60,7 +60,7 @@ public class EmailService {
 		model.put("signature", "https://doctors-office.com/");
 		model.put("url", url + "/reset-password?token=" + token.getToken());
 		mail.setModel(model);
-		sendEmail(mail, "/layouts/resetPasswordEmailTemplate");
+		sendEmail(mail, "/mail/resetPasswordEmailTemplate");
 	}
 
 	private void sendEmail(Mail mail, String template) {
