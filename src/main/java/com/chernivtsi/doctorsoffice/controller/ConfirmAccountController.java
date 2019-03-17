@@ -1,7 +1,7 @@
 package com.chernivtsi.doctorsoffice.controller;
 
 import com.chernivtsi.doctorsoffice.model.User;
-import com.chernivtsi.doctorsoffice.model.token.ConfirmAccountToken;
+import com.chernivtsi.doctorsoffice.model.token.AccountToken;
 import com.chernivtsi.doctorsoffice.service.AccountTokenService;
 import com.chernivtsi.doctorsoffice.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class ConfirmAccountController {
 	@Transactional
 	public String displayConfirmAccountPage(@RequestParam(required = false) String token, Model model) {
 
-		ConfirmAccountToken accountToken = accountTokenService.findByTokenUrl(token);
+		AccountToken accountToken = accountTokenService.findByTokenUrl(token);
 		if (accountToken == null) {
 			model.addAttribute("error", "Помилка. Не знайдено токену для підтвердження акаунту");
 		} else {

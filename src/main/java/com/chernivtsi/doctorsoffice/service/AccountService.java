@@ -3,7 +3,7 @@ package com.chernivtsi.doctorsoffice.service;
 import com.chernivtsi.doctorsoffice.model.Role;
 import com.chernivtsi.doctorsoffice.model.User;
 import com.chernivtsi.doctorsoffice.model.dto.UserRegistrationDTO;
-import com.chernivtsi.doctorsoffice.model.token.ConfirmAccountToken;
+import com.chernivtsi.doctorsoffice.model.token.AccountToken;
 import com.chernivtsi.doctorsoffice.repository.AccountTokenRepository;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -77,7 +77,7 @@ public class AccountService {
 	public void saveTokenAndSendEmail(User user, HttpServletRequest request) {
 		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 
-		ConfirmAccountToken token = new ConfirmAccountToken();
+		AccountToken token = new AccountToken();
 		token.setToken(UUID.randomUUID().toString());
 		token.setUser(user);
 		accountTokenRepository.save(token);

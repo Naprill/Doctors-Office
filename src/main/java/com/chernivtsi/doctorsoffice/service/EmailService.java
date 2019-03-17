@@ -2,7 +2,7 @@ package com.chernivtsi.doctorsoffice.service;
 
 import com.chernivtsi.doctorsoffice.model.Mail;
 import com.chernivtsi.doctorsoffice.model.User;
-import com.chernivtsi.doctorsoffice.model.token.ConfirmAccountToken;
+import com.chernivtsi.doctorsoffice.model.token.AccountToken;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -28,7 +28,7 @@ public class EmailService {
 	}
 
 	@Async
-	public void createAndSendEmail(ConfirmAccountToken token, User user, String url) {
+	public void createAndSendEmail(AccountToken token, User user, String url) {
 
 		Mail mail = new Mail();
 		mail.setFrom("no-reply@doctor-patratiy-office.com");

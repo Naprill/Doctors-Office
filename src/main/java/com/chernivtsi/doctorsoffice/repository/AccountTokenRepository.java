@@ -1,8 +1,8 @@
 package com.chernivtsi.doctorsoffice.repository;
 
-import com.chernivtsi.doctorsoffice.model.token.ConfirmAccountToken;
+import com.chernivtsi.doctorsoffice.model.token.AccountToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AccountTokenRepository extends JpaRepository<ConfirmAccountToken, Long> {
-	ConfirmAccountToken findByToken(String token);
+public interface AccountTokenRepository extends JpaRepository<AccountToken, Long> {
+	AccountToken findByToken(String token);
 }

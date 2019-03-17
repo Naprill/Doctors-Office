@@ -1,11 +1,11 @@
 package com.chernivtsi.doctorsoffice.service;
 
-import com.chernivtsi.doctorsoffice.model.token.ConfirmAccountToken;
+import com.chernivtsi.doctorsoffice.model.token.AccountToken;
 import com.chernivtsi.doctorsoffice.repository.AccountTokenRepository;
 import org.springframework.stereotype.Service;
 
 /**
- * Service layer for {@link ConfirmAccountToken} token
+ * Service layer for {@link AccountToken} token
  */
 @Service
 public class AccountTokenService {
@@ -16,11 +16,11 @@ public class AccountTokenService {
 		this.accountTokenRepository = accountTokenRepository;
 	}
 
-	public ConfirmAccountToken findByTokenUrl(String url) {
+	public AccountToken findByTokenUrl(String url) {
 		return accountTokenRepository.findByToken(url);
 	}
 
-	public void deleteByToken(ConfirmAccountToken token) {
+	public void deleteByToken(AccountToken token) {
 		accountTokenRepository.delete(token);
 	}
 
