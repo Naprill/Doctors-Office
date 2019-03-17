@@ -4,6 +4,7 @@ import com.chernivtsi.doctorsoffice.model.Role;
 import com.chernivtsi.doctorsoffice.model.User;
 import com.chernivtsi.doctorsoffice.model.dto.UserRegistrationDTO;
 import com.chernivtsi.doctorsoffice.model.token.AccountToken;
+import com.chernivtsi.doctorsoffice.model.token.ExpirationTokenProperties;
 import com.chernivtsi.doctorsoffice.repository.AccountTokenRepository;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +30,22 @@ public class AccountService {
 
 	private AccountTokenRepository accountTokenRepository;
 
+	private ExpirationTokenProperties expirationTokenProperties;
+
+	public ExpirationTokenProperties getExpirationTokenProperties() {
+		return expirationTokenProperties;
+	}
+
 	public AccountService(UserRepository userRepository,
 	                      EmailService emailService,
 	                      PasswordEncoder passwordEncoder,
-	                      AccountTokenRepository accountTokenRepository) {
+	                      AccountTokenRepository accountTokenRepository,
+	                      ExpirationTokenProperties expirationTokenProperties) {
 		this.userRepository = userRepository;
 		this.emailService = emailService;
 		this.passwordEncoder = passwordEncoder;
 		this.accountTokenRepository = accountTokenRepository;
+		this.expirationTokenProperties = expirationTokenProperties;
 	}
 
 	/**
@@ -47,12 +56,12 @@ public class AccountService {
 
 		User user = new User();
 
-        user.setFirstName(registration.getFirstName());
-        user.setLastName(registration.getLastName());
-        user.setPatronymic(registration.getPatronymic());
-        user.setBirthDate(registration.getBirthDate());
-	    user.setTelephone(registration.getTelephone());
-	    user.setAddress(registration.getAddress());
+		user.setFirstName(registration.getFirstName());
+		user.setLastName(registration.getLastName());
+		user.setPatronymic(registration.getPatronymic());
+		user.setBirthDate(registration.getBirthDate());
+		user.setTelephone(registration.getTelephone());
+		user.setAddress(registration.getAddress());
 
 		user.setEmail(registration.getEmail());
 		user.setHashedPassword(passwordEncoder.encode(registration.getPassword().getUniquePassword()));
@@ -61,7 +70,7 @@ public class AccountService {
 		user.getAddress().setPatient(user);
 
 		log.trace("Saving user with data: {}", user);
-		saveTokenAndSendEmail(
+		sendRegistrationEmail(
 				userRepository.save(user),
 				request
 		);
@@ -70,11 +79,12 @@ public class AccountService {
 	/**
 	 * Method saves confirmation token
 	 * and sends to user email for confirmation of their account
-	 * @param user - receiver of email
+	 *
+	 * @param user    - receiver of email
 	 * @param request
 	 * @throws EntityNotFoundException
 	 */
-	public void saveTokenAndSendEmail(User user, HttpServletRequest request) {
+	public void sendRegistrationEmail(User user, HttpServletRequest request) {
 		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 
 		AccountToken token = new AccountToken();
@@ -82,7 +92,7 @@ public class AccountService {
 		token.setUser(user);
 		accountTokenRepository.save(token);
 
-		emailService.createAndSendEmail(token, user, url);
+		emailService.sendRegistrationEmail(token, user, url);
 
 	}
 }

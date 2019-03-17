@@ -28,7 +28,7 @@ public class EmailService {
 	}
 
 	@Async
-	public void createAndSendEmail(AccountToken token, User user, String url) {
+	public void sendRegistrationEmail(AccountToken token, User user, String url) {
 
 		Mail mail = new Mail();
 		mail.setFrom("no-reply@doctor-patratiy-office.com");
@@ -42,10 +42,10 @@ public class EmailService {
 		model.put("signature", "https://doctors-office.com/");
 		model.put("confirmUrl", url + "/confirm-account?token=" + token.getToken());
 		mail.setModel(model);
-		sendEmail(mail);
+		sendEmail(mail, "/layouts/registrationEmailTemplate");
 	}
 
-	private void sendEmail(Mail mail) {
+	private void sendEmail(Mail mail, String template) {
 		try {
 			MimeMessage message = emailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message,
@@ -54,7 +54,7 @@ public class EmailService {
 
 			Context context = new Context();
 			context.setVariables(mail.getModel());
-			String html = templateEngine.process("/layouts/mail", context);
+			String html = templateEngine.process(template, context);
 
 			helper.setTo(mail.getTo());
 			helper.setText(html, true);
