@@ -40,9 +40,27 @@ public class EmailService {
 		model.put("userFName", user.getFirstName());
 		model.put("userLName", user.getLastName());
 		model.put("signature", "https://doctors-office.com/");
-		model.put("confirmUrl", url + "/confirm-account?token=" + token.getToken());
+		model.put("url", url + "/confirm-account?token=" + token.getToken());
 		mail.setModel(model);
 		sendEmail(mail, "/layouts/registrationEmailTemplate");
+	}
+
+	@Async
+	public void sendForgotPasswordEmail(AccountToken token, User user, String url) {
+
+			Mail mail = new Mail();
+		mail.setFrom("no-reply@doctor-patratiy-office.com");
+		mail.setTo(user.getEmail());
+		mail.setSubject("Відновлення паролю до персонального кабінету в медкабінеті лікаря Патратій Марини Володимирівни");
+
+		Map<String, Object> model = new HashMap<>();
+		model.put("token", token);
+		model.put("userFName", user.getFirstName());
+		model.put("userLName", user.getLastName());
+		model.put("signature", "https://doctors-office.com/");
+		model.put("url", url + "/reset-password?token=" + token.getToken());
+		mail.setModel(model);
+		sendEmail(mail, "/layouts/resetPasswordEmailTemplate");
 	}
 
 	private void sendEmail(Mail mail, String template) {

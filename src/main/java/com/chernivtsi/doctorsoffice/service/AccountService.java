@@ -95,4 +95,19 @@ public class AccountService {
 		emailService.sendRegistrationEmail(token, user, url);
 
 	}
+
+	public void sendForgotPasswordEmail(String email, Integer time, HttpServletRequest request) {
+		User user = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+
+		AccountToken token = new AccountToken();
+		token.setToken(UUID.randomUUID().toString());
+		token.setUser(user);
+		token.setExpiryDate(time);
+		accountTokenRepository.save(token);
+
+
+		emailService.sendForgotPasswordEmail(token, user, url);
+
+	}
 }

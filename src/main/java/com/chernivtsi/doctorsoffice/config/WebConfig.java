@@ -19,7 +19,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		registry.addViewController("/login").setViewName("authentication/page-login");
 		registry.addViewController("/").setViewName("layouts/layoutDashboard");
 		registry.addViewController("/logout").setViewName("home");
-		registry.addViewController("/forget").setViewName("authentication/pages-forget");
 	}
 
 	@Bean
