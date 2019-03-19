@@ -90,4 +90,8 @@ public class UserService extends DefaultCrudSupport<User> {
 	public Page<UserListDTO> findAll(Pageable pageable) {
 		return userRepository.findAll(pageable).map(UserListDTO::new);
 	}
+
+	public void updatePassword(String updatedPassword, Long id) {
+		userRepository.updatePassword(updatedPassword, id);
+	}
 }

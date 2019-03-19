@@ -14,6 +14,12 @@
                         </a>
                     </div>
                     <div class="login-form">
+                        <div th:if="${param.success}">
+                            <div class="alert alert-info">
+                                Ваш пароль успішно замінено. Увійдіть з новим паролем
+                            </div>
+                        </div>
+
                         <form th:action="@{/login}" th:method="post">
                             <div class="form-group">
                                 <label>Електронна пошта</label>
