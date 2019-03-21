@@ -5,6 +5,7 @@ import com.chernivtsi.doctorsoffice.model.Reception;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 public class ReceptionDTO {
 

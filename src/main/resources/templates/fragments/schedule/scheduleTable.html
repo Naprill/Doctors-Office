@@ -78,7 +78,14 @@
                 <td th:text="${#temporals.format(reception.date, 'dd-MM-yyyy')}"></td>
                 <td th:text="${reception.intervalStart}"></td>
                 <td th:text="${reception.intervalEnd}"></td>
-                <td th:text="${reception.duration}"></td>
+                <td>
+                    <span th:text="${reception.duration}"></span>
+                    <span class="badge badge-pill badge-success"
+                          th:if="${reception.interval.getIntervalType()== 'Зайнято'
+                          && reception.date.isBefore(now)}">
+                        Відбувся
+                    </span>
+                </td>
                 <td th:if="${reception.interval.getIntervalType() == 'Вільно'
                 && reception.date.isAfter(now)}">
                     <button class="btn btn-outline-success" data-toggle="modal"

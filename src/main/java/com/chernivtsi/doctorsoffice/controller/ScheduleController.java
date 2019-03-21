@@ -77,6 +77,7 @@ public class ScheduleController {
 		modelAndView.addObject("users", userService.findAll());
 		modelAndView.addObject("now", LocalDate.now());
 
+		log.trace("receptions : {}", receptionDTOs.getContent());
 		return modelAndView;
 	}
 
@@ -102,6 +103,7 @@ public class ScheduleController {
 		modelAndView.addObject("users", userService.findAll());
 		modelAndView.addObject("now", LocalDate.now());
 
+		log.trace("receptions : {}", receptionDTOs.getContent());
 		return modelAndView;
 	}
 
