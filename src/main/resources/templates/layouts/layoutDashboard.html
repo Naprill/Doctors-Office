@@ -94,7 +94,7 @@
                     <a th:href="@{/schedule}"> <i class="menu-icon fa fa-calendar"></i>Розклад лікаря </a>
                 </li>
                 <li>
-                    <a href=""> <i class="menu-icon fa fa-clock-o"></i>Мої візити </a>
+                    <a th:href="@{/personal-receptions}"> <i class="menu-icon fa fa-clock-o"></i>Мої візити </a>
                 </li>
                 <li>
                     <a href=""> <i class="menu-icon fa ti-email"></i>Задати запитання </a>
@@ -105,7 +105,7 @@
                     <a th:href="@{/profile}"> <i class="menu-icon fa fa-id-card-o"></i>Мої дані </a>
                 </li>
                 <li>
-                    <a href=""> <i class="menu-icon fa fa-key"></i>Змінити пароль </a>
+                    <a th:href="@{forgot-password}"> <i class="menu-icon fa fa-key"></i>Змінити пароль </a>
                 </li>
 
                 <h3 class="menu-title">Інформація</h3><!-- /.menu-title -->
@@ -138,6 +138,9 @@
                     <a th:href="@{/patients}"> <i class="menu-icon fa fa-list"></i>Список пацієнтів </a>
                 </li>
                 <li>
+                    <a th:href="@{/user-receptions/}"> <i class="menu-icon fa fa-clock-o"></i>Візити пацієнтів</a>
+                </li>
+                <li>
                     <a href=""> <i class="menu-icon fa ti-email"></i>Запитання пацієнтів</a>
                 </li>
 
@@ -146,7 +149,7 @@
                     <a th:href="@{/articles/add}"> <i class="menu-icon fa fa-pencil-square-o"></i>Додати статтю </a>
                 </li>
                 <li>
-                    <a href=""> <i class="menu-icon fa fa-key"></i>Змінити пароль </a>
+                    <a th:href="@{forgot-password}"> <i class="menu-icon fa fa-key"></i>Змінити пароль </a>
                 </li>
 
                 <h3 class="menu-title">Інформація</h3><!-- /.menu-title -->

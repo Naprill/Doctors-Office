@@ -2,6 +2,7 @@ package com.chernivtsi.doctorsoffice.repository;
 
 import com.chernivtsi.doctorsoffice.model.Interval;
 import com.chernivtsi.doctorsoffice.model.Reception;
+import com.chernivtsi.doctorsoffice.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,4 +36,6 @@ public interface ScheduleRepository extends CrudRepository<Reception, Long> {
 	@Modifying
 	@Query("UPDATE Reception r set r.user.id = null, r.interval = 'FREE' where r.id = :id")
 	void cancelReception(@Param("id") Long id);
+
+	Page<Reception> getReceptionsByUserOrderByIntervalStart(Pageable pageable, User user);
 }

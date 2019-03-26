@@ -1,0 +1,81 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml"
+     xmlns:sec="http://www.w3.org/1999/xhtml"
+     th:fragment="receptionsTable">
+    <div>
+
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <input type="button" class="btn btn-primary"
+                   data-toggle="modal"
+                   data-target="#settings-modal"
+                   value="Налаштувати"
+                   th:onclick="'showSettingsModal();'"><br>
+        </div>
+        <br>
+
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <form>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="date" id="date" class="form-control" th:value="${param.date}">
+                    </div>
+
+                    <div class="col">
+                        <select id="user" class="form-control">
+                            <option value="">Показати всіх користувачів</option>
+                            <option th:each="user : ${users}" th:value="${user.id}"
+                                    th:text="${user.firstName + ' ' + user.lastName}"
+                                    th:selected="${user.id} == ${#request.getParameter('user')}"></option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type="button" onclick="adminFilterButton()"
+                               class="btn btn-primary"
+                               value="Застосувати"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="hours-div">
+        <table class="table no-footer">
+            <thead>
+            <th scope="col">Дата</th>
+            <th scope="col">Початок</th>
+            <th scope="col">Кінець</th>
+            <th scope="col">Тривалість, хв</th>
+            <th scope="col"></th>
+            </thead>
+            <tbody>
+            <tr th:each="reception: ${receptions}">
+                <td th:text="${#temporals.format(reception.date, 'dd-MM-yyyy')}"></td>
+                <td th:text="${reception.intervalStart}"></td>
+                <td th:text="${reception.intervalEnd}"></td>
+                <td>
+                    <span th:text="${reception.duration}"></span>
+                </td>
+                <td th:if="${reception.date.isAfter(today)}">
+                    <button class="btn btn-outline-warning" data-toggle="modal"
+                            id="cancel-button"
+                            data-target="#cancel-modal"
+                            th:onclick="'showCancelModal(\'' + ${reception.id} + '\');'">
+                        Відміна
+                    </button>
+                </td>
+                <td th:if="${reception.intervalEnd.isBefore(now)}">
+                    <span class="badge badge-pill badge-success">
+                        Відбувся
+                    </span>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(receptions.content)}">
+                <td colspan="20">Немає записів</td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:replace="fragments/pagination :: pagination (page=${receptions}, pageRequest=${pageRequest})"></div>
+    </div>
+</div>
