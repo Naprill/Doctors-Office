@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +55,9 @@ public class ScheduleService {
 	private List<Reception> generateReceptions(LocalDate date) {
 		int count = (int) ((scheduleSettings.getWorkEnd() - scheduleSettings.getWorkStart()) * 60 / scheduleSettings.getReceptionTimeRange());
 
-		LocalTime intervalStart = LocalTime.of(scheduleSettings.getWorkStart().intValue(), 0);
-		LocalTime intervalEnd = intervalStart.plusMinutes(scheduleSettings.getReceptionTimeRange().longValue());
+		LocalTime intervalStartTime = LocalTime.of(scheduleSettings.getWorkStart().intValue(), 0);
+		LocalDateTime intervalStart = LocalDateTime.of(date, intervalStartTime);
+		LocalDateTime intervalEnd = intervalStart.plusMinutes(scheduleSettings.getReceptionTimeRange().longValue());
 
 		List<Reception> receptionList = new ArrayList<>();
 		while (count > 0) {

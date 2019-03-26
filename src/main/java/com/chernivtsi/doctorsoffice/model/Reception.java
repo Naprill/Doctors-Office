@@ -17,7 +17,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 /**
  * Represents a range of time during which a doctor ({@link Admin})
@@ -39,17 +39,17 @@ public class Reception extends AbstractVersional {
 	private LocalDate date;
 
 	@Column(nullable = false)
-	@Convert(converter = Jsr310JpaConverters.LocalTimeConverter.class)
-	private LocalTime intervalStart;
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime intervalStart;
 
 	@Column(nullable = false)
-	@Convert(converter = Jsr310JpaConverters.LocalTimeConverter.class)
-	private LocalTime intervalEnd;
+	@Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+	private LocalDateTime intervalEnd;
 
 	@Enumerated(EnumType.STRING)
 	private Interval interval;
 
-	public Reception(LocalDate date, LocalTime intervalStart, LocalTime intervalEnd, Interval interval) {
+	public Reception(LocalDate date, LocalDateTime intervalStart, LocalDateTime intervalEnd, Interval interval) {
 		super();
 		this.user = null;
 		this.date = date;

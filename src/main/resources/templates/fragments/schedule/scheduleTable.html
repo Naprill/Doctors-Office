@@ -76,8 +76,8 @@
                 </td>
                 <td th:text="${reception.interval.getIntervalType()}"></td>
                 <td th:text="${#temporals.format(reception.date, 'dd-MM-yyyy')}"></td>
-                <td th:text="${reception.intervalStart}"></td>
-                <td th:text="${reception.intervalEnd}"></td>
+                <td th:text="${#temporals.format(reception.intervalStart, 'HH:mm')}"></td>
+                <td th:text="${#temporals.format(reception.intervalEnd, 'HH:mm')}"></td>
                 <td>
                     <span th:text="${reception.duration}"></span>
                     <span class="badge badge-pill badge-success"

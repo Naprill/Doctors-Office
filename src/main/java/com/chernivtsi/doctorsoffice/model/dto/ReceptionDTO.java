@@ -9,7 +9,7 @@ import lombok.ToString;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -27,9 +27,9 @@ public class ReceptionDTO {
 
 	private LocalDate date;
 
-	private LocalTime intervalStart;
+	private LocalDateTime intervalStart;
 
-	private LocalTime intervalEnd;
+	private LocalDateTime intervalEnd;
 
 	private Long duration;
 
