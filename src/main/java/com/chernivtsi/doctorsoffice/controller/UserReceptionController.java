@@ -10,11 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -41,7 +42,7 @@ public class UserReceptionController {
 	public ModelAndView getUserReceptions(@AuthenticationPrincipal SecurityUser currentUser,
 	                                      @PageableDefault Pageable pageRequest) {
 		ModelAndView modelAndView = new ModelAndView("user-receptions");
-		Page<ReceptionDTO> receptionDTOs = scheduleService.getUserReceptions(pageRequest, currentUser.getId());
+		Page<ReceptionDTO> receptionDTOs = scheduleService.getUserReceptions(pageRequest, null, currentUser.getId());
 		modelAndView.addObject("receptions", receptionDTOs);
 		modelAndView.addObject("pageRequest", pageRequest);
 		modelAndView.addObject("today", LocalDate.now());
@@ -52,18 +53,24 @@ public class UserReceptionController {
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	@GetMapping("/user-receptions/")
-	public ModelAndView getUserReceptions(@PathVariable(required = false) Long id,
-	                                      @PageableDefault Pageable pageRequest) {
+	@GetMapping("/user-receptions")
+	public ModelAndView getUserReceptions(
+			@PageableDefault Pageable pageRequest,
+			@RequestParam(name = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+			@RequestParam(name = "user", required = false) Long id) {
+
 		ModelAndView modelAndView = new ModelAndView("user-receptions");
 		List<User> users = userService.findAll();
+		User user;
 		Page<ReceptionDTO> receptionDTOs;
-		if (id == null && !users.isEmpty()) {
-			id = users.get(0).getId();
-			receptionDTOs = scheduleService.getUserReceptions(pageRequest, id);
-		} else {
+
+		if (users.isEmpty()) {
 			receptionDTOs = new PageImpl<>(Collections.emptyList());
+		} else {
+			user = users.stream().filter(u -> u.getId().equals(id)).findFirst().orElse(users.get(0));
+			receptionDTOs = scheduleService.getUserReceptions(pageRequest, date, user.getId());
 		}
+
 		modelAndView.addObject("receptions", receptionDTOs);
 		modelAndView.addObject("pageRequest", pageRequest);
 		modelAndView.addObject("today", LocalDate.now());

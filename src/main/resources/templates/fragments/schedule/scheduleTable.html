@@ -22,7 +22,7 @@
                             <option value="">Показати всі інтервали</option>
                             <option th:each="e : ${intervals}" th:value="${e.name()}"
                                     th:text="${e}"
-                                    th:selected="${e.name()} == ${#request.getParameter('interval')}"></option>
+                                    th:selected="${e.name()} == ${param.interval}"></option>
                         </select>
                     </div>
                     <div class="col" sec:authorize="hasAuthority('ADMIN')">
