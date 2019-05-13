@@ -31,7 +31,7 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Reception> criteriaQuery = criteriaBuilder.createQuery(Reception.class);
 		Root<Reception> receptionRoot = criteriaQuery.from(Reception.class);
-		
+
 		List<Predicate> predicates = new ArrayList<>();
 
 		if (date != null) {
@@ -46,8 +46,9 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
 				.orderBy(criteriaBuilder.asc(receptionRoot.get(Reception_.intervalStart)));
 
 		TypedQuery<Reception> query = entityManager.createQuery(criteriaQuery);
+		long total = (long) query.getResultList().size();
 		query.setFirstResult(pageable.getOffset());
 		query.setMaxResults(pageable.getPageSize());
-		return new PageImpl<>(query.getResultList());
+		return new PageImpl<>(query.getResultList(), pageable, total);
 	}
 }
