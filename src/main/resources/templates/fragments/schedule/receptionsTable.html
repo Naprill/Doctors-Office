@@ -20,12 +20,8 @@
                     </div>
 
                     <div class="col">
-                        <select id="user" class="form-control">
-                            <option value="">Показати всіх користувачів</option>
-                            <option th:each="user : ${users}" th:value="${user.id}"
-                                    th:text="${user.firstName + ' ' + user.lastName}"
-                                    th:selected="${user.id} == ${#request.getParameter('user')}"></option>
-                        </select>
+                        <input id="user-name" placeholder="Користувач" class="autocomplete">
+                        <input type="hidden" id="user" class="userId" name="userId">
                     </div>
                     <div class="col">
                         <input type="button" onclick="adminFilterButton()"

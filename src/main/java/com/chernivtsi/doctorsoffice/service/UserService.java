@@ -7,6 +7,7 @@ import com.chernivtsi.doctorsoffice.model.dto.AddressDTO;
 import com.chernivtsi.doctorsoffice.model.dto.AnalysisDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserImmutableProfileDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserListDTO;
+import com.chernivtsi.doctorsoffice.model.dto.UserSearchDTO;
 import com.chernivtsi.doctorsoffice.model.dto.UserUpdatableProfileDTO;
 import com.chernivtsi.doctorsoffice.repository.UserRepository;
 import com.chernivtsi.doctorsoffice.service.base.DefaultCrudSupport;
@@ -21,6 +22,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
@@ -94,4 +97,16 @@ public class UserService extends DefaultCrudSupport<User> {
 	public void updatePassword(String updatedPassword, Long id) {
 		userRepository.updatePassword(updatedPassword, id);
 	}
+
+	/**
+	 * Method provides data for autocomplete AJAX request.
+	 * Get list of all users, whose first name or last name contains entered fragment
+	 */
+	public List<UserSearchDTO> findByNameIgnoreCaseContaining(String fragment) {
+		List<User> users = userRepository.findByNameIgnoreCaseContaining(fragment);
+		return users.stream()
+				.map(UserSearchDTO::toSearchDTO)
+				.collect(toList());
+	}
+
 }

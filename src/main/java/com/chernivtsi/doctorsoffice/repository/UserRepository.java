@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,4 +31,13 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	@Modifying
 	@Query("UPDATE User u set u.enabled = :enabled where u.id = :id")
 	void updateUserEnabled(@Param("enabled") boolean enabled, @Param("id") Long userId);
+
+	/**
+	 * Method provides data for autocomplete AJAX request.
+	 * Get list of all users, whose first name or last name contains entered fragment
+	 */
+	@Query("Select u from User u where " +
+			"lower(u.firstName) like concat('%', concat(lower(:fragment) , '%') ) " +
+			"or lower(u.lastName) like concat('%', concat(lower(:fragment) , '%'))  ")
+	List<User> findByNameIgnoreCaseContaining(@Param("fragment") String fragment);
 }
